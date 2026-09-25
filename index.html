@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Markab Panel</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="data.js"></script>
+<style>
+  :root {
+    --bg: var(--tg-theme-bg-color, #ffffff);
+    --bg2: var(--tg-theme-secondary-bg-color, #f2f3f7);
+    --text: var(--tg-theme-text-color, #16181d);
+    --hint: var(--tg-theme-hint-color, #8a8f98);
+    --accent: var(--tg-theme-button-color, #1f6feb);
+    --accent-text: var(--tg-theme-button-text-color, #ffffff);
+    --link: var(--tg-theme-link-color, #1f6feb);
+    --card: var(--tg-theme-section-bg-color, #ffffff);
+    --line: rgba(128,128,128,.18);
+    --ok: #1a9b55; --warn: #d97706; --bad: #d64545;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not(.tg) {
+      --bg:#111317; --bg2:#1b1e24; --text:#eceef2; --hint:#8d93a0; --card:#1f232a; --accent:#3b82f6; --link:#6ea8ff;
+    }
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; background: var(--bg2); color: var(--text);
+    font: 15px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  header { position: sticky; top: 0; z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line);
+    padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; }
+  header h1 { font-size: 17px; margin: 0; letter-spacing: .3px; }
+  header h1 span { color: var(--accent); }
+  .lang { display: flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  .lang button { border: 0; background: none; color: var(--hint); padding: 5px 10px; font-weight: 600; font-size: 12px; cursor: pointer; }
+  .lang button.on { background: var(--accent); color: var(--accent-text); }
+  main { padding: 12px 16px 96px; max-width: 720px; margin: 0 auto; }
+  nav { position: fixed; bottom: 0; left: 0; right: 0; z-index: 5; background: var(--bg); border-top: 1px solid var(--line);
+    display: grid; grid-template-columns: repeat(4, 1fr); padding-bottom: env(safe-area-inset-bottom); }
+  nav button { border: 0; background: none; color: var(--hint); padding: 8px 2px 10px; font-size: 11px; cursor: pointer;
+    display: flex; flex-direction: column; align-items: center; gap: 3px; }
+  nav button svg { width: 22px; height: 22px; }
+  nav button.on { color: var(--accent); }
+  .search { width: 100%; padding: 11px 14px; border-radius: 12px; border: 1px solid var(--line); background: var(--card);
+    color: var(--text); font-size: 15px; outline: none; }
+  .chips { display: flex; gap: 8px; overflow-x: auto; padding: 10px 0 4px; scrollbar-width: none; }
+  .chips::-webkit-scrollbar { display: none; }
+  .chip { flex: none; border: 1px solid var(--line); background: var(--card); color: var(--text); border-radius: 999px;
+    padding: 6px 12px; font-size: 13px; cursor: pointer; white-space: nowrap; }
+  .chip.on { background: var(--accent); color: var(--accent-text); border-color: var(--accent); }
+  .meta { color: var(--hint); font-size: 12px; margin: 6px 2px 8px; }
+  .list { display: grid; gap: 8px; }
+  .item { background: var(--card); border-radius: 12px; padding: 12px 14px; display: flex; justify-content: space-between;
+    gap: 12px; cursor: pointer; border: 1px solid transparent; }
+  .item:active { border-color: var(--accent); }
+  .item .name { font-weight: 600; }
+  .item .sub { color: var(--hint); font-size: 12px; margin-top: 2px; }
+  .item .price { font-weight: 700; white-space: nowrap; text-align: right; }
+  .stock { font-size: 11px; font-weight: 600; margin-top: 4px; }
+  .stock.ok { color: var(--ok); } .stock.low { color: var(--warn); } .stock.no { color: var(--bad); }
+  .card { background: var(--card); border-radius: 14px; padding: 16px; margin-bottom: 12px; }
+  .card h2 { font-size: 16px; margin: 0 0 12px; }
+  label { display: block; font-size: 12px; color: var(--hint); margin: 12px 0 5px; }
+  input, select, textarea { width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line);
+    background: var(--bg2); color: var(--text); font-size: 15px; font-family: inherit; outline: none; }
+  input:focus, select:focus, textarea:focus { border-color: var(--accent); }
+  .seg { display: flex; gap: 6px; flex-wrap: wrap; }
+  .seg button { flex: 1; min-width: 56px; border: 1px solid var(--line); background: var(--bg2); color: var(--text);
+    border-radius: 10px; padding: 9px 6px; font-size: 14px; cursor: pointer; font-weight: 600; }
+  .seg button.on { background: var(--accent); color: var(--accent-text); border-color: var(--accent); }
+  .range-row { display: flex; align-items: center; gap: 10px; }
+  .range-row input[type=range] { flex: 1; padding: 0; accent-color: var(--accent); background: none; border: 0; }
+  .range-row b { min-width: 44px; text-align: right; }
+  .result { background: var(--bg2); border-radius: 12px; padding: 14px; margin-top: 14px; }
+  .row { display: flex; justify-content: space-between; gap: 12px; padding: 5px 0; font-size: 14px; }
+  .row span:first-child { color: var(--hint); }
+  .row.big { font-size: 18px; font-weight: 700; border-top: 1px solid var(--line); margin-top: 6px; padding-top: 10px; }
+  .row.big span:first-child { color: var(--text); }
+  .btn { width: 100%; border: 0; border-radius: 12px; padding: 13px; font-size: 15px; font-weight: 600; cursor: pointer;
+    background: var(--accent); color: var(--accent-text); margin-top: 14px; }
+  .btn.ghost { background: var(--bg2); color: var(--link); }
+  .btn-row { display: flex; gap: 8px; } .btn-row .btn { flex: 1; }
+  .note { font-size: 12px; color: var(--hint); margin-top: 10px; }
+  .warn-box { background: rgba(217,119,6,.12); color: var(--warn); border-radius: 10px; padding: 10px 12px; font-size: 12px; margin-bottom: 12px; }
+  .branch .name { font-weight: 700; font-size: 16px; }
+  .branch .line { display: flex; gap: 8px; margin-top: 8px; font-size: 14px; }
+  .branch .line span:first-child { color: var(--hint); min-width: 74px; }
+  .branch a { color: var(--link); text-decoration: none; }
+  .empty { text-align: center; color: var(--hint); padding: 40px 0; }
+  .sheet-bg { position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 20; display: none; }
+  .sheet { position: fixed; left: 0; right: 0; bottom: 0; z-index: 21; background: var(--bg); border-radius: 18px 18px 0 0;
+    padding: 18px 16px calc(18px + env(safe-area-inset-bottom)); max-width: 720px; margin: 0 auto;
+    transform: translateY(110%); visibility: hidden; transition: transform .22s ease, visibility 0s .22s; }
+  .sheet.open { transform: none; visibility: visible; transition: transform .22s ease; } .sheet-bg.open { display: block; }
+  .sheet h3 { margin: 0 0 4px; font-size: 18px; }
+  .toast { position: fixed; left: 50%; bottom: 90px; transform: translateX(-50%); background: #222; color: #fff;
+    padding: 10px 16px; border-radius: 10px; font-size: 14px; z-index: 30; display: none; max-width: 90%; text-align: center; }
+</style>
+</head>
+<body>
+<header>
+  <h1><span>MARKAB</span> <small id="t-title" style="font-weight:500;color:var(--hint)"></small></h1>
+  <div class="lang"><button data-l="uz">UZ</button><button data-l="ru">RU</button></div>
+</header>
+<main id="view"></main>
+<nav id="nav"></nav>
+<div class="sheet-bg" id="sheetBg"></div>
+<div class="sheet" id="sheet"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+const tg = window.Telegram && Telegram.WebApp;
+const inTelegram = !!(tg && tg.initData);
+if (tg) { try { tg.ready(); tg.expand(); } catch(e){} }
+if (inTelegram) document.documentElement.classList.add('tg');
+const DATA = window.MARKAB_DATA || { products: [], nasiya: [], branches: [], updated: '' };
+
+const T = {
+  uz: {
+    title: 'ichki panel', catalog: 'Katalog', calc: 'Nasiya', order: 'Ariza', branches: 'Filiallar',
+    search: 'Qidirish: model, brend…', all: 'Hammasi', found: 'ta mahsulot', updated: 'Yangilangan',
+    inStock: 'Omborda', low: 'Kam qoldi', none: 'Tugagan', pcs: 'dona', noResults: 'Hech narsa topilmadi',
+    calcTitle: 'Nasiya kalkulyatori', price: "Mahsulot narxi (so'm)", type: 'Shartnoma turi', term: 'Muddat (oy)',
+    down: "Boshlang'ich to'lov", financed: 'Nasiyaga qoladi', markup: 'Ustama', total: "Jami to'lov",
+    monthly: "Oylik to'lov", pickProduct: 'katalogdan tanlash (ixtiyoriy)',
+    toOrder: 'Ariza yaratish', calcIt: 'Nasiya hisoblash', noTerm: 'Bu tur uchun muddatlar kiritilmagan',
+    orderTitle: 'Yangi ariza', client: 'Mijoz ismi', phone: 'Telefon', product: 'Mahsulot', branch: 'Filial',
+    comment: 'Izoh', send: 'Arizani yuborish', cash: 'Naqd',
+    required: 'Mijoz ismi, telefon va mahsulotni kiriting', preview: 'Brauzerda ochilgan: ariza faqat Telegram ichida yuboriladi',
+    address: 'Manzil', hours: 'Ish vaqti', tel: 'Telefon', map: 'Xaritada ochish',
+    sample: "Diqqat: namunaviy ma'lumotlar. Haqiqiy narx va foizlarni Excel orqali yuklang.",
+    stockBy: 'Filiallar bo\'yicha qoldiq', brand: 'Brend', minDown: "Minimal boshlang'ich to'lov",
+  },
+  ru: {
+    title: 'внутренняя панель', catalog: 'Каталог', calc: 'Рассрочка', order: 'Заявка', branches: 'Филиалы',
+    search: 'Поиск: модель, бренд…', all: 'Все', found: 'товаров', updated: 'Обновлено',
+    inStock: 'В наличии', low: 'Мало', none: 'Нет в наличии', pcs: 'шт', noResults: 'Ничего не найдено',
+    calcTitle: 'Калькулятор рассрочки', price: 'Цена товара (сум)', type: 'Тип договора', term: 'Срок (мес.)',
+    down: 'Первоначальный взнос', financed: 'Остаток в рассрочку', markup: 'Наценка', total: 'Итого к оплате',
+    monthly: 'Ежемесячный платёж', pickProduct: 'выбрать из каталога (необязательно)',
+    toOrder: 'Создать заявку', calcIt: 'Рассчитать рассрочку', noTerm: 'Для этого типа сроки не заданы',
+    orderTitle: 'Новая заявка', client: 'Имя клиента', phone: 'Телефон', product: 'Товар', branch: 'Филиал',
+    comment: 'Комментарий', send: 'Отправить заявку', cash: 'Наличные',
+    required: 'Укажите имя клиента, телефон и товар', preview: 'Открыто в браузере: заявка отправляется только из Telegram',
+    address: 'Адрес', hours: 'Часы работы', tel: 'Телефон', map: 'Открыть на карте',
+    sample: 'Внимание: демо-данные. Загрузите реальные цены и проценты через Excel.',
+    stockBy: 'Остаток по филиалам', brand: 'Бренд', minDown: 'Минимальный взнос',
+  }
+};
+
+function localGet(k){ try { return localStorage.getItem('markab_'+k); } catch(e){ return null; } }
+function localSet(k,v){ try { localStorage.setItem('markab_'+k, v); } catch(e){} }
+const tgLang = tg && tg.initDataUnsafe && tg.initDataUnsafe.user && tg.initDataUnsafe.user.language_code;
+
+const S = {
+  lang: localGet('lang') || (tgLang === 'ru' ? 'ru' : 'uz'),
+  tab: 'catalog', q: '', cat: '',
+  calc: { price: 0, product: '', type: '', term: 0, down: 30 },
+  order: { client: '', phone: '+998 ', product: '', type: 'cash', term: '', down: '', branch: '', comment: '' },
+};
+const t = k => T[S.lang][k] || k;
+const num = n => Math.round(n || 0).toLocaleString('ru-RU').replace(/\s|,/g, ' ');
+const fmt = n => num(n) + (S.lang === 'ru' ? ' сум' : " so'm");
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const haptic = () => { try { tg && tg.HapticFeedback && tg.HapticFeedback.selectionChanged(); } catch(e){} };
+
+function toast(msg){ const el = document.getElementById('toast'); el.textContent = msg; el.style.display = 'block';
+  clearTimeout(toast._t); toast._t = setTimeout(() => el.style.display = 'none', 2800); }
+
+/* ---------- nasiya ---------- */
+const types = () => [...new Set(DATA.nasiya.map(r => r.type))];
+const termsFor = type => DATA.nasiya.filter(r => r.type === type).sort((a,b) => a.months - b.months);
+function nasiyaCalc(price, type, months, downPct){
+  const rule = DATA.nasiya.find(r => r.type === type && r.months === months);
+  const down = price * downPct / 100;
+  const financed = Math.max(price - down, 0);
+  const markupPct = rule ? rule.markup : 0;
+  const total = financed * (1 + markupPct / 100);
+  return { down, financed, markupPct, markupSum: total - financed, total,
+           monthly: months ? total / months : 0, minDown: rule ? (rule.min_down || 0) : 0 };
+}
+
+/* ---------- views ---------- */
+const ICONS = {
+  catalog: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>',
+  calc: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 11h2M14 11h2M8 15h2M14 15h2M8 19h2M14 19h2"/></svg>',
+  order: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h6"/></svg>',
+  branches: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>',
+};
+
+function render(){
+  document.documentElement.lang = S.lang;
+  document.getElementById('t-title').textContent = t('title');
+  document.querySelectorAll('.lang button').forEach(b => b.classList.toggle('on', b.dataset.l === S.lang));
+  document.getElementById('nav').innerHTML = ['catalog','calc','order','branches'].map(k =>
+    `<button data-tab="${k}" class="${S.tab===k?'on':''}">${ICONS[k]}<span>${t(k)}</span></button>`).join('');
+  const banner = DATA.sample ? `<div class="warn-box">${t('sample')}</div>` : '';
+  document.getElementById('view').innerHTML = banner +
+    ({ catalog: viewCatalog, calc: viewCalc, order: viewOrder, branches: viewBranches }[S.tab])();
+  bindView();
+}
+
+function stockBadge(p){
+  const n = p.stock_total;
+  if (n <= 0) return `<div class="stock no">${t('none')}</div>`;
+  if (n <= 3) return `<div class="stock low">${t('low')}: ${n} ${t('pcs')}</div>`;
+  return `<div class="stock ok">${t('inStock')}: ${n} ${t('pcs')}</div>`;
+}
+function filtered(){
+  const q = S.q.trim().toLowerCase();
+  return DATA.products.filter(p => (!S.cat || p.category === S.cat) &&
+    (!q || [p.name, p.brand, p.model, p.sku].join(' ').toLowerCase().includes(q)));
+}
+function productRows(list){
+  return list.length ? list.map(p => `
+      <div class="item" data-sku="${esc(p.sku)}">
+        <div><div class="name">${esc(p.name)}</div>
+          <div class="sub">${esc(p.brand)}${p.model ? ' · ' + esc(p.model) : ''}</div>${stockBadge(p)}</div>
+        <div class="price">${fmt(p.price)}</div>
+      </div>`).join('') : `<div class="empty">${t('noResults')}</div>`;
+}
+function viewCatalog(){
+  const cats = [...new Set(DATA.products.map(p => p.category))];
+  const list = filtered();
+  return `
+    <input class="search" id="q" type="search" placeholder="${t('search')}" value="${esc(S.q)}">
+    <div class="chips">
+      <button class="chip ${!S.cat?'on':''}" data-cat="">${t('all')}</button>
+      ${cats.map(c => `<button class="chip ${S.cat===c?'on':''}" data-cat="${esc(c)}">${esc(c)}</button>`).join('')}
+    </div>
+    <div class="meta" id="pmeta">${list.length} ${t('found')}${DATA.updated ? ' · ' + t('updated') + ': ' + esc(DATA.updated) : ''}</div>
+    <div class="list" id="plist">${productRows(list)}</div>`;
+}
+
+function viewCalc(){
+  const c = S.calc, tp = types();
+  if (!tp.includes(c.type)) c.type = tp[0] || '';
+  const terms = termsFor(c.type);
+  if (!terms.find(r => r.months === c.term)) c.term = terms.length ? terms[0].months : 0;
+  return `
+  <div class="card"><h2>${t('calcTitle')}</h2>
+    <label>${t('product')}</label>
+    <select id="c-product"><option value="">— ${t('pickProduct')} —</option>
+      ${DATA.products.map(p => `<option value="${esc(p.sku)}" ${c.product===p.sku?'selected':''}>${esc(p.name)} — ${fmt(p.price)}</option>`).join('')}
+    </select>
+    <label>${t('price')}</label>
+    <input id="c-price" inputmode="numeric" value="${c.price ? num(c.price) : ''}" placeholder="0">
+    <label>${t('type')}</label>
+    <div class="seg" id="c-type">${tp.map(x => `<button data-v="${esc(x)}" class="${c.type===x?'on':''}">${esc(x)}</button>`).join('')}</div>
+    <label>${t('term')}</label>
+    ${terms.length ? `<div class="seg" id="c-term">${terms.map(x => `<button data-v="${x.months}" class="${c.term===x.months?'on':''}">${x.months}</button>`).join('')}</div>`
+      : `<div class="note">${t('noTerm')}</div>`}
+    <label>${t('down')}</label>
+    <div class="range-row"><input type="range" id="c-down" min="0" max="90" step="5" value="${c.down}"><b id="c-down-v">${c.down}%</b></div>
+    <div class="result" id="c-res">${calcResult()}</div>
+    <button class="btn" id="c-order">${t('toOrder')}</button>
+  </div>`;
+}
+function calcResult(){
+  const c = S.calc, r = nasiyaCalc(c.price, c.type, c.term, c.down);
+  const warn = r.minDown && c.down < r.minDown ? `<div class="note" style="color:var(--warn)">${t('minDown')}: ${r.minDown}%</div>` : '';
+  return `
+    <div class="row"><span>${t('down')}</span><span>${fmt(r.down)}</span></div>
+    <div class="row"><span>${t('financed')}</span><span>${fmt(r.financed)}</span></div>
+    <div class="row"><span>${t('markup')} (${r.markupPct}%)</span><span>${fmt(r.markupSum)}</span></div>
+    <div class="row"><span>${t('total')}</span><span>${fmt(r.total + r.down)}</span></div>
+    <div class="row big"><span>${t('monthly')}</span><span>${fmt(r.monthly)}</span></div>${warn}`;
+}
+
+function viewOrder(){
+  const o = S.order, isCash = o.type === 'cash';
+  return `
+  <div class="card"><h2>${t('orderTitle')}</h2>
+    <label>${t('client')} *</label><input id="o-client" value="${esc(o.client)}" autocomplete="off">
+    <label>${t('phone')} *</label><input id="o-phone" inputmode="tel" value="${esc(o.phone)}">
+    <label>${t('product')} *</label>
+    <select id="o-product"><option value="">—</option>
+      ${DATA.products.map(p => `<option value="${esc(p.sku)}" ${o.product===p.sku?'selected':''}>${esc(p.name)} — ${fmt(p.price)}</option>`).join('')}
+    </select>
+    <label>${t('type')}</label>
+    <select id="o-type"><option value="cash" ${isCash?'selected':''}>${t('cash')}</option>
+      ${types().map(x => `<option ${o.type===x?'selected':''}>${esc(x)}</option>`).join('')}</select>
+    <div id="o-nasiya" style="${isCash ? 'display:none' : ''}">
+      <label>${t('term')}</label><input id="o-term" inputmode="numeric" value="${esc(o.term)}">
+      <label>${t('down')} (%)</label><input id="o-down" inputmode="numeric" value="${esc(o.down)}">
+    </div>
+    <label>${t('branch')}</label>
+    <select id="o-branch"><option value="">—</option>${DATA.branches.map(b => `<option ${o.branch===b.name?'selected':''}>${esc(b.name)}</option>`).join('')}</select>
+    <label>${t('comment')}</label><textarea id="o-comment" rows="3">${esc(o.comment)}</textarea>
+    <button class="btn" id="o-send">${t('send')}</button>
+  </div>`;
+}
+
+function viewBranches(){
+  return DATA.branches.map(b => `
+    <div class="card branch"><div class="name">${esc(b.name)}</div>
+      ${b.address ? `<div class="line"><span>${t('address')}</span><span>${esc(b.address)}</span></div>` : ''}
+      ${b.phone ? `<div class="line"><span>${t('tel')}</span><a href="tel:${esc(String(b.phone).replace(/\s/g,''))}">${esc(b.phone)}</a></div>` : ''}
+      ${b.hours ? `<div class="line"><span>${t('hours')}</span><span>${esc(b.hours)}</span></div>` : ''}
+      ${b.map ? `<div class="line"><span></span><a href="${esc(b.map)}" data-ext="1" target="_blank">${t('map')} →</a></div>` : ''}
+    </div>`).join('') || `<div class="empty">—</div>`;
+}
+
+/* ---------- product sheet ---------- */
+function openProduct(sku){
+  const p = DATA.products.find(x => x.sku === sku); if (!p) return;
+  const stocks = Object.entries(p.stock || {}).map(([b,n]) =>
+    `<div class="row"><span>${esc(b)}</span><span>${n} ${t('pcs')}</span></div>`).join('');
+  const sh = document.getElementById('sheet');
+  sh.innerHTML = `<h3>${esc(p.name)}</h3><div class="meta">${t('brand')}: ${esc(p.brand)} · SKU ${esc(p.sku)}</div>
+    <div class="row big" style="border:0;margin:0"><span></span><span>${fmt(p.price)}</span></div>
+    ${stocks ? `<div class="result"><div class="meta" style="margin-top:0">${t('stockBy')}</div>${stocks}</div>` : ''}
+    ${p.note ? `<div class="note">${esc(p.note)}</div>` : ''}
+    <div class="btn-row"><button class="btn" id="s-calc">${t('calcIt')}</button><button class="btn ghost" id="s-order">${t('toOrder')}</button></div>`;
+  document.getElementById('sheetBg').classList.add('open'); sh.classList.add('open');
+  document.getElementById('s-calc').onclick = () => { closeSheet(); Object.assign(S.calc, { product: sku, price: p.price }); S.tab = 'calc'; render(); };
+  document.getElementById('s-order').onclick = () => { closeSheet(); S.order.product = sku; S.tab = 'order'; render(); };
+}
+function closeSheet(){ document.getElementById('sheet').classList.remove('open'); document.getElementById('sheetBg').classList.remove('open'); }
+document.getElementById('sheetBg').onclick = closeSheet;
+
+/* ---------- events ---------- */
+function bindView(){
+  const $ = id => document.getElementById(id);
+  if (S.tab === 'catalog') {
+    const bindItems = () => document.querySelectorAll('[data-sku]').forEach(el => el.onclick = () => openProduct(el.dataset.sku));
+    $('q').oninput = e => { S.q = e.target.value; const list = filtered();
+      $('plist').innerHTML = productRows(list);
+      $('pmeta').textContent = `${list.length} ${t('found')}${DATA.updated ? ' · ' + t('updated') + ': ' + DATA.updated : ''}`;
+      bindItems(); };
+    document.querySelectorAll('[data-cat]').forEach(b => b.onclick = () => { S.cat = b.dataset.cat; haptic(); render(); });
+    bindItems();
+  }
+  if (S.tab === 'calc') {
+    const refresh = () => { $('c-res').innerHTML = calcResult(); };
+    $('c-product').onchange = e => { S.calc.product = e.target.value; const p = DATA.products.find(x => x.sku === e.target.value);
+      if (p) S.calc.price = p.price; render(); };
+    $('c-price').oninput = e => { const n = +e.target.value.replace(/\D/g,''); S.calc.price = n; S.calc.product = '';
+      $('c-product').value = ''; e.target.value = n ? num(n) : ''; refresh(); };
+    document.querySelectorAll('#c-type button').forEach(b => b.onclick = () => { S.calc.type = b.dataset.v; haptic(); render(); });
+    document.querySelectorAll('#c-term button').forEach(b => b.onclick = () => { S.calc.term = +b.dataset.v; haptic(); render(); });
+    $('c-down').oninput = e => { S.calc.down = +e.target.value; $('c-down-v').textContent = S.calc.down + '%'; refresh(); };
+    $('c-order').onclick = () => { Object.assign(S.order, { product: S.calc.product, type: S.calc.type || 'cash',
+      term: String(S.calc.term || ''), down: String(S.calc.down) }); S.tab = 'order'; render(); };
+  }
+  if (S.tab === 'order') {
+    ['client','phone','term','down','comment'].forEach(k => { const el = $('o-'+k); if (el) el.oninput = e => S.order[k] = e.target.value; });
+    $('o-product').onchange = e => S.order.product = e.target.value;
+    $('o-branch').onchange = e => S.order.branch = e.target.value;
+    $('o-type').onchange = e => { S.order.type = e.target.value; $('o-nasiya').style.display = e.target.value === 'cash' ? 'none' : ''; };
+    $('o-send').onclick = sendOrder;
+  }
+  document.querySelectorAll('[data-ext]').forEach(a => a.onclick = e => {
+    if (inTelegram && tg.openLink) { e.preventDefault(); tg.openLink(a.href); } });
+}
+
+function sendOrder(){
+  const o = S.order, p = DATA.products.find(x => x.sku === o.product);
+  if (!o.client.trim() || o.phone.replace(/\D/g,'').length < 9 || !p) { toast(t('required')); return; }
+  const isCash = o.type === 'cash';
+  const payload = { kind: 'order', client: o.client.trim(), phone: o.phone.trim(),
+    product: p.name, sku: p.sku, price: p.price, type: isCash ? 'Naqd' : o.type,
+    term: isCash ? '' : o.term, down: isCash ? '' : o.down, branch: o.branch, comment: o.comment.trim() };
+  if (!isCash && +o.term) {
+    const r = nasiyaCalc(p.price, o.type, +o.term, parseFloat(o.down) || 0);
+    if (r.monthly) payload.monthly = Math.round(r.monthly);
+  }
+  if (inTelegram && tg.sendData) {
+    try { tg.HapticFeedback.notificationOccurred('success'); } catch(e){}
+    tg.sendData(JSON.stringify(payload));   // bot receives it as web_app_data; the window closes
+  } else {
+    toast(t('preview'));
+    console.log('ORDER', payload);
+  }
+}
+
+document.getElementById('nav').addEventListener('click', e => {
+  const b = e.target.closest('[data-tab]'); if (!b) return; S.tab = b.dataset.tab; haptic(); render(); window.scrollTo(0,0);
+});
+document.querySelectorAll('.lang button').forEach(b => b.onclick = () => { S.lang = b.dataset.l; localSet('lang', S.lang); render(); });
+
+render();
+</script>
+</body>
+</html>
