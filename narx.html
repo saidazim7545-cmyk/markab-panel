@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>Markab — telefon narxlash</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="narx_data.js"></script>
+<style>
+  :root {
+    --brand: #BB2548; --brand-ink: #9C1C3B; --brand-soft: rgba(187,37,72,.09); --on-brand: #fff;
+    --bg: #F4F2F3; --card: #FFFFFF; --field: #F1EEF0; --text: #1C1719; --hint: #857D81; --line: rgba(28,23,25,.09);
+    --ok: #1E8E5A; --ok-soft: rgba(30,142,90,.11); --warn: #B86E00; --warn-soft: rgba(184,110,0,.12); --bad: #C43B3B; --bad-soft: rgba(196,59,59,.10);
+    --shadow: 0 1px 2px rgba(28,23,25,.04), 0 4px 14px rgba(28,23,25,.04);
+    --mark: url("data:image/png;base64,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");
+    --word: url("data:image/png;base64,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");
+  }
+  :root.dark {
+    --brand: #E2587B; --brand-ink: #EC7C98; --brand-soft: rgba(226,88,123,.14);
+    --bg: #121012; --card: #1D1A1C; --field: #262225; --text: #F1ECEE; --hint: #968D92; --line: rgba(255,255,255,.08);
+    --ok: #3FBF83; --ok-soft: rgba(63,191,131,.14); --warn: #E3A23B; --warn-soft: rgba(227,162,59,.14); --bad: #EF6B6B; --bad-soft: rgba(239,107,107,.14); --shadow: none;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.4 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif; }
+  button { font: inherit; color: inherit; }
+  .num { font-variant-numeric: tabular-nums; }
+
+  header { position: sticky; top: 0; z-index: 5; background: var(--card); box-shadow: 0 1px 0 var(--line); }
+  .bar { padding: 11px 16px 10px; display: flex; align-items: center; gap: 10px; }
+  .back { width: 34px; height: 34px; border-radius: 11px; border: 0; background: var(--field); display: grid; place-items: center; cursor: pointer; flex: none; }
+  .back svg { width: 18px; height: 18px; }
+  .logo { display: flex; align-items: center; gap: 8px; }
+  .logo .m { width: 27px; height: 22px; background: var(--brand); -webkit-mask: var(--mark) center/contain no-repeat; mask: var(--mark) center/contain no-repeat; }
+  .logo .w { width: 84px; height: 17px; background: var(--brand); -webkit-mask: var(--word) left center/contain no-repeat; mask: var(--word) left center/contain no-repeat; }
+  .stepno { margin-left: auto; font-size: 12.5px; font-weight: 700; color: var(--hint); }
+  .sample { margin-left: auto; font-size: 11px; font-weight: 700; color: var(--warn); background: var(--warn-soft); padding: 4px 8px; border-radius: 7px; }
+  .progress { height: 3px; background: var(--field); } .progress i { display: block; height: 100%; background: var(--brand); transition: width .25s; }
+
+  main { padding: 18px 16px calc(110px + env(safe-area-inset-bottom)); max-width: 640px; margin: 0 auto; }
+  h1 { font-size: 23px; margin: 0 0 4px; letter-spacing: -.3px; text-wrap: balance; }
+  .sub { color: var(--hint); font-size: 14px; margin: 0 0 16px; }
+  .chosen { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 700; color: var(--brand); background: var(--brand-soft); padding: 5px 10px; border-radius: 999px; margin-bottom: 10px; }
+
+  .opts { display: grid; gap: 8px; }
+  .opts.two { grid-template-columns: 1fr 1fr; }
+  .opt { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; background: var(--card); border: 1.5px solid transparent; border-radius: 14px;
+    padding: 15px 14px; font-size: 15.5px; font-weight: 600; cursor: pointer; box-shadow: var(--shadow); }
+  .opt .r { margin-left: auto; color: var(--hint); font-size: 13px; font-weight: 500; }
+  .opt.on { border-color: var(--brand); background: var(--brand-soft); color: var(--brand); }
+  .opt .box { width: 22px; height: 22px; border-radius: 7px; border: 2px solid var(--line); flex: none; display: grid; place-items: center; }
+  .opt.on .box { background: var(--brand); border-color: var(--brand); color: #fff; }
+  .opt .box svg { width: 14px; height: 14px; visibility: hidden; }
+  .opt.on .box svg { visibility: visible; }
+  .opt.center { justify-content: center; text-align: center; padding: 18px 10px; font-size: 16px; }
+
+  .search { position: relative; margin-bottom: 12px; }
+  .search svg { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); width: 18px; height: 18px; color: var(--hint); }
+  .search input { width: 100%; padding: 13px 14px 13px 40px; border-radius: 13px; border: 1.5px solid transparent; background: var(--card);
+    color: var(--text); font-size: 16px; outline: none; -webkit-appearance: none; box-shadow: var(--shadow); }
+  .search input:focus { border-color: var(--brand); }
+
+  .hint { display: flex; gap: 10px; background: var(--card); border-radius: 14px; padding: 12px 14px; margin-bottom: 14px; font-size: 13.5px; box-shadow: var(--shadow); }
+  .hint svg { width: 20px; height: 20px; flex: none; color: var(--brand); margin-top: 1px; }
+  .hint b { display: block; margin-bottom: 2px; }
+  .bat { background: var(--card); border-radius: 18px; padding: 20px 16px; text-align: center; box-shadow: var(--shadow); }
+  .bat input { width: 150px; text-align: center; font-size: 44px; font-weight: 800; border: 0; border-bottom: 2px solid var(--line); background: none; color: var(--text); outline: none; padding: 4px 0; -webkit-appearance: none; }
+  .bat input:focus { border-color: var(--brand); }
+  .bat .pc { font-size: 30px; font-weight: 800; color: var(--hint); }
+  .bat .st { margin-top: 12px; display: inline-block; font-size: 13px; font-weight: 700; padding: 5px 12px; border-radius: 999px; background: var(--field); color: var(--hint); }
+  .bat .st.good { background: var(--ok-soft); color: var(--ok); } .bat .st.mid { background: var(--warn-soft); color: var(--warn); } .bat .st.low { background: var(--bad-soft); color: var(--bad); }
+  .linkbtn { background: none; border: 0; color: var(--brand); font-weight: 700; font-size: 14px; margin-top: 14px; cursor: pointer; padding: 6px; }
+
+  .foot { position: fixed; left: 0; right: 0; bottom: 0; z-index: 6; background: var(--card); box-shadow: 0 -1px 0 var(--line); padding: 10px 16px calc(12px + env(safe-area-inset-bottom)); }
+  .foot .in { max-width: 640px; margin: 0 auto; display: grid; gap: 8px; }
+  .btn { width: 100%; border: 0; border-radius: 14px; padding: 15px; font-size: 15.5px; font-weight: 800; cursor: pointer;
+    background: var(--brand); color: var(--on-brand); display: flex; flex-direction: column; align-items: center; gap: 1px; }
+  .btn:active { background: var(--brand-ink); } .btn:disabled { opacity: .45; }
+  .btn small { font-size: 12px; font-weight: 600; opacity: .85; }
+  .btn.ghost { background: var(--brand-soft); color: var(--brand); }
+
+  .prices { display: grid; gap: 10px; }
+  .pcard { border-radius: 18px; padding: 16px; background: var(--card); box-shadow: var(--shadow); }
+  .pcard.main { background: linear-gradient(130deg,#8E1734,#BB2548); color: #fff; }
+  :root.dark .pcard.main { background: linear-gradient(130deg,#6B1229,#8F1B38); }
+  .pcard small { font-size: 12px; font-weight: 700; letter-spacing: .4px; text-transform: uppercase; opacity: .8; }
+  .pcard .v { font-size: 28px; font-weight: 800; letter-spacing: -.4px; margin: 2px 0 2px; }
+  .pcard .h { font-size: 13px; opacity: .85; }
+  .tag { display: inline-block; font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 7px; background: rgba(255,255,255,.2); margin-left: 6px; vertical-align: 3px; }
+  details { background: var(--card); border-radius: 14px; margin-top: 10px; box-shadow: var(--shadow); }
+  summary { padding: 13px 14px; font-weight: 700; font-size: 14px; cursor: pointer; list-style: none; display: flex; justify-content: space-between; }
+  summary::-webkit-details-marker { display: none; } summary span { color: var(--hint); font-weight: 500; }
+  .rows { padding: 0 14px 10px; }
+  .row { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; border-top: 1px solid var(--line); font-size: 13.5px; }
+  .row span:first-child { color: var(--hint); } .row b { white-space: nowrap; }
+  .note { font-size: 12.5px; color: var(--hint); margin: 12px 2px; }
+  .fb { background: var(--card); border-radius: 14px; padding: 13px 14px; margin-top: 10px; box-shadow: var(--shadow); }
+  .fb .t { font-weight: 700; font-size: 14px; margin-bottom: 9px; }
+  .fbopts { display: flex; gap: 6px; } .fbopts button { flex: 1; border: 1.5px solid transparent; background: var(--field); border-radius: 11px; padding: 9px 4px; font-weight: 700; font-size: 13.5px; cursor: pointer; }
+  .fbopts button.on { border-color: var(--brand); background: var(--brand-soft); color: var(--brand); }
+  label { display: block; font-size: 12.5px; font-weight: 700; color: var(--hint); margin: 12px 0 6px; }
+  input.f { width: 100%; padding: 12px; border-radius: 12px; border: 1.5px solid transparent; background: var(--field); color: var(--text); font-size: 16px; outline: none; -webkit-appearance: none; }
+  input.f:focus { border-color: var(--brand); background: var(--card); } input.f.bad { border-color: var(--bad); }
+
+  .reject { text-align: center; padding: 26px 8px 8px; }
+  .reject .ic { width: 70px; height: 70px; border-radius: 50%; background: var(--bad-soft); color: var(--bad); display: grid; place-items: center; margin: 0 auto 14px; }
+  .reject .ic svg { width: 34px; height: 34px; }
+  .empty { text-align: center; color: var(--hint); padding: 24px 0; }
+
+  .sheet-bg { position: fixed; inset: 0; background: rgba(10,6,8,.45); z-index: 20; opacity: 0; pointer-events: none; transition: opacity .2s; }
+  .sheet-bg.open { opacity: 1; pointer-events: auto; }
+  .sheet { position: fixed; left: 0; right: 0; bottom: 0; z-index: 21; background: var(--card); border-radius: 20px 20px 0 0;
+    padding: 8px 16px calc(18px + env(safe-area-inset-bottom)); max-width: 640px; margin: 0 auto; max-height: 92vh; overflow-y: auto;
+    transform: translateY(110%); visibility: hidden; transition: transform .24s cubic-bezier(.2,.8,.2,1), visibility 0s .24s; }
+  .sheet.open { transform: none; visibility: visible; transition: transform .24s cubic-bezier(.2,.8,.2,1); }
+  .grab { width: 38px; height: 5px; border-radius: 3px; background: var(--line); margin: 0 auto 12px; }
+  .sheet h3 { margin: 0 0 4px; font-size: 19px; } .sheet p { color: var(--hint); font-size: 13.5px; margin: 0 0 4px; }
+  .toast { position: fixed; left: 50%; bottom: calc(120px + env(safe-area-inset-bottom)); transform: translateX(-50%); background: #231C1F; color: #fff;
+    padding: 11px 16px; border-radius: 12px; font-size: 14px; z-index: 30; display: none; max-width: 90%; text-align: center; }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="bar" id="bar"></div>
+  <div class="progress"><i id="prog" style="width:0"></i></div>
+</header>
+<main id="view"></main>
+<div class="foot" id="foot" hidden><div class="in" id="footIn"></div></div>
+<div class="sheet-bg" id="sheetBg"></div>
+<div class="sheet" id="sheet"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+const tg = window.Telegram && Telegram.WebApp;
+// Pastki tugma (KeyboardButton) orqali ochilganda initData bo'sh bo'ladi — platformaga qaraymiz
+const inTelegram = !!(tg && (tg.initData || (tg.platform && tg.platform !== 'unknown')));
+if (tg) { try { tg.ready(); tg.expand(); } catch(e){} }
+const D = Object.assign({ models: [], regions: [], battery: [], questions: [], tradein_bonus: 0, max_pct: 70, round_to: 50000, note: '' }, window.NARX_DATA || {});
+
+function applyTheme(){
+  const dark = inTelegram ? tg.colorScheme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  document.documentElement.classList.toggle('dark', dark);
+  if (inTelegram) { try { const cs = getComputedStyle(document.documentElement);
+    tg.setHeaderColor(cs.getPropertyValue('--card').trim()); tg.setBackgroundColor(cs.getPropertyValue('--bg').trim()); } catch(e){} }
+}
+applyTheme();
+if (inTelegram) tg.onEvent('themeChanged', applyTheme);
+
+/* ---------- state ---------- */
+const S = { i: 0, brand: '', model: '', mem: '', region: null, battery: '', batteryUnknown: false, ans: {}, q: '',
+            feedback: '', competitor: '', mode: '', name: '', phone: '' };
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const num = n => Math.round(n || 0).toLocaleString('ru-RU').replace(/\s|,/g, ' ');
+const som = n => num(n) + " so'm";
+const haptic = (k='sel') => { try { if (!tg || !tg.HapticFeedback) return; k === 'sel' ? tg.HapticFeedback.selectionChanged() : tg.HapticFeedback.notificationOccurred(k); } catch(e){} };
+function toast(m){ const el = document.getElementById('toast'); el.textContent = m; el.style.display = 'block'; clearTimeout(toast._t); toast._t = setTimeout(() => el.style.display = 'none', 2800); }
+
+const brands = [...new Set(D.models.map(m => m.brand))];
+const modelsOf = b => [...new Set(D.models.filter(m => m.brand === b).map(m => m.model))];
+const memsOf = (b, md) => D.models.filter(m => m.brand === b && m.model === md);
+const regionsOf = b => D.regions.filter(r => !r.brand || r.brand.toLowerCase() === b.toLowerCase());
+const entry = () => D.models.find(m => m.brand === S.brand && m.model === S.model && m.memory === S.mem);
+function batteryTier(p){ if (p === '' || isNaN(p)) return null; return D.battery.find(b => p >= b.from && p <= b.to) || D.battery[D.battery.length - 1] || null; }
+function unknownTier(){ return D.battery.find(b => /normal/i.test(b.label)) || D.battery[Math.min(2, D.battery.length - 1)] || null; }
+
+/* ---------- steps (dynamic) ---------- */
+function steps(){
+  const st = [{ k: 'brand' }, { k: 'model' }];
+  if (S.model && memsOf(S.brand, S.model).length > 1) st.push({ k: 'mem' });
+  if (S.brand && regionsOf(S.brand).length) st.push({ k: 'region' });
+  if (D.battery.length) st.push({ k: 'battery' });
+  D.questions.forEach((q, qi) => st.push({ k: 'q', qi }));
+  st.push({ k: 'result' });
+  return st;
+}
+
+/* ---------- pricing ---------- */
+function calc(){
+  const e = entry(); if (!e) return null;
+  const lines = []; let pct = 0, blocked = false;
+  const add = (label, p) => { if (p > 0) { pct += p; lines.push({ label, p }); } };
+  if (S.region) add(`Mintaqa: ${S.region.label}`, S.region.pct);
+  const bt = S.batteryUnknown ? unknownTier() : batteryTier(+S.battery);
+  if (bt) add(`Batareya: ${S.batteryUnknown ? 'noma\'lum' : S.battery + '%'} (${bt.label})`, bt.pct);
+  D.questions.forEach((q, qi) => (S.ans[qi] || []).forEach(oi => { const o = q.options[oi]; if (!o) return;
+    if (o.block) blocked = true; add(`${q.title.replace(/\?$/, '')}: ${o.label}`, o.pct); }));
+  pct = Math.min(pct, D.max_pct);
+  const r = D.round_to || 1;
+  const cash = Math.max(0, Math.round(e.base * (1 - pct / 100) / r) * r);
+  const trade = Math.round(cash * (1 + (D.tradein_bonus || 0) / 100) / r) * r;
+  return { base: e.base, pct, cash, trade, blocked, lines: lines.map(l => ({ ...l, sum: Math.round(e.base * l.p / 100 / 1000) * 1000 })) };
+}
+
+/* ---------- icons ---------- */
+const I = {
+  back: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg>',
+  search: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>',
+  check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>',
+  info: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.01"/></svg>',
+  x: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>',
+};
+
+/* ---------- render ---------- */
+function render(){
+  const st = steps(); if (S.i >= st.length) S.i = st.length - 1;
+  const s = st[S.i], total = st.length - 1;
+  document.getElementById('bar').innerHTML = S.i === 0
+    ? `<div class="logo"><span class="m"></span><span class="w"></span></div>${D.sample ? '<span class="sample">Namuna narxlar</span>' : ''}`
+    : `<button class="back" id="backBtn" aria-label="Orqaga">${I.back}</button><div class="logo"><span class="m"></span><span class="w"></span></div>
+       <span class="stepno">${s.k === 'result' ? 'Natija' : `${S.i + 1} / ${total}`}</span>`;
+  document.getElementById('prog').style.width = (s.k === 'result' ? 100 : (S.i / total) * 100) + '%';
+  const V = { brand: vBrand, model: vModel, mem: vMem, region: vRegion, battery: vBattery, q: vQuestion, result: vResult }[s.k];
+  const out = V(s);
+  document.getElementById('view').innerHTML = out.html;
+  const foot = document.getElementById('foot');
+  foot.hidden = !out.foot; document.getElementById('footIn').innerHTML = out.foot || '';
+  if (document.getElementById('backBtn')) document.getElementById('backBtn').onclick = back;
+  if (inTelegram && tg.BackButton) { try { S.i > 0 ? tg.BackButton.show() : tg.BackButton.hide(); } catch(e){} }
+  out.bind && out.bind();
+  const fh = foot.hidden ? 0 : foot.offsetHeight;
+  document.getElementById('view').style.paddingBottom = (fh + 24) + 'px';
+}
+function next(){ S.i++; haptic(); render(); window.scrollTo(0, 0); }
+function back(){ if (S.i > 0) { S.i--; haptic(); render(); window.scrollTo(0, 0); } }
+if (inTelegram && tg.BackButton) { try { tg.BackButton.onClick(back); } catch(e){} }
+const chosenLine = () => S.model ? `<div class="chosen">${esc(S.brand)} ${esc(S.model)}${S.mem ? ' · ' + esc(S.mem) : ''}</div>` : '';
+
+function vBrand(){
+  return { html: `
+    <h1>Telefoningiz qancha turadi?</h1>
+    <p class="sub">Bir necha savolga javob bering — 2 daqiqada naqd va trade-in narxini bilasiz. Bepul.</p>
+    <div class="opts two">${brands.map(b => `<button class="opt center ${S.brand===b?'on':''}" data-b="${esc(b)}">${esc(b)}</button>`).join('')}</div>`,
+    bind(){ document.querySelectorAll('[data-b]').forEach(el => el.onclick = () => {
+      if (S.brand !== el.dataset.b) { S.brand = el.dataset.b; S.model = ''; S.mem = ''; S.region = null; S.q = ''; } next(); }); } };
+}
+function vModel(){
+  const list = () => { const q = S.q.trim().toLowerCase(); const ms = modelsOf(S.brand).filter(m => !q || m.toLowerCase().includes(q));
+    return ms.map(m => { const mems = memsOf(S.brand, m).map(x => x.memory).filter(Boolean);
+      return `<button class="opt ${S.model===m?'on':''}" data-m="${esc(m)}">${esc(m)}<span class="r">${esc(mems.join(' · '))}</span></button>`; }).join('')
+      || `<div class="empty">Model topilmadi. Ro'yxatda yo'q bo'lsa, filialimizga murojaat qiling.</div>`; };
+  const bindRows = () => document.querySelectorAll('[data-m]').forEach(el => el.onclick = () => {
+    if (S.model !== el.dataset.m) { S.model = el.dataset.m; const ms = memsOf(S.brand, S.model); S.mem = ms.length === 1 ? ms[0].memory : ''; }
+    next(); });
+  return { html: `
+    <h1>Qaysi model?</h1><p class="sub">${esc(S.brand)} modelini tanlang</p>
+    <div class="search">${I.search}<input id="q" type="search" placeholder="Qidirish, masalan 14 Pro" value="${esc(S.q)}" autocomplete="off"></div>
+    <div class="opts" id="mlist">${list()}</div>`,
+    bind(){ document.getElementById('q').oninput = e => { S.q = e.target.value; document.getElementById('mlist').innerHTML = list(); bindRows(); }; bindRows(); } };
+}
+function vMem(){
+  const ms = memsOf(S.brand, S.model);
+  return { html: `${chosenLine()}<h1>Xotira hajmi</h1><p class="sub">Sozlamalar → Umumiy → Qurilma haqida bo'limida ko'rinadi</p>
+    <div class="opts two">${ms.map(m => `<button class="opt center ${S.mem===m.memory?'on':''}" data-mem="${esc(m.memory)}">${esc(m.memory)}</button>`).join('')}</div>`,
+    bind(){ document.querySelectorAll('[data-mem]').forEach(el => el.onclick = () => { S.mem = el.dataset.mem; next(); }); } };
+}
+function vRegion(){
+  const rs = regionsOf(S.brand);
+  return { html: `${chosenLine()}<h1>Qaysi mamlakat uchun chiqarilgan?</h1>
+    <div class="hint">${I.info}<div><b>Qayerdan topish mumkin</b>Sozlamalar → Umumiy → Qurilma haqida → Model raqami. Oxiridagi harflarga qarang, masalan MQ9U3<b style="display:inline">LL/A</b>.</div></div>
+    <div class="opts">${rs.map((r, i) => `<button class="opt ${S.region && S.region.code===r.code?'on':''}" data-r="${i}">${esc(r.label)}</button>`).join('')}</div>`,
+    bind(){ document.querySelectorAll('[data-r]').forEach(el => el.onclick = () => { S.region = rs[+el.dataset.r]; next(); }); } };
+}
+function vBattery(){
+  const hintPath = /apple/i.test(S.brand) ? 'Sozlamalar → Batareya → Batareya holati' : 'Sozlamalar → Batareya (yoki Qurilma parvarishi → Batareya)';
+  const statusHtml = () => { const t = batteryTier(+S.battery); if (!t || S.battery === '') return '<span class="st">1 dan 100 gacha kiriting</span>';
+    const cls = t.pct === 0 ? 'good' : t.pct <= 6 ? 'mid' : 'low'; return `<span class="st ${cls}">${esc(t.label)}${t.pct ? ' · narxni pasaytiradi' : ''}</span>`; };
+  const valid = () => { const v = +S.battery; return S.battery !== '' && v >= 1 && v <= 100; };
+  return { html: `${chosenLine()}<h1>Batareya holati necha foiz?</h1>
+    <div class="hint">${I.info}<div><b>Qayerdan topish mumkin</b>${hintPath}</div></div>
+    <div class="bat"><input id="bat" inputmode="numeric" maxlength="3" placeholder="87" value="${esc(S.battery)}" aria-label="Batareya foizi"><span class="pc">%</span>
+      <div id="bst">${statusHtml()}</div>
+      <button class="linkbtn" id="batUnknown">Bilmayman</button></div>`,
+    foot: `<button class="btn" id="goNext" ${valid() ? '' : 'disabled'}>Davom etish</button>`,
+    bind(){ const inp = document.getElementById('bat'), go = document.getElementById('goNext');
+      inp.oninput = e => { e.target.value = e.target.value.replace(/\D/g, '').slice(0, 3); S.battery = e.target.value; S.batteryUnknown = false;
+        document.getElementById('bst').innerHTML = statusHtml(); go.disabled = !valid(); };
+      inp.onkeydown = e => { if (e.key === 'Enter' && valid()) { inp.blur(); next(); } };
+      go.onclick = () => { inp.blur(); next(); };
+      document.getElementById('batUnknown').onclick = () => { S.battery = ''; S.batteryUnknown = true; next(); }; } };
+}
+function vQuestion(s){
+  const q = D.questions[s.qi]; const sel = S.ans[s.qi] || [];
+  if (!q.multi) return { html: `${chosenLine()}<h1>${esc(q.title)}</h1>${q.hint ? `<p class="sub">${esc(q.hint)}</p>` : '<div style="height:10px"></div>'}
+    <div class="opts">${q.options.map((o, i) => `<button class="opt ${sel.includes(i)?'on':''}" data-o="${i}">${esc(o.label)}</button>`).join('')}</div>`,
+    bind(){ document.querySelectorAll('[data-o]').forEach(el => el.onclick = () => { S.ans[s.qi] = [+el.dataset.o]; next(); }); } };
+  const redraw = () => document.querySelectorAll('[data-o]').forEach(el => { const on = (S.ans[s.qi] || []).includes(+el.dataset.o); el.classList.toggle('on', on); });
+  return { html: `${chosenLine()}<h1>${esc(q.title)}</h1><p class="sub">${esc(q.hint || 'Bir nechtasini belgilash mumkin')}</p>
+    <div class="opts">${q.options.map((o, i) => `<button class="opt ${sel.includes(i)?'on':''}" data-o="${i}"><span class="box">${I.check}</span>${esc(o.label)}</button>`).join('')}</div>`,
+    foot: `<button class="btn" id="goNext" ${sel.length ? '' : 'disabled'}>Davom etish</button>`,
+    bind(){ document.querySelectorAll('[data-o]').forEach(el => el.onclick = () => { const i = +el.dataset.o; let cur = S.ans[s.qi] || [];
+        if (i === 0) cur = cur.includes(0) ? [] : [0];            // birinchi javob ("hammasi yaxshi") boshqalarini bekor qiladi
+        else { cur = cur.filter(x => x !== 0); cur = cur.includes(i) ? cur.filter(x => x !== i) : [...cur, i]; }
+        S.ans[s.qi] = cur; haptic(); redraw(); document.getElementById('goNext').disabled = !cur.length; });
+      document.getElementById('goNext').onclick = next; } };
+}
+
+function vResult(){
+  const r = calc();
+  if (!r) return { html: `<div class="empty">Model tanlanmagan</div>` };
+  if (r.blocked) return { html: `
+    <div class="reject"><div class="ic">${I.x}</div><h1>Afsus, onlayn baholab bo'lmaydi</h1>
+      <p class="sub">Bu holatdagi telefonni ustalarimiz ko'rib chiqishi kerak. Ariza qoldiring — o'zimiz bog'lanamiz.</p></div>`,
+    foot: `<button class="btn" id="leadBlocked">Ariza qoldirish</button><button class="btn ghost" id="restart">Qaytadan baholash</button>`,
+    bind(){ document.getElementById('leadBlocked').onclick = () => openLead('check'); document.getElementById('restart').onclick = restart; } };
+  const bonus = D.tradein_bonus || 0;
+  return { html: `${chosenLine()}<h1>Baholash natijasi</h1><p class="sub">Telefoningiz uchun taxminiy narx</p>
+    <div class="prices">
+      ${bonus > 0 ? `<div class="pcard main"><small>Trade-in narxi <span class="tag">+${bonus}%</span></small>
+        <div class="v num">${som(r.trade)}</div><div class="h">Markabdan yangi telefon olsangiz, shu summa hisobga olinadi</div></div>` : ''}
+      <div class="pcard ${bonus > 0 ? '' : 'main'}"><small>Naqd pul</small><div class="v num">${som(r.cash)}</div>
+        <div class="h" style="color:${bonus > 0 ? 'var(--hint)' : 'inherit'}">Telefonni sotib, naqd pul olsangiz</div></div>
+    </div>
+    <details><summary>Baholash tafsilotlari <span>${r.lines.length ? '−' + (Math.round(r.pct * 10) / 10) + '%' : "chegirma yo'q"}</span></summary>
+      <div class="rows"><div class="row"><span>A'lo holatdagi narx</span><b class="num">${som(r.base)}</b></div>
+      ${r.lines.map(l => `<div class="row"><span>${esc(l.label)}</span><b class="num">−${num(l.sum)}</b></div>`).join('')}</div></details>
+    <div class="fb"><div class="t">Narx yoqdimi?</div>
+      <div class="fbopts">${['Past', 'Yaxshi', 'Ajoyib'].map(x => `<button data-fb="${x}" class="${S.feedback===x?'on':''}">${x}</button>`).join('')}</div>
+      <div id="compBox" ${S.feedback === 'Past' ? '' : 'hidden'}><label for="comp">Boshqa joyda qancha taklif qilishdi? (so'm, ixtiyoriy)</label>
+        <input class="f num" id="comp" inputmode="numeric" placeholder="Masalan, 7 000 000" value="${esc(S.competitor)}"></div></div>
+    <p class="note">${esc(D.note)}</p>`,
+    foot: `${bonus > 0 ? `<button class="btn" id="leadTrade">Trade-in qilaman<small>Yangi telefonga almashtirish</small></button>` : ''}
+           <button class="btn ${bonus > 0 ? 'ghost' : ''}" id="leadCash">Naqd sotaman</button>`,
+    bind(){
+      document.querySelectorAll('[data-fb]').forEach(b => b.onclick = () => { S.feedback = b.dataset.fb; haptic();
+        document.querySelectorAll('[data-fb]').forEach(x => x.classList.toggle('on', x === b));
+        document.getElementById('compBox').hidden = S.feedback !== 'Past'; });
+      const comp = document.getElementById('comp');
+      comp.oninput = e => { const n = +e.target.value.replace(/\D/g, ''); S.competitor = n ? num(n) : ''; e.target.value = S.competitor; };
+      if (document.getElementById('leadTrade')) document.getElementById('leadTrade').onclick = () => openLead('tradein');
+      document.getElementById('leadCash').onclick = () => openLead('cash');
+    } };
+}
+function restart(){ Object.assign(S, { i: 0, model: '', mem: '', region: null, battery: '', batteryUnknown: false, ans: {}, q: '', feedback: '', competitor: '' }); render(); }
+
+/* ---------- lead ---------- */
+function openSheet(html){ const sh = document.getElementById('sheet'); sh.innerHTML = '<div class="grab"></div>' + html;
+  document.getElementById('sheetBg').classList.add('open'); sh.classList.add('open'); return sh; }
+function closeSheet(){ document.getElementById('sheet').classList.remove('open'); document.getElementById('sheetBg').classList.remove('open'); }
+document.getElementById('sheetBg').onclick = closeSheet;
+function maskPhone(v){ let d = String(v).replace(/\D/g, ''); if (d.startsWith('998')) d = d.slice(3); d = d.slice(0, 9);
+  const p = [d.slice(0,2), d.slice(2,5), d.slice(5,7), d.slice(7,9)].filter(Boolean); return '+998' + (p.length ? ' ' + p.join(' ') : ' '); }
+const phoneOk = v => String(v).replace(/\D/g,'').replace(/^998/,'').length === 9;
+
+function openLead(mode){
+  S.mode = mode; const r = calc();
+  if (!inTelegram) {   // Instagram yoki oddiy brauzer: ariza Telegram ichida yuboriladi
+    const bot = (D.bot || '').replace(/^@/, ''), app = (D.app || '').replace(/^\//, '');
+    const link = bot ? (app ? `https://t.me/${encodeURIComponent(bot)}/${encodeURIComponent(app)}` : `https://t.me/${encodeURIComponent(bot)}?start=narx`) : '';
+    openSheet(`<h3>Arizani Telegram orqali yuboring</h3>
+      <p>Narxingiz: ${esc(S.brand)} ${esc(S.model)} · ${esc(S.mem)}${r && !r.blocked ? ` — naqd ${som(r.cash)}${D.tradein_bonus ? `, trade-in ${som(r.trade)}` : ''}` : ''}.</p>
+      <p>${app ? 'Telegram\'da shu ilova ochiladi — javoblarni yana bir bor belgilab, arizani yuboring.'
+               : 'Telegram\'da botimiz ochiladi: <b>Start</b> ni bosing, so\'ng <b>📱 Telefonni narxlash</b> tugmasi orqali arizani yuboring.'}</p>
+      <div style="height:14px"></div>
+      ${link ? `<a class="btn" style="text-decoration:none;display:block;text-align:center" href="${link}" target="_blank" rel="noopener">Telegram'da davom etish</a>` : ''}`);
+    return;
+  }
+  const title = { tradein: 'Trade-in arizasi', cash: 'Naqd sotish arizasi', check: 'Ko\'rikka yozilish' }[mode];
+  const price = mode === 'tradein' ? r.trade : mode === 'cash' ? r.cash : 0;
+  const sh = openSheet(`<h3>${title}</h3>
+    <p>${esc(S.brand)} ${esc(S.model)} · ${esc(S.mem)}${price ? ` · taxminan ${som(price)}` : ''}</p>
+    <p>Xodimimiz qo'ng'iroq qilib, filialga kelish vaqtini kelishadi.</p>
+    <label for="l-name">Ismingiz</label><input class="f" id="l-name" autocomplete="name" value="${esc(S.name)}">
+    <label for="l-phone">Telefon raqamingiz</label><input class="f num" id="l-phone" inputmode="tel" value="${esc(S.phone || '+998 ')}" placeholder="+998 90 123 45 67">
+    <div style="height:14px"></div><button class="btn" id="l-send">Yuborish</button>`);
+  const n = sh.querySelector('#l-name'), p = sh.querySelector('#l-phone');
+  n.oninput = e => { S.name = e.target.value; n.classList.remove('bad'); };
+  p.oninput = e => { S.phone = maskPhone(e.target.value); e.target.value = S.phone; if (phoneOk(S.phone)) p.classList.remove('bad'); };
+  sh.querySelector('#l-send').onclick = () => {
+    const bad = { n: !S.name.trim(), p: !phoneOk(S.phone) };
+    n.classList.toggle('bad', bad.n); p.classList.toggle('bad', bad.p);
+    if (bad.n || bad.p) { haptic('error'); toast("Ism va telefon raqamini to'liq kiriting"); return; }
+    sendLead();
+  };
+}
+
+function sendLead(){
+  const r = calc();
+  const answers = D.questions.map((q, qi) => ({ q: q.title, a: (S.ans[qi] || []).map(i => q.options[i] && q.options[i].label).filter(Boolean).join(', '),
+    pct: (S.ans[qi] || []).reduce((s, i) => s + ((q.options[i] || {}).pct || 0), 0) }));
+  const payload = { kind: 'tradein', v: 2, mode: S.mode, name: S.name.trim(), phone: S.phone.trim(),
+    brand: S.brand, model: S.model, memory: S.mem, region: S.region ? S.region.label : '',
+    battery: S.batteryUnknown ? "noma'lum" : (S.battery ? S.battery + '%' : ''), answers,
+    blocked: r.blocked, cash: r.blocked ? 0 : r.cash, trade: r.blocked ? 0 : r.trade, base: r.base,
+    feedback: S.feedback, competitor: +String(S.competitor).replace(/\D/g, '') || 0 };
+  // 1) Havola orqali ochilgan (t.me/<bot>/narx): initData bor -> arizani serverimizga yuboramiz
+  if (inTelegram && tg.initData && D.api) { postLead(payload); return; }
+  // 2) Botdagi pastki tugma orqali ochilgan: Telegram o'zi botga yetkazadi
+  if (inTelegram && tg.sendData) {
+    try { tg.sendData(JSON.stringify(payload)); haptic('success'); }
+    catch (e) { haptic('error'); toast("Yuborish uchun botdagi pastki «📱 Telefonni narxlash» tugmasi orqali oching (/narx)"); }
+  } else {
+    closeSheet(); toast('Brauzerda ochilgan: ariza faqat Telegram ichida yuboriladi.');
+    console.log('TRADEIN', payload);
+  }
+}
+
+let sending = false;
+function postLead(payload){
+  if (sending) return; sending = true;
+  const btn = document.getElementById('l-send') || document.getElementById('l-retry');
+  if (btn) { btn.disabled = true; btn.textContent = 'Yuborilmoqda…'; }
+  const ctl = window.AbortController ? new AbortController() : null;
+  const timer = setTimeout(() => ctl && ctl.abort(), 20000);
+  fetch(D.api.replace(/\/$/, '') + '/api/lead', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ initData: tg.initData, lead: payload }), signal: ctl ? ctl.signal : undefined })
+    .then(res => res.json().catch(() => ({})).then(j => ({ ok: res.ok && j.ok, err: j.error || res.status })))
+    .then(({ ok, err }) => { if (ok) leadDone(); else leadFail(err); })
+    .catch(() => leadFail('net'))
+    .finally(() => { clearTimeout(timer); sending = false; });
+}
+function leadDone(){
+  haptic('success');
+  const sh = openSheet(`<div style="text-align:center;padding:6px 0 2px">
+      <div style="font-size:46px;line-height:1">✅</div>
+      <h3 style="margin-top:10px">Arizangiz qabul qilindi!</h3>
+      <p>Xodimimiz <b>${esc(S.phone)}</b> raqamiga tez orada qo'ng'iroq qiladi.</p></div>
+    <div style="height:10px"></div>
+    <button class="btn" id="l-close">Yopish</button>
+    <div style="height:8px"></div><button class="btn ghost" id="l-again">Boshqa telefonni baholash</button>`);
+  sh.querySelector('#l-close').onclick = () => { try { tg.close(); } catch (e) { closeSheet(); } };
+  sh.querySelector('#l-again').onclick = () => { closeSheet(); restart(); };
+}
+function leadFail(err){
+  haptic('error');
+  const msg = err === 'rate' ? "Juda ko'p ariza yuborildi. Birozdan so'ng qayta urinib ko'ring."
+            : err === 'auth' ? "Sahifa eskirib qoldi. Ilovani yopib, qayta oching."
+            : "Arizani yuborib bo'lmadi. Internetni tekshirib, qayta urinib ko'ring.";
+  const bot = (D.bot || '').replace(/^@/, '');
+  const sh = openSheet(`<h3>Yuborilmadi</h3><p>${msg}</p><div style="height:14px"></div>
+    <button class="btn" id="l-retry">Qayta yuborish</button>
+    ${bot ? `<div style="height:8px"></div><a class="btn ghost" style="text-decoration:none;display:block;text-align:center" href="https://t.me/${encodeURIComponent(bot)}?start=narx">Bot orqali yuborish</a>` : ''}`);
+  sh.querySelector('#l-retry').onclick = () => sendLead();
+}
+
+render();
+</script>
+</body>
+</html>
