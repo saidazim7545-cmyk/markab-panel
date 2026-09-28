@@ -70,6 +70,11 @@
   .bat .st.good { background: var(--ok-soft); color: var(--ok); } .bat .st.mid { background: var(--warn-soft); color: var(--warn); } .bat .st.low { background: var(--bad-soft); color: var(--bad); }
   .linkbtn { background: none; border: 0; color: var(--brand); font-weight: 700; font-size: 14px; margin-top: 14px; cursor: pointer; padding: 6px; }
 
+  .colors { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
+  .col { display: flex; align-items: center; gap: 10px; text-align: left; border: 1.5px solid transparent; background: var(--card); border-radius: 14px; padding: 12px; cursor: pointer; font-size: 14px; font-weight: 700; color: var(--text); box-shadow: var(--shadow); line-height: 1.25; }
+  .col.on { border-color: var(--brand); background: var(--brand-soft); }
+  .col i { width: 30px; height: 30px; flex: none; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(0,0,0,.14), 0 1px 3px rgba(0,0,0,.12); }
+  .col small { display: block; font-weight: 500; font-size: 12px; color: var(--hint); }
   .foot { position: fixed; left: 0; right: 0; bottom: 0; z-index: 6; background: var(--card); box-shadow: 0 -1px 0 var(--line); padding: 10px 16px calc(12px + env(safe-area-inset-bottom)); }
   .foot .in { max-width: 640px; margin: 0 auto; display: grid; gap: 8px; }
   .btn { width: 100%; border: 0; border-radius: 14px; padding: 15px; font-size: 15.5px; font-weight: 800; cursor: pointer;
@@ -147,7 +152,7 @@ applyTheme();
 if (inTelegram) tg.onEvent('themeChanged', applyTheme);
 
 /* ---------- state ---------- */
-const S = { i: 0, brand: '', model: '', mem: '', region: null, battery: '', batteryUnknown: false, ans: {}, q: '',
+const S = { i: 0, brand: '', model: '', mem: '', color: '', region: null, battery: '', batteryUnknown: false, ans: {}, q: '',
             feedback: '', competitor: '', mode: '', name: '', phone: '' };
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num = n => Math.round(n || 0).toLocaleString('ru-RU').replace(/\s|,/g, ' ');
@@ -158,6 +163,8 @@ function toast(m){ const el = document.getElementById('toast'); el.textContent =
 const brands = [...new Set(D.models.map(m => m.brand))];
 const modelsOf = b => [...new Set(D.models.filter(m => m.brand === b).map(m => m.model))];
 const memsOf = (b, md) => D.models.filter(m => m.brand === b && m.model === md);
+const colorsOf = (b, md) => (D.colors || {})[b + '|' + md] || [];
+const colorEntry = () => colorsOf(S.brand, S.model).find(c => c.name === S.color);
 const regionsOf = b => D.regions.filter(r => !r.brand || r.brand.toLowerCase() === b.toLowerCase());
 const entry = () => D.models.find(m => m.brand === S.brand && m.model === S.model && m.memory === S.mem);
 function batteryTier(p){ if (p === '' || isNaN(p)) return null; return D.battery.find(b => p >= b.from && p <= b.to) || D.battery[D.battery.length - 1] || null; }
@@ -167,6 +174,7 @@ function unknownTier(){ return D.battery.find(b => /normal/i.test(b.label)) || D
 function steps(){
   const st = [{ k: 'brand' }, { k: 'model' }];
   if (S.model && memsOf(S.brand, S.model).length > 1) st.push({ k: 'mem' });
+  if (S.model && colorsOf(S.brand, S.model).length) st.push({ k: 'color' });
   if (S.brand && regionsOf(S.brand).length) st.push({ k: 'region' });
   if (D.battery.length) st.push({ k: 'battery' });
   D.questions.forEach((q, qi) => st.push({ k: 'q', qi }));
@@ -179,6 +187,7 @@ function calc(){
   const e = entry(); if (!e) return null;
   const lines = []; let pct = 0, blocked = false;
   const add = (label, p) => { if (p > 0) { pct += p; lines.push({ label, p }); } };
+  const ce = colorEntry(); if (ce) add(`Rang: ${ce.name}`, ce.pct);
   if (S.region) add(`Mintaqa: ${S.region.label}`, S.region.pct);
   const bt = S.batteryUnknown ? unknownTier() : batteryTier(+S.battery);
   if (bt) add(`Batareya: ${S.batteryUnknown ? 'noma\'lum' : S.battery + '%'} (${bt.label})`, bt.pct);
@@ -209,7 +218,7 @@ function render(){
     : `<button class="back" id="backBtn" aria-label="Orqaga">${I.back}</button><div class="logo"><span class="m"></span><span class="w"></span></div>
        <span class="stepno">${s.k === 'result' ? 'Natija' : `${S.i + 1} / ${total}`}</span>`;
   document.getElementById('prog').style.width = (s.k === 'result' ? 100 : (S.i / total) * 100) + '%';
-  const V = { brand: vBrand, model: vModel, mem: vMem, region: vRegion, battery: vBattery, q: vQuestion, result: vResult }[s.k];
+  const V = { brand: vBrand, model: vModel, mem: vMem, color: vColor, region: vRegion, battery: vBattery, q: vQuestion, result: vResult }[s.k];
   const out = V(s);
   document.getElementById('view').innerHTML = out.html;
   const foot = document.getElementById('foot');
@@ -223,7 +232,7 @@ function render(){
 function next(){ S.i++; haptic(); render(); window.scrollTo(0, 0); }
 function back(){ if (S.i > 0) { S.i--; haptic(); render(); window.scrollTo(0, 0); } }
 if (inTelegram && tg.BackButton) { try { tg.BackButton.onClick(back); } catch(e){} }
-const chosenLine = () => S.model ? `<div class="chosen">${esc(S.brand)} ${esc(S.model)}${S.mem ? ' · ' + esc(S.mem) : ''}</div>` : '';
+const chosenLine = () => S.model ? `<div class="chosen">${esc(S.brand)} ${esc(S.model)}${S.mem ? ' · ' + esc(S.mem) : ''}${S.color ? ' · ' + esc(S.color.replace(/\s*\(.*\)$/, '')) : ''}</div>` : '';
 
 function vBrand(){
   return { html: `
@@ -231,7 +240,7 @@ function vBrand(){
     <p class="sub">Bir necha savolga javob bering — 2 daqiqada naqd va trade-in narxini bilasiz. Bepul.</p>
     <div class="opts two">${brands.map(b => `<button class="opt center ${S.brand===b?'on':''}" data-b="${esc(b)}">${esc(b)}</button>`).join('')}</div>`,
     bind(){ document.querySelectorAll('[data-b]').forEach(el => el.onclick = () => {
-      if (S.brand !== el.dataset.b) { S.brand = el.dataset.b; S.model = ''; S.mem = ''; S.region = null; S.q = ''; } next(); }); } };
+      if (S.brand !== el.dataset.b) { S.brand = el.dataset.b; S.model = ''; S.mem = ''; S.color = ''; S.region = null; S.q = ''; } next(); }); } };
 }
 function vModel(){
   const list = () => { const q = S.q.trim().toLowerCase(); const ms = modelsOf(S.brand).filter(m => !q || m.toLowerCase().includes(q));
@@ -239,7 +248,7 @@ function vModel(){
       return `<button class="opt ${S.model===m?'on':''}" data-m="${esc(m)}">${esc(m)}<span class="r">${esc(mems.join(' · '))}</span></button>`; }).join('')
       || `<div class="empty">Model topilmadi. Ro'yxatda yo'q bo'lsa, filialimizga murojaat qiling.</div>`; };
   const bindRows = () => document.querySelectorAll('[data-m]').forEach(el => el.onclick = () => {
-    if (S.model !== el.dataset.m) { S.model = el.dataset.m; const ms = memsOf(S.brand, S.model); S.mem = ms.length === 1 ? ms[0].memory : ''; }
+    if (S.model !== el.dataset.m) { S.model = el.dataset.m; S.color = ''; const ms = memsOf(S.brand, S.model); S.mem = ms.length === 1 ? ms[0].memory : ''; }
     next(); });
   return { html: `
     <h1>Qaysi model?</h1><p class="sub">${esc(S.brand)} modelini tanlang</p>
@@ -252,6 +261,15 @@ function vMem(){
   return { html: `${chosenLine()}<h1>Xotira hajmi</h1><p class="sub">Sozlamalar → Umumiy → Qurilma haqida bo'limida ko'rinadi</p>
     <div class="opts two">${ms.map(m => `<button class="opt center ${S.mem===m.memory?'on':''}" data-mem="${esc(m.memory)}">${esc(m.memory)}</button>`).join('')}</div>`,
     bind(){ document.querySelectorAll('[data-mem]').forEach(el => el.onclick = () => { S.mem = el.dataset.mem; next(); }); } };
+}
+function vColor(){
+  const cs = colorsOf(S.brand, S.model);
+  const nm = c => { const m = c.name.match(/^(.*?)\s*\((.*)\)$/); return m ? `${esc(m[1])}<small>${esc(m[2])}</small>` : esc(c.name); };
+  return { html: `${chosenLine()}<h1>Telefon rangi</h1><p class="sub">Telefoningiz qaysi rangda?</p>
+    <div class="colors">${cs.map((c, i) => `<button class="col ${S.color===c.name?'on':''}" data-c="${i}"><i style="background:${/^#[0-9a-f]{3,8}$/i.test(c.hex) ? c.hex : 'var(--field)'}"></i><span>${nm(c)}</span></button>`).join('')}</div>
+    <div style="text-align:center"><button class="linkbtn" id="colOther">Boshqa rang</button></div>`,
+    bind(){ document.querySelectorAll('[data-c]').forEach(el => el.onclick = () => { S.color = cs[+el.dataset.c].name; next(); });
+      document.getElementById('colOther').onclick = () => { S.color = 'Boshqa rang'; next(); }; } };
 }
 function vRegion(){
   const rs = regionsOf(S.brand);
@@ -330,7 +348,7 @@ function vResult(){
       document.getElementById('leadCash').onclick = () => openLead('cash');
     } };
 }
-function restart(){ Object.assign(S, { i: 0, model: '', mem: '', region: null, battery: '', batteryUnknown: false, ans: {}, q: '', feedback: '', competitor: '' }); render(); }
+function restart(){ Object.assign(S, { i: 0, model: '', mem: '', color: '', region: null, battery: '', batteryUnknown: false, ans: {}, q: '', feedback: '', competitor: '' }); render(); }
 
 /* ---------- lead ---------- */
 function openSheet(html){ const sh = document.getElementById('sheet'); sh.innerHTML = '<div class="grab"></div>' + html;
@@ -378,7 +396,7 @@ function sendLead(){
   const answers = D.questions.map((q, qi) => ({ q: q.title, a: (S.ans[qi] || []).map(i => q.options[i] && q.options[i].label).filter(Boolean).join(', '),
     pct: (S.ans[qi] || []).reduce((s, i) => s + ((q.options[i] || {}).pct || 0), 0) }));
   const payload = { kind: 'tradein', v: 2, mode: S.mode, name: S.name.trim(), phone: S.phone.trim(),
-    brand: S.brand, model: S.model, memory: S.mem, region: S.region ? S.region.label : '',
+    brand: S.brand, model: S.model, memory: S.mem, color: S.color, region: S.region ? S.region.label : '',
     battery: S.batteryUnknown ? "noma'lum" : (S.battery ? S.battery + '%' : ''), answers,
     blocked: r.blocked, cash: r.blocked ? 0 : r.cash, trade: r.blocked ? 0 : r.trade, base: r.base,
     feedback: S.feedback, competitor: +String(S.competitor).replace(/\D/g, '') || 0 };
