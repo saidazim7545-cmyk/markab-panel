@@ -1,11 +1,11 @@
 // Avtomatik yaratilgan: narx_to_data.py. Qo'lda tahrirlamang.
 window.NARX_DATA = {
- "updated": "30.09.2026 13:51",
+ "updated": "30.09.2026 14:27",
  "sample": true,
  "tradein_bonus": 8.0,
  "max_pct": 70.0,
  "round_to": 50000,
- "bot": "Saidazim_markab_bot",
+ "bot": "Markab_uz_bot",
  "app": "narx",
  "api": "https://2-29-39-102.sslip.io",
  "note": "Yakuniy narx filialda telefonni ko'rib chiqqandan keyin aytiladi.",
