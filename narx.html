@@ -75,6 +75,25 @@
   .col.on { border-color: var(--brand); background: var(--brand-soft); }
   .col i { width: 30px; height: 30px; flex: none; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(0,0,0,.14), 0 1px 3px rgba(0,0,0,.12); }
   .col small { display: block; font-weight: 500; font-size: 12px; color: var(--hint); }
+  /* telefon rasmi */
+  .phones { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background: var(--card); border-radius: 18px; padding: 14px 8px 10px; box-shadow: var(--shadow); margin-bottom: 12px; }
+  .pv { position: relative; }
+  .pv svg { display: block; width: 100%; height: auto; }
+  .cap { text-align: center; font-size: 12px; font-weight: 700; color: var(--hint); margin-top: 4px; }
+  .pin { position: absolute; transform: translate(-50%, -50%); border: 1.5px solid var(--brand); background: var(--card); color: var(--text);
+    border-radius: 999px; padding: 4px 8px 4px 6px; font-size: 11px; font-weight: 800; line-height: 1.1; cursor: pointer; white-space: nowrap;
+    max-width: 96px; overflow: hidden; text-overflow: ellipsis; box-shadow: 0 2px 8px rgba(0,0,0,.18); display: inline-flex; align-items: center; gap: 3px; }
+  .pin b { display: inline-grid; place-items: center; width: 15px; height: 15px; border-radius: 50%; background: var(--brand); color: #fff; font-size: 11px; flex: none; }
+  .pin.on { background: var(--brand); color: #fff; } .pin.on b { background: #fff; color: var(--brand); }
+  .zl { display: grid; gap: 8px; }
+  .zrow { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; background: var(--card); border: 1.5px solid transparent; border-radius: 14px; padding: 13px 14px; cursor: pointer; font-size: 15px; font-weight: 700; color: var(--text); box-shadow: var(--shadow); }
+  .zrow .r { margin-left: auto; font-size: 13px; font-weight: 700; color: var(--ok); }
+  .zrow.on { border-color: var(--brand); background: var(--brand-soft); } .zrow.on .r { color: var(--brand); }
+  .zrow svg { width: 18px; height: 18px; color: var(--hint); flex: none; }
+  .colors.ph { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
+  .col.ph { flex-direction: column; text-align: center; gap: 6px; padding: 12px 8px 10px; }
+  .col.ph svg, .col.ph img { width: 56px; height: 104px; object-fit: contain; }
+  .col.ph span { font-size: 13px; }
   .foot { position: fixed; left: 0; right: 0; bottom: 0; z-index: 6; background: var(--card); box-shadow: 0 -1px 0 var(--line); padding: 10px 16px calc(12px + env(safe-area-inset-bottom)); }
   .foot .in { max-width: 640px; margin: 0 auto; display: grid; gap: 8px; }
   .btn { width: 100%; border: 0; border-radius: 14px; padding: 15px; font-size: 15.5px; font-weight: 800; cursor: pointer;
@@ -152,7 +171,7 @@ applyTheme();
 if (inTelegram) tg.onEvent('themeChanged', applyTheme);
 
 /* ---------- state ---------- */
-const S = { i: 0, brand: '', model: '', mem: '', color: '', region: null, battery: '', batteryUnknown: false, ans: {}, q: '',
+const S = { i: 0, brand: '', model: '', mem: '', color: '', dmg: {}, region: null, battery: '', batteryUnknown: false, ans: {}, q: '',
             feedback: '', competitor: '', mode: '', name: '', phone: '' };
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num = n => Math.round(n || 0).toLocaleString('ru-RU').replace(/\s|,/g, ' ');
@@ -170,6 +189,128 @@ const entry = () => D.models.find(m => m.brand === S.brand && m.model === S.mode
 function batteryTier(p){ if (p === '' || isNaN(p)) return null; return D.battery.find(b => p >= b.from && p <= b.to) || D.battery[D.battery.length - 1] || null; }
 function unknownTier(){ return D.battery.find(b => /normal/i.test(b.label)) || D.battery[Math.min(2, D.battery.length - 1)] || null; }
 
+/* ---------- telefon rasmi (SVG, oddiy chizma — brend rasmi emas) ---------- */
+function shade(hex, f){
+  const m = /^#?([0-9a-f]{6})$/i.exec(hex || ''); if (!m) return '#8E8E93';
+  const n = parseInt(m[1], 16); let r = n >> 16 & 255, g = n >> 8 & 255, b = n & 255; const t = f < 0 ? 0 : 255, p = Math.abs(f);
+  r = Math.round((t - r) * p + r); g = Math.round((t - g) * p + g); b = Math.round((t - b) * p + b);
+  return '#' + ((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1);
+}
+function phoneKind(brand, model){
+  const b = String(brand || '').toLowerCase(), m = String(model || '');
+  if (b === 'apple') { const n = +((m.match(/\d+/) || [0])[0]);
+    const cam = /Air/.test(m) ? 'air' : /Pro/.test(m) ? 'tri' : /\b1[67]\b/.test(m) ? 'dualv' : 'duald';
+    return { cam, top: (/Air/.test(m) || n >= 15 || (n === 14 && /Pro/.test(m))) ? 'island' : 'notch' }; }
+  if (b === 'samsung') return { cam: /Ultra/.test(m) ? 'ultra' : 'sam3', top: 'hole' };
+  return { cam: 'square', top: 'hole' };
+}
+// kamera bloki: [hudud (rect), linzalar, markaz]
+function camGeom(cam){
+  switch (cam) {
+    case 'tri':   return { box: [7, 7, 42, 42, 11], lens: [[18.5, 18.5, 7.6], [18.5, 37.5, 7.6], [37.5, 28, 7.6]], flash: [38, 14], c: [28, 28] };
+    case 'duald': return { box: [7, 7, 36, 36, 10], lens: [[17.5, 17.5, 7], [32.5, 32.5, 7]], flash: [33, 15], c: [25, 25] };
+    case 'dualv': return { box: [9, 8, 20, 40, 10], lens: [[19, 18, 7], [19, 38, 7]], flash: [33, 13], c: [19, 28] };
+    case 'air':   return { box: [5, 7, 90, 20, 10], lens: [[17, 17, 6.5]], flash: [30, 17], c: [50, 17] };
+    case 'sam3':  return { box: [9, 7, 19, 53, 9], lens: [[18.5, 16.5, 6.5], [18.5, 33.5, 6.5], [18.5, 50.5, 6.5]], flash: [32, 16], c: [18.5, 33], bare: 1 };
+    case 'ultra': return { box: [9, 7, 36, 53, 9], lens: [[18.5, 16.5, 6.5], [18.5, 33.5, 6.5], [18.5, 50.5, 6.5], [35, 22, 5.5]], flash: [35, 38], c: [24, 33], bare: 1 };
+    default:      return { box: [7, 7, 40, 40, 12], lens: [[18, 18, 6.8], [36, 18, 6.8], [18, 36, 6.8], [36, 36, 6.8]], flash: [27, 27], c: [27, 27] };
+  }
+}
+let _svgN = 0;
+// view: 'front' | 'back'; o: { color, kind, mark: {code:true}, battery: bool }
+function phoneSVG(view, o){
+  const id = 'p' + (++_svgN), col = o.color || '#8E8E93', frame = shade(col, -0.28), k = o.kind, mk = o.mark || {};
+  const HL = o.hatch ? `url(#${id}h)` : 'rgba(187,37,72,.42)';
+  let s = `<svg viewBox="-14 -6 128 234" aria-hidden="true"><defs>
+    <pattern id="${id}h" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(40)"><rect width="6" height="6" fill="#BB2548" fill-opacity=".16"/><line x1="0" y1="0" x2="0" y2="6" stroke="#BB2548" stroke-width="2.2" stroke-opacity=".75"/></pattern>
+    <linearGradient id="${id}g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".28"/><stop offset=".55" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".12"/></linearGradient>
+    <linearGradient id="${id}s" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2B3445"/><stop offset="1" stop-color="#0B0D12"/></linearGradient></defs>`;
+  s += `<rect x="0" y="0" width="100" height="200" rx="17" fill="${frame}"/>`;
+  if (view === 'front') {
+    s += `<rect x="3" y="3" width="94" height="194" rx="14.5" fill="#0E0E10"/>`;
+    s += `<rect x="6.5" y="6.5" width="87" height="187" rx="11.5" fill="url(#${id}s)"/>`;
+    s += `<path d="M14 30 L40 12 M14 48 L58 16" stroke="#fff" stroke-opacity=".07" stroke-width="5" stroke-linecap="round"/>`;
+    if (mk.screen) s += `<rect x="6.5" y="6.5" width="87" height="187" rx="11.5" fill="${HL}" stroke="#BB2548" stroke-width="1.4"/>`;
+    const tf = mk.faceid ? '#BB2548' : '#000';
+    if (k.top === 'island') s += `<rect x="37" y="12" width="26" height="8" rx="4" fill="${tf}"/>`;
+    else if (k.top === 'notch') s += `<path d="M32 6.5 h36 v4 a6 6 0 0 1 -6 6 h-24 a6 6 0 0 1 -6 -6z" fill="${tf}"/>`;
+    else s += `<circle cx="50" cy="15" r="3.3" fill="${tf}"/>`;
+    s += `<rect x="30" y="198.3" width="12" height="1.4" rx=".7" fill="${mk.speaker ? '#BB2548' : '#000'}" opacity=".7"/>`;
+    s += `<rect x="58" y="198.3" width="12" height="1.4" rx=".7" fill="${mk.speaker ? '#BB2548' : '#000'}" opacity=".7"/>`;
+  } else {
+    s += `<rect x="2" y="2" width="96" height="196" rx="15.5" fill="${col}"/>`;
+    s += `<rect x="2" y="2" width="96" height="196" rx="15.5" fill="url(#${id}g)"/>`;
+    if (mk.back) s += `<rect x="2" y="2" width="96" height="196" rx="15.5" fill="${HL}" stroke="#BB2548" stroke-width="1.4"/>`;
+    if (o.battery) s += `<rect x="20" y="62" width="60" height="92" rx="7" fill="${mk.battery ? HL : 'none'}" stroke="${mk.battery ? '#BB2548' : '#000'}" stroke-opacity="${mk.battery ? 1 : .28}" stroke-width="1.4" stroke-dasharray="4 3"/>`;
+    const g = camGeom(k.cam);
+    if (!g.bare) { const [x, y, w, h, r] = g.box;
+      s += `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${r}" fill="${shade(col, -0.1)}" stroke="${shade(col, -0.25)}" stroke-width=".8"/>`; }
+    g.lens.forEach(([x, y, r]) => { s += `<circle cx="${x}" cy="${y}" r="${r}" fill="${shade(col, -0.35)}"/><circle cx="${x}" cy="${y}" r="${r * 0.72}" fill="#15171C"/><circle cx="${x - r * .25}" cy="${y - r * .25}" r="${r * 0.18}" fill="#fff" opacity=".35"/>`; });
+    s += `<circle cx="${g.flash[0]}" cy="${g.flash[1]}" r="2.3" fill="#F3EFE6"/>`;
+    if (mk.camera) { const [x, y, w, h, r] = g.box; s += `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${r}" fill="${HL}" stroke="#BB2548" stroke-width="1.4"/>`; }
+    if (!/air/.test(k.cam)) s += `<circle cx="50" cy="100" r="7" fill="none" stroke="#000" stroke-opacity=".06" stroke-width="2"/>`;
+  }
+  if (mk.frame) s += `<rect x="1" y="1" width="98" height="198" rx="16.5" fill="none" stroke="#BB2548" stroke-width="3.2"/>`;
+  if (mk.port) s += `<rect x="40" y="197" width="20" height="3" rx="1.5" fill="#BB2548"/>`;
+  return s + '</svg>';
+}
+// qism/zona joylashuvi rasmda: [ko'rinish, x, y]
+function spotOf(code, kind){
+  const c = camGeom(kind.cam).c;
+  return ({ screen: ['front', 50, 108], faceid: ['front', 50, 16], speaker: ['front', 50, 215], port: ['back', 50, 215],
+            back: ['back', 50, 166], battery: ['back', 50, 108], camera: ['back', c[0] + (kind.cam === 'air' ? 0 : 4), c[1]], frame: ['back', 99, 132] })[code] || null;
+}
+function phonesHTML(o){ // o: {kind, color, mark, battery, pins:[{code,label,on,sym}]}
+  const views = ['front', 'back'].map(v => {
+    const pins = (o.pins || []).map(p => { const sp = spotOf(p.code, o.kind); if (!sp || sp[0] !== v) return '';
+      return `<button class="pin ${p.on ? 'on' : ''}" data-pin="${esc(p.key)}" style="left:${(sp[1] + 14) / 128 * 100}%;top:${(sp[2] + 6) / 234 * 100}%"><b>${p.on ? p.sym : '+'}</b>${esc(p.label)}</button>`; }).join('');
+    return `<div><div class="pv">${phoneSVG(v, o)}${pins}</div><div class="cap">${v === 'front' ? 'Old tomoni' : 'Orqa tomoni'}</div></div>`; }).join('');
+  return `<div class="phones">${views}</div>`;
+}
+const curColorHex = () => { const c = colorEntry(); return c && c.hex ? c.hex : '#C9C9CC'; };
+
+/* ---------- shikastlar xaritasi ---------- */
+function vDamage(){
+  const Z = D.damage || [], kind = phoneKind(S.brand, S.model);
+  const lvl = z => z.levels[S.dmg[z.code] || 0] || z.levels[0];
+  const mark = {}; Z.forEach(z => { if ((S.dmg[z.code] || 0) > 0) mark[z.code] = true; });
+  const short = { screen: 'Ekran', back: 'Orqa', frame: 'Ramka', camera: 'Kamera' };
+  const pins = Z.map(z => ({ key: z.code, code: z.code, label: short[z.code] || z.name, on: !!mark[z.code], sym: '!' }));
+  return { html: `${chosenLine()}<h1>Tirnalish va shikastlar</h1><p class="sub">Telefon rasmida shikastlangan joyni bosing. Belgilanmagan joylar ideal hisoblanadi.</p>
+    ${phonesHTML({ kind, color: curColorHex(), mark, pins, hatch: true })}
+    <div class="zl">${Z.map(z => { const L = lvl(z), on = (S.dmg[z.code] || 0) > 0;
+      return `<button class="zrow ${on ? 'on' : ''}" data-z="${esc(z.code)}">${esc(z.name)}<span class="r">${esc(L.label)}${on && L.pct ? ` · −${L.pct}%` : ''}</span>${I.chev}</button>`; }).join('')}</div>`,
+    foot: `<button class="btn" id="goNext">${Object.keys(mark).length ? 'Davom etish' : 'Hammasi ideal — davom etish'}</button>`,
+    bind(){
+      const open = code => { const z = Z.find(x => x.code === code); if (!z) return; haptic();
+        const sh = openSheet(`<h3>${esc(z.name)}</h3><p>Holatini tanlang</p><div style="height:10px"></div>
+          <div class="opts">${z.levels.map((l, i) => `<button class="opt ${(S.dmg[code] || 0) === i ? 'on' : ''}" data-l="${i}">${esc(l.label)}</button>`).join('')}</div>`);
+        sh.querySelectorAll('[data-l]').forEach(b => b.onclick = () => { S.dmg[code] = +b.dataset.l; closeSheet(); haptic(); render(); }); };
+      document.querySelectorAll('[data-pin],[data-z]').forEach(el => el.onclick = () => open(el.dataset.pin || el.dataset.z));
+      document.getElementById('goNext').onclick = next; } };
+}
+
+/* ---------- almashtirilgan qismlar (rasmda) ---------- */
+function vParts(s){
+  const q = D.questions[s.qi], kind = phoneKind(S.brand, S.model);
+  const sel = () => S.ans[s.qi] || [];
+  const toggle = i => { let cur = sel();
+    if (i === 0) cur = cur.includes(0) ? [] : [0];
+    else { cur = cur.filter(x => x !== 0); cur = cur.includes(i) ? cur.filter(x => x !== i) : [...cur, i]; }
+    S.ans[s.qi] = cur; haptic(); render(); };
+  const mark = {}; sel().forEach(i => { const o = q.options[i]; if (o && o.pos) mark[o.pos] = true; });
+  const shortL = l => l.replace(/\s*\/.*$/, '').replace(/ skaneri$/, '');
+  const pins = q.options.map((o, i) => o.pos ? { key: String(i), code: o.pos, label: shortL(o.label), on: sel().includes(i), sym: '✓' } : null).filter(Boolean);
+  return { html: `${chosenLine()}<h1>${esc(q.title)}</h1><p class="sub">${esc(q.hint || 'Almashtirilgan qismni telefon rasmida bosing')}</p>
+    ${phonesHTML({ kind, color: curColorHex(), mark, pins, battery: pins.some(p => p.code === 'battery') })}
+    <div class="opts">${q.options.map((o, i) => `<button class="opt ${sel().includes(i) ? 'on' : ''}" data-o="${i}"><span class="box">${I.check}</span>${esc(o.label)}</button>`).join('')}</div>`,
+    foot: `<button class="btn" id="goNext">${sel().length && !sel().includes(0) ? 'Davom etish' : 'Almashtirilmagan — davom etish'}</button>`,
+    bind(){
+      document.querySelectorAll('[data-pin]').forEach(el => el.onclick = () => toggle(+el.dataset.pin));
+      document.querySelectorAll('[data-o]').forEach(el => el.onclick = () => toggle(+el.dataset.o));
+      document.getElementById('goNext').onclick = () => { if (!sel().length) S.ans[s.qi] = [0]; next(); }; } };
+}
+
 /* ---------- steps (dynamic) ---------- */
 function steps(){
   const st = [{ k: 'brand' }, { k: 'model' }];
@@ -177,6 +318,7 @@ function steps(){
   if (S.model && colorsOf(S.brand, S.model).length) st.push({ k: 'color' });
   if (S.brand && regionsOf(S.brand).length) st.push({ k: 'region' });
   if (D.battery.length) st.push({ k: 'battery' });
+  if ((D.damage || []).length) st.push({ k: 'damage' });
   D.questions.forEach((q, qi) => st.push({ k: 'q', qi }));
   st.push({ k: 'result' });
   return st;
@@ -191,6 +333,8 @@ function calc(){
   if (S.region) add(`Mintaqa: ${S.region.label}`, S.region.pct);
   const bt = S.batteryUnknown ? unknownTier() : batteryTier(+S.battery);
   if (bt) add(`Batareya: ${S.batteryUnknown ? 'noma\'lum' : S.battery + '%'} (${bt.label})`, bt.pct);
+  (D.damage || []).forEach(z => { const l = z.levels[S.dmg[z.code] || 0]; if (!l || !(S.dmg[z.code] > 0)) return;
+    if (l.block) blocked = true; add(`${z.name}: ${l.label}`, l.pct); });
   D.questions.forEach((q, qi) => (S.ans[qi] || []).forEach(oi => { const o = q.options[oi]; if (!o) return;
     if (o.block) blocked = true; add(`${q.title.replace(/\?$/, '')}: ${o.label}`, o.pct); }));
   pct = Math.min(pct, D.max_pct);
@@ -202,6 +346,7 @@ function calc(){
 
 /* ---------- icons ---------- */
 const I = {
+  chev: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>',
   back: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg>',
   search: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>',
   check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>',
@@ -218,7 +363,7 @@ function render(){
     : `<button class="back" id="backBtn" aria-label="Orqaga">${I.back}</button><div class="logo"><span class="m"></span><span class="w"></span></div>
        <span class="stepno">${s.k === 'result' ? 'Natija' : `${S.i + 1} / ${total}`}</span>`;
   document.getElementById('prog').style.width = (s.k === 'result' ? 100 : (S.i / total) * 100) + '%';
-  const V = { brand: vBrand, model: vModel, mem: vMem, color: vColor, region: vRegion, battery: vBattery, q: vQuestion, result: vResult }[s.k];
+  const V = { brand: vBrand, model: vModel, mem: vMem, color: vColor, damage: vDamage, region: vRegion, battery: vBattery, q: vQuestion, result: vResult }[s.k];
   const out = V(s);
   document.getElementById('view').innerHTML = out.html;
   const foot = document.getElementById('foot');
@@ -232,7 +377,7 @@ function render(){
 function next(){ S.i++; haptic(); render(); window.scrollTo(0, 0); }
 function back(){ if (S.i > 0) { S.i--; haptic(); render(); window.scrollTo(0, 0); } }
 if (inTelegram && tg.BackButton) { try { tg.BackButton.onClick(back); } catch(e){} }
-const chosenLine = () => S.model ? `<div class="chosen">${esc(S.brand)} ${esc(S.model)}${S.mem ? ' · ' + esc(S.mem) : ''}${S.color ? ' · ' + esc(S.color.replace(/\s*\(.*\)$/, '')) : ''}</div>` : '';
+const chosenLine = () => S.model ? `<div class="chosen">${S.model.startsWith(S.brand) ? '' : esc(S.brand) + ' '}${esc(S.model)}${S.mem ? ' · ' + esc(S.mem) : ''}${S.color ? ' · ' + esc(S.color.replace(/\s*\(.*\)$/, '')) : ''}</div>` : '';
 
 function vBrand(){
   return { html: `
@@ -240,7 +385,7 @@ function vBrand(){
     <p class="sub">Bir necha savolga javob bering — 2 daqiqada naqd va trade-in narxini bilasiz. Bepul.</p>
     <div class="opts two">${brands.map(b => `<button class="opt center ${S.brand===b?'on':''}" data-b="${esc(b)}">${esc(b)}</button>`).join('')}</div>`,
     bind(){ document.querySelectorAll('[data-b]').forEach(el => el.onclick = () => {
-      if (S.brand !== el.dataset.b) { S.brand = el.dataset.b; S.model = ''; S.mem = ''; S.color = ''; S.region = null; S.q = ''; } next(); }); } };
+      if (S.brand !== el.dataset.b) { S.brand = el.dataset.b; S.model = ''; S.mem = ''; S.color = ''; S.dmg = {}; S.region = null; S.q = ''; } next(); }); } };
 }
 function vModel(){
   const list = () => { const q = S.q.trim().toLowerCase(); const ms = modelsOf(S.brand).filter(m => !q || m.toLowerCase().includes(q));
@@ -263,10 +408,12 @@ function vMem(){
     bind(){ document.querySelectorAll('[data-mem]').forEach(el => el.onclick = () => { S.mem = el.dataset.mem; next(); }); } };
 }
 function vColor(){
-  const cs = colorsOf(S.brand, S.model);
+  const cs = colorsOf(S.brand, S.model), kind = phoneKind(S.brand, S.model);
   const nm = c => { const m = c.name.match(/^(.*?)\s*\((.*)\)$/); return m ? `${esc(m[1])}<small>${esc(m[2])}</small>` : esc(c.name); };
   return { html: `${chosenLine()}<h1>Telefon rangi</h1><p class="sub">Telefoningiz qaysi rangda?</p>
-    <div class="colors">${cs.map((c, i) => `<button class="col ${S.color===c.name?'on':''}" data-c="${i}"><i style="background:${/^#[0-9a-f]{3,8}$/i.test(c.hex) ? c.hex : 'var(--field)'}"></i><span>${nm(c)}</span></button>`).join('')}</div>
+    <div class="colors ph">${cs.map((c, i) => `<button class="col ph ${S.color===c.name?'on':''}" data-c="${i}">${c.img
+        ? `<img src="${esc(c.img)}" alt="" loading="lazy">`
+        : phoneSVG('back', { kind, color: /^#[0-9a-f]{6}$/i.test(c.hex) ? c.hex : '#C9C9CC' }).replace('viewBox="-14 -6 128 234"', 'viewBox="-2 -2 104 204"')}<span>${nm(c)}</span></button>`).join('')}</div>
     <div style="text-align:center"><button class="linkbtn" id="colOther">Boshqa rang</button></div>`,
     bind(){ document.querySelectorAll('[data-c]').forEach(el => el.onclick = () => { S.color = cs[+el.dataset.c].name; next(); });
       document.getElementById('colOther').onclick = () => { S.color = 'Boshqa rang'; next(); }; } };
@@ -298,6 +445,7 @@ function vBattery(){
 }
 function vQuestion(s){
   const q = D.questions[s.qi]; const sel = S.ans[s.qi] || [];
+  if (q.multi && q.options.some(o => o.pos)) return vParts(s);
   if (!q.multi) return { html: `${chosenLine()}<h1>${esc(q.title)}</h1>${q.hint ? `<p class="sub">${esc(q.hint)}</p>` : '<div style="height:10px"></div>'}
     <div class="opts">${q.options.map((o, i) => `<button class="opt ${sel.includes(i)?'on':''}" data-o="${i}">${esc(o.label)}</button>`).join('')}</div>`,
     bind(){ document.querySelectorAll('[data-o]').forEach(el => el.onclick = () => { S.ans[s.qi] = [+el.dataset.o]; next(); }); } };
@@ -348,7 +496,7 @@ function vResult(){
       document.getElementById('leadCash').onclick = () => openLead('cash');
     } };
 }
-function restart(){ Object.assign(S, { i: 0, model: '', mem: '', color: '', region: null, battery: '', batteryUnknown: false, ans: {}, q: '', feedback: '', competitor: '' }); render(); }
+function restart(){ Object.assign(S, { i: 0, model: '', mem: '', color: '', dmg: {}, region: null, battery: '', batteryUnknown: false, ans: {}, q: '', feedback: '', competitor: '' }); render(); }
 
 /* ---------- lead ---------- */
 function openSheet(html){ const sh = document.getElementById('sheet'); sh.innerHTML = '<div class="grab"></div>' + html;
@@ -395,6 +543,8 @@ function sendLead(){
   const r = calc();
   const answers = D.questions.map((q, qi) => ({ q: q.title, a: (S.ans[qi] || []).map(i => q.options[i] && q.options[i].label).filter(Boolean).join(', '),
     pct: (S.ans[qi] || []).reduce((s, i) => s + ((q.options[i] || {}).pct || 0), 0) }));
+  const dmgAns = (D.damage || []).map(z => { const l = z.levels[S.dmg[z.code] || 0] || {}; return { q: z.name, a: l.label || '', pct: (S.dmg[z.code] > 0 && l.pct) || 0 }; });
+  answers.unshift(...dmgAns);
   const payload = { kind: 'tradein', v: 2, mode: S.mode, name: S.name.trim(), phone: S.phone.trim(),
     brand: S.brand, model: S.model, memory: S.mem, color: S.color, region: S.region ? S.region.label : '',
     battery: S.batteryUnknown ? "noma'lum" : (S.battery ? S.battery + '%' : ''), answers,
