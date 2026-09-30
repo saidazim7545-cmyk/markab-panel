@@ -336,8 +336,8 @@ function vResult(){
       <div id="compBox" ${S.feedback === 'Past' ? '' : 'hidden'}><label for="comp">Boshqa joyda qancha taklif qilishdi? (so'm, ixtiyoriy)</label>
         <input class="f num" id="comp" inputmode="numeric" placeholder="Masalan, 7 000 000" value="${esc(S.competitor)}"></div></div>
     <p class="note">${esc(D.note)}</p>`,
-    foot: `${bonus > 0 ? `<button class="btn" id="leadTrade">Trade-in qilaman<small>Yangi telefonga almashtirish</small></button>` : ''}
-           <button class="btn ${bonus > 0 ? 'ghost' : ''}" id="leadCash">Naqd sotaman</button>`,
+    foot: `<button class="btn" id="leadCash">Hoziroq Markabga sotish<small>Naqd pul — ${som(r.cash)}</small></button>
+           ${bonus > 0 ? `<button class="btn ghost" id="leadTrade">Trade-in qilaman<small>Yangi telefonga almashtirish — ${som(r.trade)}</small></button>` : ''}`,
     bind(){
       document.querySelectorAll('[data-fb]').forEach(b => b.onclick = () => { S.feedback = b.dataset.fb; haptic();
         document.querySelectorAll('[data-fb]').forEach(x => x.classList.toggle('on', x === b));
@@ -372,7 +372,7 @@ function openLead(mode){
       ${link ? `<a class="btn" style="text-decoration:none;display:block;text-align:center" href="${link}" target="_blank" rel="noopener">Telegram'da davom etish</a>` : ''}`);
     return;
   }
-  const title = { tradein: 'Trade-in arizasi', cash: 'Naqd sotish arizasi', check: 'Ko\'rikka yozilish' }[mode];
+  const title = { tradein: 'Trade-in arizasi', cash: 'Hoziroq Markabga sotish', check: 'Ko\'rikka yozilish' }[mode];
   const price = mode === 'tradein' ? r.trade : mode === 'cash' ? r.cash : 0;
   const sh = openSheet(`<h3>${title}</h3>
     <p>${esc(S.brand)} ${esc(S.model)} · ${esc(S.mem)}${price ? ` · taxminan ${som(price)}` : ''}</p>
