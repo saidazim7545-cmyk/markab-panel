@@ -1,6 +1,6 @@
 // Avtomatik yaratilgan: narx_to_data.py. Qo'lda tahrirlamang.
 window.NARX_DATA = {
- "updated": "29.09.2026 01:21",
+ "updated": "30.09.2026 13:51",
  "sample": true,
  "tradein_bonus": 8.0,
  "max_pct": 70.0,
@@ -24,9 +24,33 @@ window.NARX_DATA = {
   },
   {
    "brand": "Apple",
+   "model": "iPhone 17 Pro Max",
+   "memory": "1 TB",
+   "base": 16300000
+  },
+  {
+   "brand": "Apple",
+   "model": "iPhone 17 Pro Max",
+   "memory": "2 TB",
+   "base": 18000000
+  },
+  {
+   "brand": "Apple",
    "model": "iPhone 17 Pro",
    "memory": "256 GB",
    "base": 11800000
+  },
+  {
+   "brand": "Apple",
+   "model": "iPhone 17 Pro",
+   "memory": "512 GB",
+   "base": 13000000
+  },
+  {
+   "brand": "Apple",
+   "model": "iPhone 17 Pro",
+   "memory": "1 TB",
+   "base": 14300000
   },
   {
    "brand": "Apple",
@@ -36,9 +60,27 @@ window.NARX_DATA = {
   },
   {
    "brand": "Apple",
+   "model": "iPhone 17",
+   "memory": "512 GB",
+   "base": 9800000
+  },
+  {
+   "brand": "Apple",
    "model": "iPhone Air",
    "memory": "256 GB",
    "base": 9200000
+  },
+  {
+   "brand": "Apple",
+   "model": "iPhone Air",
+   "memory": "512 GB",
+   "base": 10100000
+  },
+  {
+   "brand": "Apple",
+   "model": "iPhone Air",
+   "memory": "1 TB",
+   "base": 11100000
   },
   {
    "brand": "Apple",
@@ -54,6 +96,12 @@ window.NARX_DATA = {
   },
   {
    "brand": "Apple",
+   "model": "iPhone 16 Pro Max",
+   "memory": "1 TB",
+   "base": 13200000
+  },
+  {
+   "brand": "Apple",
    "model": "iPhone 16 Pro",
    "memory": "128 GB",
    "base": 8700000
@@ -66,9 +114,33 @@ window.NARX_DATA = {
   },
   {
    "brand": "Apple",
+   "model": "iPhone 16 Pro",
+   "memory": "512 GB",
+   "base": 10500000
+  },
+  {
+   "brand": "Apple",
+   "model": "iPhone 16 Pro",
+   "memory": "1 TB",
+   "base": 11600000
+  },
+  {
+   "brand": "Apple",
    "model": "iPhone 16",
    "memory": "128 GB",
    "base": 6600000
+  },
+  {
+   "brand": "Apple",
+   "model": "iPhone 16",
+   "memory": "256 GB",
+   "base": 7300000
+  },
+  {
+   "brand": "Apple",
+   "model": "iPhone 16",
+   "memory": "512 GB",
+   "base": 8000000
   },
   {
    "brand": "Apple",
@@ -78,15 +150,57 @@ window.NARX_DATA = {
   },
   {
    "brand": "Apple",
+   "model": "iPhone 15 Pro Max",
+   "memory": "512 GB",
+   "base": 9300000
+  },
+  {
+   "brand": "Apple",
+   "model": "iPhone 15 Pro Max",
+   "memory": "1 TB",
+   "base": 10000000
+  },
+  {
+   "brand": "Apple",
    "model": "iPhone 15 Pro",
    "memory": "128 GB",
    "base": 7000000
   },
   {
    "brand": "Apple",
+   "model": "iPhone 15 Pro",
+   "memory": "256 GB",
+   "base": 7600000
+  },
+  {
+   "brand": "Apple",
+   "model": "iPhone 15 Pro",
+   "memory": "512 GB",
+   "base": 8200000
+  },
+  {
+   "brand": "Apple",
+   "model": "iPhone 15 Pro",
+   "memory": "1 TB",
+   "base": 8800000
+  },
+  {
+   "brand": "Apple",
    "model": "iPhone 15",
    "memory": "128 GB",
    "base": 5300000
+  },
+  {
+   "brand": "Apple",
+   "model": "iPhone 15",
+   "memory": "256 GB",
+   "base": 5700000
+  },
+  {
+   "brand": "Apple",
+   "model": "iPhone 15",
+   "memory": "512 GB",
+   "base": 6200000
   },
   {
    "brand": "Apple",
@@ -102,9 +216,39 @@ window.NARX_DATA = {
   },
   {
    "brand": "Apple",
+   "model": "iPhone 14 Pro Max",
+   "memory": "512 GB",
+   "base": 7900000
+  },
+  {
+   "brand": "Apple",
+   "model": "iPhone 14 Pro Max",
+   "memory": "1 TB",
+   "base": 8600000
+  },
+  {
+   "brand": "Apple",
    "model": "iPhone 14 Pro",
    "memory": "128 GB",
    "base": 6000000
+  },
+  {
+   "brand": "Apple",
+   "model": "iPhone 14 Pro",
+   "memory": "256 GB",
+   "base": 6500000
+  },
+  {
+   "brand": "Apple",
+   "model": "iPhone 14 Pro",
+   "memory": "512 GB",
+   "base": 7000000
+  },
+  {
+   "brand": "Apple",
+   "model": "iPhone 14 Pro",
+   "memory": "1 TB",
+   "base": 7600000
   },
   {
    "brand": "Apple",
@@ -114,9 +258,39 @@ window.NARX_DATA = {
   },
   {
    "brand": "Apple",
+   "model": "iPhone 14",
+   "memory": "256 GB",
+   "base": 4600000
+  },
+  {
+   "brand": "Apple",
+   "model": "iPhone 14",
+   "memory": "512 GB",
+   "base": 5000000
+  },
+  {
+   "brand": "Apple",
+   "model": "iPhone 13 Pro Max",
+   "memory": "128 GB",
+   "base": 5200000
+  },
+  {
+   "brand": "Apple",
    "model": "iPhone 13 Pro Max",
    "memory": "256 GB",
    "base": 5600000
+  },
+  {
+   "brand": "Apple",
+   "model": "iPhone 13 Pro Max",
+   "memory": "512 GB",
+   "base": 6000000
+  },
+  {
+   "brand": "Apple",
+   "model": "iPhone 13 Pro Max",
+   "memory": "1 TB",
+   "base": 6400000
   },
   {
    "brand": "Apple",
@@ -126,15 +300,51 @@ window.NARX_DATA = {
   },
   {
    "brand": "Apple",
+   "model": "iPhone 13",
+   "memory": "256 GB",
+   "base": 3700000
+  },
+  {
+   "brand": "Apple",
+   "model": "iPhone 13",
+   "memory": "512 GB",
+   "base": 4000000
+  },
+  {
+   "brand": "Apple",
    "model": "iPhone 12",
    "memory": "64 GB",
    "base": 2400000
   },
   {
    "brand": "Apple",
+   "model": "iPhone 12",
+   "memory": "128 GB",
+   "base": 2600000
+  },
+  {
+   "brand": "Apple",
+   "model": "iPhone 12",
+   "memory": "256 GB",
+   "base": 2700000
+  },
+  {
+   "brand": "Apple",
    "model": "iPhone 11",
    "memory": "64 GB",
    "base": 1800000
+  },
+  {
+   "brand": "Apple",
+   "model": "iPhone 11",
+   "memory": "128 GB",
+   "base": 1900000
+  },
+  {
+   "brand": "Apple",
+   "model": "iPhone 11",
+   "memory": "256 GB",
+   "base": 2100000
   },
   {
    "brand": "Samsung",
@@ -144,9 +354,33 @@ window.NARX_DATA = {
   },
   {
    "brand": "Samsung",
+   "model": "Galaxy S25 Ultra",
+   "memory": "512 GB",
+   "base": 12100000
+  },
+  {
+   "brand": "Samsung",
+   "model": "Galaxy S25 Ultra",
+   "memory": "1 TB",
+   "base": 13300000
+  },
+  {
+   "brand": "Samsung",
+   "model": "Galaxy S25",
+   "memory": "128 GB",
+   "base": 6700000
+  },
+  {
+   "brand": "Samsung",
    "model": "Galaxy S25",
    "memory": "256 GB",
    "base": 7400000
+  },
+  {
+   "brand": "Samsung",
+   "model": "Galaxy S25",
+   "memory": "512 GB",
+   "base": 8100000
   },
   {
    "brand": "Samsung",
@@ -156,9 +390,39 @@ window.NARX_DATA = {
   },
   {
    "brand": "Samsung",
+   "model": "Galaxy S24 Ultra",
+   "memory": "512 GB",
+   "base": 8900000
+  },
+  {
+   "brand": "Samsung",
+   "model": "Galaxy S24 Ultra",
+   "memory": "1 TB",
+   "base": 9600000
+  },
+  {
+   "brand": "Samsung",
+   "model": "Galaxy S24",
+   "memory": "128 GB",
+   "base": 5000000
+  },
+  {
+   "brand": "Samsung",
    "model": "Galaxy S24",
    "memory": "256 GB",
    "base": 5400000
+  },
+  {
+   "brand": "Samsung",
+   "model": "Galaxy S24",
+   "memory": "512 GB",
+   "base": 5800000
+  },
+  {
+   "brand": "Samsung",
+   "model": "Galaxy S23",
+   "memory": "128 GB",
+   "base": 3900000
   },
   {
    "brand": "Samsung",
@@ -168,15 +432,33 @@ window.NARX_DATA = {
   },
   {
    "brand": "Samsung",
+   "model": "Galaxy S23",
+   "memory": "512 GB",
+   "base": 4500000
+  },
+  {
+   "brand": "Samsung",
    "model": "Galaxy A56",
    "memory": "128 GB",
    "base": 3300000
   },
   {
    "brand": "Samsung",
+   "model": "Galaxy A56",
+   "memory": "256 GB",
+   "base": 3500000
+  },
+  {
+   "brand": "Samsung",
    "model": "Galaxy A36",
    "memory": "128 GB",
    "base": 2500000
+  },
+  {
+   "brand": "Samsung",
+   "model": "Galaxy A36",
+   "memory": "256 GB",
+   "base": 2700000
   },
   {
    "brand": "Xiaomi",
@@ -186,15 +468,33 @@ window.NARX_DATA = {
   },
   {
    "brand": "Xiaomi",
+   "model": "Redmi Note 14 Pro",
+   "memory": "512 GB",
+   "base": 2900000
+  },
+  {
+   "brand": "Xiaomi",
    "model": "Redmi Note 13",
    "memory": "128 GB",
    "base": 1500000
   },
   {
    "brand": "Xiaomi",
+   "model": "Redmi Note 13",
+   "memory": "256 GB",
+   "base": 1600000
+  },
+  {
+   "brand": "Xiaomi",
    "model": "Xiaomi 15",
    "memory": "256 GB",
    "base": 6200000
+  },
+  {
+   "brand": "Xiaomi",
+   "model": "Xiaomi 15",
+   "memory": "512 GB",
+   "base": 6700000
   }
  ],
  "colors": {
