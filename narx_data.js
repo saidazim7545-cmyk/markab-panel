@@ -1,6 +1,6 @@
 // Avtomatik yaratilgan: narx_to_data.py. Qo'lda tahrirlamang.
 window.NARX_DATA = {
- "updated": "03.10.2026 16:14",
+ "updated": "03.10.2026 16:34",
  "sample": true,
  "tradein_bonus": 8.0,
  "max_pct": 70.0,
@@ -496,6 +496,48 @@ window.NARX_DATA = {
    "model": "Xiaomi 15",
    "memory": "512 GB",
    "base": 6700000
+  }
+ ],
+ "branches": [
+  {
+   "name": "Yunusobod",
+   "name_ru": "Юнусабад",
+   "addr": "",
+   "addr_ru": "",
+   "phone": "+998 55 517 65 55",
+   "open": "09:00",
+   "close": "20:00",
+   "map": ""
+  },
+  {
+   "name": "Qoratosh",
+   "name_ru": "Каратош",
+   "addr": "",
+   "addr_ru": "",
+   "phone": "+998 55 517 65 55",
+   "open": "09:00",
+   "close": "20:00",
+   "map": ""
+  },
+  {
+   "name": "Farxod bozor",
+   "name_ru": "Фархадский базар",
+   "addr": "",
+   "addr_ru": "",
+   "phone": "+998 55 517 65 55",
+   "open": "09:00",
+   "close": "20:00",
+   "map": ""
+  },
+  {
+   "name": "Chilonzor",
+   "name_ru": "Чиланзар",
+   "addr": "",
+   "addr_ru": "",
+   "phone": "+998 55 517 65 55",
+   "open": "09:00",
+   "close": "20:00",
+   "map": ""
   }
  ],
  "colors": {

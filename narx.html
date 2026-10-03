@@ -96,6 +96,15 @@
   .col.ph svg, .col.ph img { width: 56px; height: 104px; object-fit: contain; }
   .col.ph span { font-size: 13px; }
   .sample + .langs { margin-left: 8px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { border: 1.5px solid transparent; background: var(--field); color: var(--text); border-radius: 11px; padding: 9px 12px; font-size: 14px; font-weight: 700; cursor: pointer; }
+  .chip.on { border-color: var(--brand); background: var(--brand-soft); color: var(--brand); }
+  .chip small { display: block; font-size: 11px; font-weight: 600; color: var(--hint); margin-top: 1px; }
+  .chip.on small { color: var(--brand); }
+  .visit-sub { font-size: 12.5px; font-weight: 700; color: var(--hint); margin: 12px 0 6px; }
+  .visit-sub i { font-style: normal; font-weight: 500; }
+  .place { background: var(--field); border-radius: 12px; padding: 11px 12px; font-size: 13.5px; text-align: left; margin-top: 10px; }
+  .place b { display: block; margin-bottom: 2px; }
   .langs { margin-left: auto; display: inline-flex; background: var(--field); border-radius: 10px; padding: 3px; gap: 2px; }
   .langs button { border: 0; background: none; color: var(--hint); font-weight: 800; font-size: 12.5px; padding: 6px 10px; border-radius: 8px; cursor: pointer; }
   .langs button.on { background: var(--card); color: var(--brand); box-shadow: 0 1px 3px rgba(0,0,0,.12); }
@@ -238,6 +247,9 @@ const RU = {
   "Ekran": "Экран", "Orqa": "Задняя", "Ramka": "Рамка", "Kamera": "Камера",
   "Almashtirilgan qismni telefon rasmida bosing": "Нажмите на заменённую деталь на изображении",
   "Almashtirilmagan — davom etish": "Ничего не менялось — продолжить", "Old tomoni": "Спереди", "Orqa tomoni": "Сзади",
+  "Qaysi filialga kelasiz?": "В какой филиал придёте?", "Farqi yo'q": "Без разницы", "Qachon kelasiz?": "Когда придёте?",
+  "Bugun": "Сегодня", "Ertaga": "Завтра", "Indinga": "Послезавтра", "Qo'ng'iroqda kelishamiz": "Договоримся по телефону",
+  "Xaritada ochish": "Открыть на карте", "Sizni kutamiz": "Ждём вас", "ixtiyoriy": "необязательно",
   "Rang": "Цвет", "Mintaqa": "Регион", "Batareya": "Аккумулятор", "noma'lum": "неизвестно", "so'm": "сум",
 };
 const LANG = (() => {
@@ -251,7 +263,7 @@ function setLang(l){ try { localStorage.setItem('narx_lang', l); } catch (e) {} 
 
 /* ---------- state ---------- */
 const S = { i: 0, brand: '', model: '', mem: '', color: '', dmg: {}, region: null, battery: '', batteryUnknown: false, ans: {}, q: '',
-            feedback: '', competitor: '', mode: '', name: '', phone: '' };
+            feedback: '', competitor: '', mode: '', name: '', phone: '', branch: null, day: null, slot: '' };
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num = n => Math.round(n || 0).toLocaleString('ru-RU').replace(/\s|,/g, ' ');
 const som = n => num(n) + ' ' + t("so'm");
@@ -589,6 +601,48 @@ function maskPhone(v){ let d = String(v).replace(/\D/g, ''); if (d.startsWith('9
   const p = [d.slice(0,2), d.slice(2,5), d.slice(5,7), d.slice(7,9)].filter(Boolean); return '+998' + (p.length ? ' ' + p.join(' ') : ' '); }
 const phoneOk = v => String(v).replace(/\D/g,'').replace(/^998/,'').length === 9;
 
+/* ---------- filial va kelish vaqti ---------- */
+const pad2 = n => String(n).padStart(2, '0');
+const branches = () => D.branches || [];
+const curBranch = () => (S.branch != null && S.branch >= 0) ? branches()[S.branch] : null;
+function dayDate(i){ const d = new Date(); d.setDate(d.getDate() + i); return d; }
+function slotsFor(br, day){
+  const [oh] = String((br && br.open) || (branches()[0] || {}).open || '09:00').split(':').map(Number);
+  const [ch] = String((br && br.close) || (branches()[0] || {}).close || '20:00').split(':').map(Number);
+  const out = []; for (let h = oh; h < ch; h += 2) out.push(`${pad2(h)}:00–${pad2(Math.min(h + 2, ch))}:00`);
+  if (day !== 0) return out;
+  const now = new Date(), hNow = now.getHours() + now.getMinutes() / 60;
+  return out.filter(x => +x.slice(6, 8) - 1 > hNow);   // bugun: kamida 1 soat qolgan oraliqlar
+}
+function visitHTML(){
+  const bs = branches(); if (!bs.length) return '';
+  const days = [0, 1, 2].filter(i => i > 0 || slotsFor(curBranch(), 0).length);
+  const dn = ['Bugun', 'Ertaga', 'Indinga'];
+  let h = `<div class="visit-sub">${t('Qaysi filialga kelasiz?')} <i>(${t('ixtiyoriy')})</i></div><div class="chips">
+    ${bs.map((b, i) => `<button class="chip ${S.branch === i ? 'on' : ''}" data-br="${i}">${esc(tx(b, 'name'))}</button>`).join('')}
+    <button class="chip ${S.branch === -1 ? 'on' : ''}" data-br="-1">${t("Farqi yo'q")}</button></div>
+    <div class="visit-sub">${t('Qachon kelasiz?')}</div><div class="chips">
+    ${days.map(i => { const d = dayDate(i); return `<button class="chip ${S.day === i ? 'on' : ''}" data-day="${i}">${t(dn[i])}<small>${pad2(d.getDate())}.${pad2(d.getMonth() + 1)}</small></button>`; }).join('')}
+    <button class="chip ${S.day === -1 ? 'on' : ''}" data-day="-1">${t("Qo'ng'iroqda kelishamiz")}</button></div>`;
+  if (S.day != null && S.day >= 0) {
+    const sl = slotsFor(curBranch(), S.day);
+    h += `<div class="chips" style="margin-top:8px">${sl.map(x => `<button class="chip ${S.slot === x ? 'on' : ''}" data-slot="${x}">${x}</button>`).join('')}</div>`;
+  }
+  return h;
+}
+function bindVisit(box){
+  const redraw = () => { box.innerHTML = visitHTML(); bindVisit(box); };
+  box.querySelectorAll('[data-br]').forEach(b => b.onclick = () => { S.branch = +b.dataset.br; haptic(); redraw(); });
+  box.querySelectorAll('[data-day]').forEach(b => b.onclick = () => { S.day = +b.dataset.day; S.slot = ''; haptic(); redraw(); });
+  box.querySelectorAll('[data-slot]').forEach(b => b.onclick = () => { S.slot = b.dataset.slot; haptic(); redraw(); });
+}
+function visitText(){   // xodimlar uchun (o'zbekcha)
+  if (S.day == null) return '';
+  if (S.day === -1) return "Qo'ng'iroqda kelishiladi";
+  const d = dayDate(S.day);
+  return `${['Bugun', 'Ertaga', 'Indinga'][S.day]}, ${pad2(d.getDate())}.${pad2(d.getMonth() + 1)}${S.slot ? ' · ' + S.slot : ''}`;
+}
+
 function openLead(mode){
   S.mode = mode; const r = calc(); track('lead_open', mode);
   if (!inTelegram) {   // Instagram yoki oddiy brauzer: ariza Telegram ichida yuboriladi
@@ -609,8 +663,10 @@ function openLead(mode){
     <p>${t("Xodimimiz qo'ng'iroq qilib, filialga kelish vaqtini kelishadi.")}</p>
     <label for="l-name">${t('Ismingiz')}</label><input class="f" id="l-name" autocomplete="name" value="${esc(S.name)}">
     <label for="l-phone">${t('Telefon raqamingiz')}</label><input class="f num" id="l-phone" inputmode="tel" value="${esc(S.phone || '+998 ')}" placeholder="+998 90 123 45 67">
+    <div id="visit">${visitHTML()}</div>
     <div style="height:14px"></div><button class="btn" id="l-send">${t('Yuborish')}</button>`);
   const n = sh.querySelector('#l-name'), p = sh.querySelector('#l-phone');
+  bindVisit(sh.querySelector('#visit'));
   n.oninput = e => { S.name = e.target.value; n.classList.remove('bad'); };
   p.oninput = e => { S.phone = maskPhone(e.target.value); e.target.value = S.phone; if (phoneOk(S.phone)) p.classList.remove('bad'); };
   sh.querySelector('#l-send').onclick = () => {
@@ -631,6 +687,7 @@ function sendLead(){
     brand: S.brand, model: S.model, memory: S.mem, color: S.color, region: S.region ? S.region.label : '',
     battery: S.batteryUnknown ? "noma'lum" : (S.battery ? S.battery + '%' : ''), answers,
     blocked: r.blocked, cash: r.blocked ? 0 : r.cash, trade: r.blocked ? 0 : r.trade, base: r.base,
+    branch: curBranch() ? curBranch().name : (S.branch === -1 ? "Farqi yo'q" : ''), visit: visitText(),
     feedback: S.feedback, competitor: +String(S.competitor).replace(/\D/g, '') || 0 };
   // 1) Havola orqali ochilgan (t.me/<bot>/narx): initData bor -> arizani serverimizga yuboramiz
   if (inTelegram && tg.initData && D.api) { postLead(payload); return; }
@@ -663,7 +720,9 @@ function leadDone(){
   const sh = openSheet(`<div style="text-align:center;padding:6px 0 2px">
       <div style="font-size:46px;line-height:1">✅</div>
       <h3 style="margin-top:10px">${t('Arizangiz qabul qilindi!')}</h3>
-      <p>${t("Xodimimiz {p} raqamiga tez orada qo'ng'iroq qiladi.", { p: `<b>${esc(S.phone)}</b>` })}</p></div>
+      <p>${t("Xodimimiz {p} raqamiga tez orada qo'ng'iroq qiladi.", { p: `<b>${esc(S.phone)}</b>` })}</p>
+      ${curBranch() ? `<div class="place"><b>📍 ${t('Sizni kutamiz')}: ${esc(tx(curBranch(), 'name'))}${S.day >= 0 && S.day != null ? ' · ' + esc(t(['Bugun', 'Ertaga', 'Indinga'][S.day])) + (S.slot ? ', ' + S.slot : '') : ''}</b>
+        ${esc(tx(curBranch(), 'addr'))}${curBranch().map ? `<div style="margin-top:6px"><a href="${esc(curBranch().map)}" target="_blank" rel="noopener" style="color:var(--brand);font-weight:700">${t('Xaritada ochish')} →</a></div>` : ''}</div>` : ''}</div>
     <div style="height:10px"></div>
     <button class="btn" id="l-close">${t('Yopish')}</button>
     <div style="height:8px"></div><button class="btn ghost" id="l-again">${t('Boshqa telefonni baholash')}</button>`);
