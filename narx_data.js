@@ -1,7 +1,7 @@
 // Avtomatik yaratilgan: narx_to_data.py. Qo'lda tahrirlamang.
 window.NARX_DATA = {
- "updated": "03.10.2026 16:34",
- "sample": true,
+ "updated": "03.10.2026 18:25",
+ "sample": false,
  "tradein_bonus": 8.0,
  "max_pct": 70.0,
  "round_to": 50000,
@@ -15,487 +15,433 @@ window.NARX_DATA = {
    "brand": "Apple",
    "model": "iPhone 17 Pro Max",
    "memory": "256 GB",
-   "base": 13500000
+   "base": 15232000
   },
   {
    "brand": "Apple",
    "model": "iPhone 17 Pro Max",
    "memory": "512 GB",
-   "base": 15200000
+   "base": 17612000
   },
   {
    "brand": "Apple",
    "model": "iPhone 17 Pro Max",
    "memory": "1 TB",
-   "base": 16300000
+   "base": 18445000
   },
   {
    "brand": "Apple",
    "model": "iPhone 17 Pro Max",
    "memory": "2 TB",
-   "base": 18000000
+   "base": 19278000
   },
   {
    "brand": "Apple",
    "model": "iPhone 17 Pro",
    "memory": "256 GB",
-   "base": 11800000
+   "base": 14042000
   },
   {
    "brand": "Apple",
    "model": "iPhone 17 Pro",
    "memory": "512 GB",
-   "base": 13000000
+   "base": 14875000
   },
   {
    "brand": "Apple",
    "model": "iPhone 17 Pro",
    "memory": "1 TB",
-   "base": 14300000
+   "base": 15470000
   },
   {
    "brand": "Apple",
    "model": "iPhone 17",
    "memory": "256 GB",
-   "base": 8900000
+   "base": 9520000
   },
   {
    "brand": "Apple",
    "model": "iPhone 17",
    "memory": "512 GB",
-   "base": 9800000
+   "base": 10115000
   },
   {
    "brand": "Apple",
    "model": "iPhone Air",
    "memory": "256 GB",
-   "base": 9200000
+   "base": 9520000
   },
   {
    "brand": "Apple",
    "model": "iPhone Air",
    "memory": "512 GB",
-   "base": 10100000
+   "base": 10353000
   },
   {
    "brand": "Apple",
    "model": "iPhone Air",
    "memory": "1 TB",
-   "base": 11100000
+   "base": 10948000
   },
   {
    "brand": "Apple",
    "model": "iPhone 16 Pro Max",
    "memory": "256 GB",
-   "base": 10900000
+   "base": 11305000
   },
   {
    "brand": "Apple",
    "model": "iPhone 16 Pro Max",
    "memory": "512 GB",
-   "base": 12100000
+   "base": 12138000
   },
   {
    "brand": "Apple",
    "model": "iPhone 16 Pro Max",
    "memory": "1 TB",
-   "base": 13200000
+   "base": 12733000
   },
   {
    "brand": "Apple",
    "model": "iPhone 16 Pro",
    "memory": "128 GB",
-   "base": 8700000
+   "base": 8925000
   },
   {
    "brand": "Apple",
    "model": "iPhone 16 Pro",
    "memory": "256 GB",
-   "base": 9500000
+   "base": 9401000
   },
   {
    "brand": "Apple",
    "model": "iPhone 16 Pro",
    "memory": "512 GB",
-   "base": 10500000
+   "base": 9996000
   },
   {
    "brand": "Apple",
    "model": "iPhone 16 Pro",
    "memory": "1 TB",
-   "base": 11600000
+   "base": 10353000
   },
   {
    "brand": "Apple",
    "model": "iPhone 16",
    "memory": "128 GB",
-   "base": 6600000
+   "base": 6307000
   },
   {
    "brand": "Apple",
    "model": "iPhone 16",
    "memory": "256 GB",
-   "base": 7300000
+   "base": 6664000
   },
   {
    "brand": "Apple",
    "model": "iPhone 16",
    "memory": "512 GB",
-   "base": 8000000
+   "base": 7378000
   },
   {
    "brand": "Apple",
    "model": "iPhone 15 Pro Max",
    "memory": "256 GB",
-   "base": 8600000
+   "base": 8330000
   },
   {
    "brand": "Apple",
    "model": "iPhone 15 Pro Max",
    "memory": "512 GB",
-   "base": 9300000
+   "base": 8925000
   },
   {
    "brand": "Apple",
    "model": "iPhone 15 Pro Max",
    "memory": "1 TB",
-   "base": 10000000
+   "base": 9282000
   },
   {
    "brand": "Apple",
    "model": "iPhone 15 Pro",
    "memory": "128 GB",
-   "base": 7000000
+   "base": 7140000
   },
   {
    "brand": "Apple",
    "model": "iPhone 15 Pro",
    "memory": "256 GB",
-   "base": 7600000
+   "base": 7378000
   },
   {
    "brand": "Apple",
    "model": "iPhone 15 Pro",
    "memory": "512 GB",
-   "base": 8200000
+   "base": 7973000
   },
   {
    "brand": "Apple",
    "model": "iPhone 15 Pro",
    "memory": "1 TB",
-   "base": 8800000
+   "base": 8568000
   },
   {
    "brand": "Apple",
    "model": "iPhone 15",
    "memory": "128 GB",
-   "base": 5300000
+   "base": 4760000
   },
   {
    "brand": "Apple",
    "model": "iPhone 15",
    "memory": "256 GB",
-   "base": 5700000
+   "base": 5355000
   },
   {
    "brand": "Apple",
    "model": "iPhone 15",
    "memory": "512 GB",
-   "base": 6200000
+   "base": 5950000
   },
   {
    "brand": "Apple",
    "model": "iPhone 14 Pro Max",
    "memory": "128 GB",
-   "base": 6800000
+   "base": 5950000
   },
   {
    "brand": "Apple",
    "model": "iPhone 14 Pro Max",
    "memory": "256 GB",
-   "base": 7300000
+   "base": 6545000
   },
   {
    "brand": "Apple",
    "model": "iPhone 14 Pro Max",
    "memory": "512 GB",
-   "base": 7900000
+   "base": 6902000
   },
   {
    "brand": "Apple",
    "model": "iPhone 14 Pro Max",
    "memory": "1 TB",
-   "base": 8600000
+   "base": 7497000
   },
   {
    "brand": "Apple",
    "model": "iPhone 14 Pro",
    "memory": "128 GB",
-   "base": 6000000
+   "base": 5474000
   },
   {
    "brand": "Apple",
    "model": "iPhone 14 Pro",
    "memory": "256 GB",
-   "base": 6500000
+   "base": 5831000
   },
   {
    "brand": "Apple",
    "model": "iPhone 14 Pro",
    "memory": "512 GB",
-   "base": 7000000
+   "base": 6188000
   },
   {
    "brand": "Apple",
    "model": "iPhone 14 Pro",
    "memory": "1 TB",
-   "base": 7600000
+   "base": 6545000
   },
   {
    "brand": "Apple",
    "model": "iPhone 14",
    "memory": "128 GB",
-   "base": 4300000
+   "base": 3570000
   },
   {
    "brand": "Apple",
    "model": "iPhone 14",
    "memory": "256 GB",
-   "base": 4600000
+   "base": 4046000
   },
   {
    "brand": "Apple",
    "model": "iPhone 14",
    "memory": "512 GB",
-   "base": 5000000
+   "base": 4403000
   },
   {
    "brand": "Apple",
    "model": "iPhone 13 Pro Max",
    "memory": "128 GB",
-   "base": 5200000
+   "base": 5593000
   },
   {
    "brand": "Apple",
    "model": "iPhone 13 Pro Max",
    "memory": "256 GB",
-   "base": 5600000
+   "base": 5950000
   },
   {
    "brand": "Apple",
    "model": "iPhone 13 Pro Max",
    "memory": "512 GB",
-   "base": 6000000
+   "base": 6307000
   },
   {
    "brand": "Apple",
    "model": "iPhone 13 Pro Max",
    "memory": "1 TB",
-   "base": 6400000
+   "base": 6545000
+  },
+  {
+   "brand": "Apple",
+   "model": "iPhone 13 Pro",
+   "memory": "128 GB",
+   "base": 4403000
+  },
+  {
+   "brand": "Apple",
+   "model": "iPhone 13 Pro",
+   "memory": "256 GB",
+   "base": 4760000
+  },
+  {
+   "brand": "Apple",
+   "model": "iPhone 13 Pro",
+   "memory": "512 GB",
+   "base": 4998000
+  },
+  {
+   "brand": "Apple",
+   "model": "iPhone 13 Pro",
+   "memory": "1 TB",
+   "base": 5355000
   },
   {
    "brand": "Apple",
    "model": "iPhone 13",
    "memory": "128 GB",
-   "base": 3500000
+   "base": 3332000
   },
   {
    "brand": "Apple",
    "model": "iPhone 13",
    "memory": "256 GB",
-   "base": 3700000
+   "base": 3689000
   },
   {
    "brand": "Apple",
    "model": "iPhone 13",
    "memory": "512 GB",
-   "base": 4000000
+   "base": 4165000
+  },
+  {
+   "brand": "Apple",
+   "model": "iPhone 12 Pro Max",
+   "memory": "128 GB",
+   "base": 3570000
+  },
+  {
+   "brand": "Apple",
+   "model": "iPhone 12 Pro Max",
+   "memory": "256 GB",
+   "base": 3927000
+  },
+  {
+   "brand": "Apple",
+   "model": "iPhone 12 Pro Max",
+   "memory": "512 GB",
+   "base": 4284000
+  },
+  {
+   "brand": "Apple",
+   "model": "iPhone 12 Pro",
+   "memory": "128 GB",
+   "base": 3213000
+  },
+  {
+   "brand": "Apple",
+   "model": "iPhone 12 Pro",
+   "memory": "256 GB",
+   "base": 3570000
+  },
+  {
+   "brand": "Apple",
+   "model": "iPhone 12 Pro",
+   "memory": "512 GB",
+   "base": 3927000
   },
   {
    "brand": "Apple",
    "model": "iPhone 12",
    "memory": "64 GB",
-   "base": 2400000
+   "base": 2023000
   },
   {
    "brand": "Apple",
    "model": "iPhone 12",
    "memory": "128 GB",
-   "base": 2600000
+   "base": 2380000
   },
   {
    "brand": "Apple",
    "model": "iPhone 12",
    "memory": "256 GB",
-   "base": 2700000
+   "base": 2618000
+  },
+  {
+   "brand": "Apple",
+   "model": "iPhone 11 Pro Max",
+   "memory": "64 GB",
+   "base": 2142000
+  },
+  {
+   "brand": "Apple",
+   "model": "iPhone 11 Pro Max",
+   "memory": "128 GB",
+   "base": 2380000
+  },
+  {
+   "brand": "Apple",
+   "model": "iPhone 11 Pro Max",
+   "memory": "256 GB",
+   "base": 2618000
+  },
+  {
+   "brand": "Apple",
+   "model": "iPhone 11 Pro",
+   "memory": "64 GB",
+   "base": 1666000
+  },
+  {
+   "brand": "Apple",
+   "model": "iPhone 11 Pro",
+   "memory": "128 GB",
+   "base": 1904000
+  },
+  {
+   "brand": "Apple",
+   "model": "iPhone 11 Pro",
+   "memory": "256 GB",
+   "base": 2142000
   },
   {
    "brand": "Apple",
    "model": "iPhone 11",
    "memory": "64 GB",
-   "base": 1800000
+   "base": 952000
   },
   {
    "brand": "Apple",
    "model": "iPhone 11",
    "memory": "128 GB",
-   "base": 1900000
+   "base": 1428000
   },
   {
    "brand": "Apple",
    "model": "iPhone 11",
    "memory": "256 GB",
-   "base": 2100000
-  },
-  {
-   "brand": "Samsung",
-   "model": "Galaxy S25 Ultra",
-   "memory": "256 GB",
-   "base": 11000000
-  },
-  {
-   "brand": "Samsung",
-   "model": "Galaxy S25 Ultra",
-   "memory": "512 GB",
-   "base": 12100000
-  },
-  {
-   "brand": "Samsung",
-   "model": "Galaxy S25 Ultra",
-   "memory": "1 TB",
-   "base": 13300000
-  },
-  {
-   "brand": "Samsung",
-   "model": "Galaxy S25",
-   "memory": "128 GB",
-   "base": 6700000
-  },
-  {
-   "brand": "Samsung",
-   "model": "Galaxy S25",
-   "memory": "256 GB",
-   "base": 7400000
-  },
-  {
-   "brand": "Samsung",
-   "model": "Galaxy S25",
-   "memory": "512 GB",
-   "base": 8100000
-  },
-  {
-   "brand": "Samsung",
-   "model": "Galaxy S24 Ultra",
-   "memory": "256 GB",
-   "base": 8200000
-  },
-  {
-   "brand": "Samsung",
-   "model": "Galaxy S24 Ultra",
-   "memory": "512 GB",
-   "base": 8900000
-  },
-  {
-   "brand": "Samsung",
-   "model": "Galaxy S24 Ultra",
-   "memory": "1 TB",
-   "base": 9600000
-  },
-  {
-   "brand": "Samsung",
-   "model": "Galaxy S24",
-   "memory": "128 GB",
-   "base": 5000000
-  },
-  {
-   "brand": "Samsung",
-   "model": "Galaxy S24",
-   "memory": "256 GB",
-   "base": 5400000
-  },
-  {
-   "brand": "Samsung",
-   "model": "Galaxy S24",
-   "memory": "512 GB",
-   "base": 5800000
-  },
-  {
-   "brand": "Samsung",
-   "model": "Galaxy S23",
-   "memory": "128 GB",
-   "base": 3900000
-  },
-  {
-   "brand": "Samsung",
-   "model": "Galaxy S23",
-   "memory": "256 GB",
-   "base": 4200000
-  },
-  {
-   "brand": "Samsung",
-   "model": "Galaxy S23",
-   "memory": "512 GB",
-   "base": 4500000
-  },
-  {
-   "brand": "Samsung",
-   "model": "Galaxy A56",
-   "memory": "128 GB",
-   "base": 3300000
-  },
-  {
-   "brand": "Samsung",
-   "model": "Galaxy A56",
-   "memory": "256 GB",
-   "base": 3500000
-  },
-  {
-   "brand": "Samsung",
-   "model": "Galaxy A36",
-   "memory": "128 GB",
-   "base": 2500000
-  },
-  {
-   "brand": "Samsung",
-   "model": "Galaxy A36",
-   "memory": "256 GB",
-   "base": 2700000
-  },
-  {
-   "brand": "Xiaomi",
-   "model": "Redmi Note 14 Pro",
-   "memory": "256 GB",
-   "base": 2700000
-  },
-  {
-   "brand": "Xiaomi",
-   "model": "Redmi Note 14 Pro",
-   "memory": "512 GB",
-   "base": 2900000
-  },
-  {
-   "brand": "Xiaomi",
-   "model": "Redmi Note 13",
-   "memory": "128 GB",
-   "base": 1500000
-  },
-  {
-   "brand": "Xiaomi",
-   "model": "Redmi Note 13",
-   "memory": "256 GB",
-   "base": 1600000
-  },
-  {
-   "brand": "Xiaomi",
-   "model": "Xiaomi 15",
-   "memory": "256 GB",
-   "base": 6200000
-  },
-  {
-   "brand": "Xiaomi",
-   "model": "Xiaomi 15",
-   "memory": "512 GB",
-   "base": 6700000
+   "base": 1666000
   }
  ],
  "branches": [
@@ -1403,6 +1349,163 @@ window.NARX_DATA = {
     "name": "Kumush (Liquid Silver)",
     "name_ru": "Серебристый (Liquid Silver)",
     "hex": "#D5D7D9",
+    "pct": 0.0,
+    "img": ""
+   }
+  ],
+  "Apple|iPhone 13 Pro": [
+   {
+    "name": "Grafit (Graphite)",
+    "name_ru": "Графит (Graphite)",
+    "hex": "#50504E",
+    "pct": 0.0,
+    "img": ""
+   },
+   {
+    "name": "Oltinrang (Gold)",
+    "name_ru": "Золотой (Gold)",
+    "hex": "#F3E3C3",
+    "pct": 0.0,
+    "img": ""
+   },
+   {
+    "name": "Kumush (Silver)",
+    "name_ru": "Серебристый (Silver)",
+    "hex": "#E8E8E3",
+    "pct": 0.0,
+    "img": ""
+   },
+   {
+    "name": "Havorang (Sierra Blue)",
+    "name_ru": "Голубой (Sierra Blue)",
+    "hex": "#9BB5CE",
+    "pct": 0.0,
+    "img": ""
+   },
+   {
+    "name": "Yashil (Alpine Green)",
+    "name_ru": "Зелёный (Alpine Green)",
+    "hex": "#58675A",
+    "pct": 0.0,
+    "img": ""
+   }
+  ],
+  "Apple|iPhone 12 Pro Max": [
+   {
+    "name": "Grafit (Graphite)",
+    "name_ru": "Графит (Graphite)",
+    "hex": "#52514F",
+    "pct": 0.0,
+    "img": ""
+   },
+   {
+    "name": "Kumush (Silver)",
+    "name_ru": "Серебристый (Silver)",
+    "hex": "#E3E4DF",
+    "pct": 0.0,
+    "img": ""
+   },
+   {
+    "name": "Oltinrang (Gold)",
+    "name_ru": "Золотой (Gold)",
+    "hex": "#F6E6C9",
+    "pct": 0.0,
+    "img": ""
+   },
+   {
+    "name": "Ko'k (Pacific Blue)",
+    "name_ru": "Синий (Pacific Blue)",
+    "hex": "#2E4A5E",
+    "pct": 0.0,
+    "img": ""
+   }
+  ],
+  "Apple|iPhone 12 Pro": [
+   {
+    "name": "Grafit (Graphite)",
+    "name_ru": "Графит (Graphite)",
+    "hex": "#52514F",
+    "pct": 0.0,
+    "img": ""
+   },
+   {
+    "name": "Kumush (Silver)",
+    "name_ru": "Серебристый (Silver)",
+    "hex": "#E3E4DF",
+    "pct": 0.0,
+    "img": ""
+   },
+   {
+    "name": "Oltinrang (Gold)",
+    "name_ru": "Золотой (Gold)",
+    "hex": "#F6E6C9",
+    "pct": 0.0,
+    "img": ""
+   },
+   {
+    "name": "Ko'k (Pacific Blue)",
+    "name_ru": "Синий (Pacific Blue)",
+    "hex": "#2E4A5E",
+    "pct": 0.0,
+    "img": ""
+   }
+  ],
+  "Apple|iPhone 11 Pro Max": [
+   {
+    "name": "Kulrang (Space Gray)",
+    "name_ru": "Серый (Space Gray)",
+    "hex": "#535150",
+    "pct": 0.0,
+    "img": ""
+   },
+   {
+    "name": "Kumush (Silver)",
+    "name_ru": "Серебристый (Silver)",
+    "hex": "#EBEBE3",
+    "pct": 0.0,
+    "img": ""
+   },
+   {
+    "name": "Oltinrang (Gold)",
+    "name_ru": "Золотой (Gold)",
+    "hex": "#F3DFC8",
+    "pct": 0.0,
+    "img": ""
+   },
+   {
+    "name": "To'q yashil (Midnight Green)",
+    "name_ru": "Тёмно-зелёный (Midnight Green)",
+    "hex": "#4E5851",
+    "pct": 0.0,
+    "img": ""
+   }
+  ],
+  "Apple|iPhone 11 Pro": [
+   {
+    "name": "Kulrang (Space Gray)",
+    "name_ru": "Серый (Space Gray)",
+    "hex": "#535150",
+    "pct": 0.0,
+    "img": ""
+   },
+   {
+    "name": "Kumush (Silver)",
+    "name_ru": "Серебристый (Silver)",
+    "hex": "#EBEBE3",
+    "pct": 0.0,
+    "img": ""
+   },
+   {
+    "name": "Oltinrang (Gold)",
+    "name_ru": "Золотой (Gold)",
+    "hex": "#F3DFC8",
+    "pct": 0.0,
+    "img": ""
+   },
+   {
+    "name": "To'q yashil (Midnight Green)",
+    "name_ru": "Тёмно-зелёный (Midnight Green)",
+    "hex": "#4E5851",
     "pct": 0.0,
     "img": ""
    }
