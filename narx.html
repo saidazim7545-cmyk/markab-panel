@@ -112,6 +112,16 @@
   .phs .add { aspect-ratio: 1; border-radius: 12px; border: 1.5px dashed var(--line); background: var(--field); color: var(--brand); font-weight: 800; font-size: 12.5px; cursor: pointer; display: grid; place-items: center; text-align: center; padding: 6px; }
   .phs .add b { display: block; font-size: 24px; line-height: 1; }
   .ph-hint { font-size: 12px; color: var(--hint); margin: -2px 0 8px; }
+  .seg { display: grid; grid-template-columns: 1fr 1fr; background: var(--field); border-radius: 14px; padding: 4px; gap: 4px; margin-bottom: 16px; }
+  .seg button { border: 0; background: none; border-radius: 11px; padding: 11px 6px; font-size: 14px; font-weight: 800; color: var(--hint); cursor: pointer; }
+  .seg button.on { background: var(--card); color: var(--brand); box-shadow: 0 1px 4px rgba(0,0,0,.12); }
+  .est { background: var(--brand-soft); color: var(--text); border-radius: 14px; padding: 12px 14px; font-size: 13.5px; margin-bottom: 4px; }
+  .est b { color: var(--brand); }
+  .pricein { display: flex; gap: 8px; } .pricein input { flex: 1; }
+  .pricein .seg { margin: 0; width: 120px; flex: none; } .pricein .seg button { padding: 8px 4px; }
+  textarea.f { resize: vertical; min-height: 78px; font-family: inherit; }
+  .chk { display: flex; align-items: center; gap: 10px; margin-top: 14px; font-size: 14px; font-weight: 600; cursor: pointer; }
+  .chk input { width: 20px; height: 20px; accent-color: var(--brand); }
   .langs { margin-left: auto; display: inline-flex; background: var(--field); border-radius: 10px; padding: 3px; gap: 2px; }
   .langs button { border: 0; background: none; color: var(--hint); font-weight: 800; font-size: 12.5px; padding: 6px 10px; border-radius: 8px; cursor: pointer; }
   .langs button.on { background: var(--card); color: var(--brand); box-shadow: 0 1px 3px rgba(0,0,0,.12); }
@@ -143,8 +153,8 @@
   .fbopts { display: flex; gap: 6px; } .fbopts button { flex: 1; border: 1.5px solid transparent; background: var(--field); border-radius: 11px; padding: 9px 4px; font-weight: 700; font-size: 13.5px; cursor: pointer; }
   .fbopts button.on { border-color: var(--brand); background: var(--brand-soft); color: var(--brand); }
   label { display: block; font-size: 12.5px; font-weight: 700; color: var(--hint); margin: 12px 0 6px; }
-  input.f { width: 100%; padding: 12px; border-radius: 12px; border: 1.5px solid transparent; background: var(--field); color: var(--text); font-size: 16px; outline: none; -webkit-appearance: none; }
-  input.f:focus { border-color: var(--brand); background: var(--card); } input.f.bad { border-color: var(--bad); }
+  input.f, textarea.f { width: 100%; padding: 12px; border-radius: 12px; border: 1.5px solid transparent; background: var(--field); color: var(--text); font-size: 16px; outline: none; -webkit-appearance: none; }
+  input.f:focus, textarea.f:focus { border-color: var(--brand); background: var(--card); } input.f.bad, textarea.f.bad { border-color: var(--bad); }
 
   .reject { text-align: center; padding: 26px 8px 8px; }
   .reject .ic { width: 70px; height: 70px; border-radius: 50%; background: var(--bad-soft); color: var(--bad); display: grid; place-items: center; margin: 0 auto 14px; }
@@ -260,6 +270,22 @@ const RU = {
   "Telefon rasmlari": "Фото телефона", "ixtiyoriy, 3 tagacha": "необязательно, до 3 шт.",
   "Ekran va orqa tomonini suratga oling — narxni aniqroq aytamiz": "Сфотографируйте экран и заднюю сторону — назовём цену точнее",
   "Rasm qo'shish": "Добавить фото", "Rasmni o'qib bo'lmadi": "Не удалось прочитать фото",
+  "Markabga sotish": "Продать Markab", "E'lon berish": "Дать объявление",
+  "Telefoningizni e'lon qiling": "Разместите объявление о продаже",
+  "Bir necha savolga javob bering — e'loningiz tekshiruvdan so'ng Markab kanalida bepul chiqadi.": "Ответьте на несколько вопросов — после проверки объявление бесплатно появится в канале Markab.",
+  "E'lon ma'lumotlari": "Данные объявления", "E'lon tekshiruvdan so'ng Markab kanalida bepul chiqadi.": "После проверки объявление бесплатно появится в канале Markab.",
+  "Bizning baholash": "Наша оценка", "narxni o'zingiz belgilaysiz": "цену вы назначаете сами", "Narxi": "Цена",
+  "Qo'shimcha ma'lumot": "Дополнительная информация", "Masalan: 1 yil ishlatilgan, g'ilofi va oynasi bilan": "Например: в использовании 1 год, с чехлом и стеклом",
+  "Shahar / tuman": "Город / район", "Masalan: Toshkent, Yunusobod": "Например: Ташкент, Юнусабад",
+  "1–3 ta, majburiy": "1–3 шт., обязательно", "Telegram profilimni ham ko'rsatish": "Показать мой профиль Telegram",
+  "E'lonni yuborish": "Отправить объявление", "Narxni kiriting": "Укажите цену", "Kamida 1 ta rasm qo'shing": "Добавьте хотя бы 1 фото",
+  "E'loningiz tekshiruvga yuborildi!": "Объявление отправлено на проверку!",
+  "Xodimlarimiz tekshirgach, e'lon Markab kanalida chiqadi va sizga bot orqali xabar beramiz.": "После проверки объявление появится в канале Markab, и мы сообщим вам через бота.",
+  "Yana e'lon berish": "Дать ещё объявление", "Bunday telefonni e'lon qilib bo'lmaydi": "Такой телефон нельзя разместить",
+  "Akkaunti qulflangan yoki ishlamaydigan telefonlar kanalga qo'yilmaydi. Markab ustalariga ko'rsatishingiz mumkin.": "Телефоны с заблокированным аккаунтом не размещаются. Вы можете показать телефон мастерам Markab.",
+  "E'lonni Telegram ilovasi orqali bering": "Разместите объявление через Telegram",
+  "E'lon berish uchun ilovani Telegram'da oching — rasm yuklash va tasdiqlash faqat u yerda ishlaydi.": "Откройте приложение в Telegram — загрузка фото и проверка работают только там.",
+  "Bugun 3 tadan ortiq e'lon berib bo'lmaydi.": "Сегодня нельзя подать больше 3 объявлений.",
   "Rang": "Цвет", "Mintaqa": "Регион", "Batareya": "Аккумулятор", "noma'lum": "неизвестно", "so'm": "сум",
 };
 const LANG = (() => {
@@ -273,7 +299,8 @@ function setLang(l){ try { localStorage.setItem('narx_lang', l); } catch (e) {} 
 
 /* ---------- state ---------- */
 const S = { i: 0, brand: '', model: '', mem: '', color: '', dmg: {}, region: null, battery: '', batteryUnknown: false, ans: {}, q: '',
-            feedback: '', competitor: '', mode: '', name: '', phone: '', branch: null, day: null, slot: '', photos: [] };
+            feedback: '', competitor: '', mode: '', name: '', phone: '', branch: null, day: null, slot: '', photos: [],
+            flow: /^elon/i.test(SRC) ? 'listing' : 'sell', L: { price: '', cur: '$', desc: '', city: '', showtg: true } };
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num = n => Math.round(n || 0).toLocaleString('ru-RU').replace(/\s|,/g, ' ');
 const som = n => num(n) + ' ' + t("so'm");
@@ -421,7 +448,7 @@ function steps(){
   if (D.battery.length) st.push({ k: 'battery' });
   if ((D.damage || []).length) st.push({ k: 'damage' });
   D.questions.forEach((q, qi) => st.push({ k: 'q', qi }));
-  st.push({ k: 'result' });
+  st.push({ k: S.flow === 'listing' ? 'listing' : 'result' });
   return st;
 }
 
@@ -462,11 +489,11 @@ function render(){
   document.getElementById('bar').innerHTML = S.i === 0
     ? `<div class="logo"><span class="m"></span><span class="w"></span></div>${D.sample ? `<span class="sample">${t('Namuna narxlar')}</span>` : ''}<span class="langs"><button data-lang="uz" class="${LANG === 'uz' ? 'on' : ''}">UZ</button><button data-lang="ru" class="${LANG === 'ru' ? 'on' : ''}">RU</button></span>`
     : `<button class="back" id="backBtn" aria-label="${t('Orqaga')}">${I.back}</button><div class="logo"><span class="m"></span><span class="w"></span></div>
-       <span class="stepno">${s.k === 'result' ? t('Natija') : `${S.i + 1} / ${total}`}</span>`;
-  document.getElementById('prog').style.width = (s.k === 'result' ? 100 : (S.i / total) * 100) + '%';
+       <span class="stepno">${s.k === 'result' ? t('Natija') : s.k === 'listing' ? t("E'lon berish") : `${S.i + 1} / ${total}`}</span>`;
+  document.getElementById('prog').style.width = (s.k === 'result' || s.k === 'listing' ? 100 : (S.i / total) * 100) + '%';
   if (s.k === 'result') track('result', '', `${S.brand} ${S.model} ${S.mem}`.trim());
   else track('step', s.k === 'q' ? 'q:' + String((D.questions[s.qi] || {}).title || '').slice(0, 28) : s.k);
-  const V = { brand: vBrand, model: vModel, mem: vMem, color: vColor, damage: vDamage, region: vRegion, battery: vBattery, q: vQuestion, result: vResult }[s.k];
+  const V = { brand: vBrand, model: vModel, mem: vMem, color: vColor, damage: vDamage, region: vRegion, battery: vBattery, q: vQuestion, result: vResult, listing: vListing }[s.k];
   const out = V(s);
   document.getElementById('view').innerHTML = out.html;
   const foot = document.getElementById('foot');
@@ -485,10 +512,13 @@ const chosenLine = () => S.model ? `<div class="chosen">${S.model.startsWith(S.b
 
 function vBrand(){
   return { html: `
-    <h1>${t('Telefoningiz qancha turadi?')}</h1>
-    <p class="sub">${t('Bir necha savolga javob bering — 2 daqiqada naqd va trade-in narxini bilasiz. Bepul.')}</p>
+    <div class="seg"><button data-flow="sell" class="${S.flow === 'sell' ? 'on' : ''}">💰 ${t('Markabga sotish')}</button><button data-flow="listing" class="${S.flow === 'listing' ? 'on' : ''}">📢 ${t("E'lon berish")}</button></div>
+    ${S.flow === 'listing'
+      ? `<h1>${t("Telefoningizni e'lon qiling")}</h1><p class="sub">${t("Bir necha savolga javob bering — e'loningiz tekshiruvdan so'ng Markab kanalida bepul chiqadi.")}</p>`
+      : `<h1>${t('Telefoningiz qancha turadi?')}</h1><p class="sub">${t('Bir necha savolga javob bering — 2 daqiqada naqd va trade-in narxini bilasiz. Bepul.')}</p>`}
     <div class="opts two">${brands.map(b => `<button class="opt center ${S.brand===b?'on':''}" data-b="${esc(b)}">${esc(b)}</button>`).join('')}</div>`,
-    bind(){ document.querySelectorAll('[data-b]').forEach(el => el.onclick = () => {
+    bind(){ document.querySelectorAll('[data-flow]').forEach(el => el.onclick = () => { if (S.flow !== el.dataset.flow) { S.flow = el.dataset.flow; haptic(); render(); track('step', 'flow:' + S.flow); } });
+      document.querySelectorAll('[data-b]').forEach(el => el.onclick = () => {
       if (S.brand !== el.dataset.b) { S.brand = el.dataset.b; S.model = ''; S.mem = ''; S.color = ''; S.dmg = {}; S.region = null; S.q = ''; } next(); }); } };
 }
 function vModel(){
@@ -600,7 +630,96 @@ function vResult(){
       document.getElementById('leadCash').onclick = () => openLead('cash');
     } };
 }
-function restart(){ Object.assign(S, { i: 0, model: '', mem: '', color: '', dmg: {}, region: null, battery: '', batteryUnknown: false, ans: {}, q: '', feedback: '', competitor: '' }); render(); }
+/* ---------- mijoz e'loni ---------- */
+function vListing(){
+  const r = calc();
+  if (!r) return { html: `<div class="empty">${t('Model tanlanmagan')}</div>` };
+  if (r.blocked) return { html: `
+    <div class="reject"><div class="ic">${I.x}</div><h1>${t("Bunday telefonni e'lon qilib bo'lmaydi")}</h1>
+      <p class="sub">${t("Akkaunti qulflangan yoki ishlamaydigan telefonlar kanalga qo'yilmaydi. Markab ustalariga ko'rsatishingiz mumkin.")}</p></div>`,
+    foot: `<button class="btn" id="leadBlocked">${t('Ariza qoldirish')}</button><button class="btn ghost" id="restart">${t('Qaytadan baholash')}</button>`,
+    bind(){ document.getElementById('leadBlocked').onclick = () => openLead('check'); document.getElementById('restart').onclick = restart; } };
+  if (!canPhotos()) {
+    const bot = (D.bot || '').replace(/^@/, ''), app = (D.app || '').replace(/^\//, '');
+    const link = bot && app ? `https://t.me/${encodeURIComponent(bot)}/${encodeURIComponent(app)}?startapp=elon` : '';
+    return { html: `${chosenLine()}<h1>${t("E'lonni Telegram ilovasi orqali bering")}</h1>
+      <p class="sub">${t("E'lon berish uchun ilovani Telegram'da oching — rasm yuklash va tasdiqlash faqat u yerda ishlaydi.")}</p>`,
+      foot: link ? `<a class="btn" style="text-decoration:none;text-align:center" href="${link}" target="_blank" rel="noopener">${t("Telegram'da davom etish")}</a>` : '' };
+  }
+  const L = S.L;
+  return { html: `${chosenLine()}<h1>${t("E'lon ma'lumotlari")}</h1><p class="sub">${t("E'lon tekshiruvdan so'ng Markab kanalida bepul chiqadi.")}</p>
+    <div class="est">🧮 ${t('Bizning baholash')}: <b>~${som(r.cash)}</b> — ${t("narxni o'zingiz belgilaysiz")}</div>
+    <label for="lp">${t('Narxi')}</label>
+    <div class="pricein"><input class="f num" id="lp" inputmode="numeric" placeholder="${L.cur === '$' ? '850' : '10 500 000'}" value="${esc(L.price)}">
+      <div class="seg"><button data-cur="$" class="${L.cur === '$' ? 'on' : ''}">$</button><button data-cur="so'm" class="${L.cur !== '$' ? 'on' : ''}">${t("so'm")}</button></div></div>
+    <label for="ld">${t("Qo'shimcha ma'lumot")} <span style="font-weight:500">(${t('ixtiyoriy')})</span></label>
+    <textarea class="f" id="ld" maxlength="400" placeholder="${t("Masalan: 1 yil ishlatilgan, g'ilofi va oynasi bilan")}">${esc(L.desc)}</textarea>
+    <label for="lc">${t('Shahar / tuman')} <span style="font-weight:500">(${t('ixtiyoriy')})</span></label>
+    <input class="f" id="lc" placeholder="${t('Masalan: Toshkent, Yunusobod')}" value="${esc(L.city)}">
+    <div id="photos">${photosHTML()}</div>
+    <label for="l-name">${t('Ismingiz')}</label><input class="f" id="l-name" autocomplete="name" value="${esc(S.name)}">
+    <label for="l-phone">${t('Telefon raqamingiz')}</label><input class="f num" id="l-phone" inputmode="tel" value="${esc(S.phone || '+998 ')}" placeholder="+998 90 123 45 67">
+    <label class="chk"><input type="checkbox" id="ltg" ${L.showtg ? 'checked' : ''}>${t("Telegram profilimni ham ko'rsatish")}</label>`,
+    foot: `<button class="btn" id="lsend">${t("E'lonni yuborish")}</button>`,
+    bind(){
+      const $ = id => document.getElementById(id);
+      $('lp').oninput = e => { const n = +e.target.value.replace(/\D/g, ''); L.price = n ? num(n) : ''; e.target.value = L.price; e.target.classList.remove('bad'); };
+      document.querySelectorAll('[data-cur]').forEach(b => b.onclick = () => { L.cur = b.dataset.cur; haptic();
+        document.querySelectorAll('[data-cur]').forEach(x => x.classList.toggle('on', x === b)); $('lp').placeholder = L.cur === '$' ? '850' : '10 500 000'; });
+      $('ld').oninput = e => { L.desc = e.target.value; };
+      $('lc').oninput = e => { L.city = e.target.value; };
+      $('ltg').onchange = e => { L.showtg = e.target.checked; };
+      $('l-name').oninput = e => { S.name = e.target.value; e.target.classList.remove('bad'); };
+      $('l-phone').oninput = e => { S.phone = maskPhone(e.target.value); e.target.value = S.phone; if (phoneOk(S.phone)) e.target.classList.remove('bad'); };
+      bindPhotos($('photos'));
+      $('lsend').onclick = () => submitListing(r);
+    } };
+}
+function submitListing(r){
+  const $ = id => document.getElementById(id);
+  const price = +String(S.L.price).replace(/\D/g, '');
+  if (!price) { $('lp').classList.add('bad'); haptic('error'); toast(t('Narxni kiriting')); return; }
+  if (!S.photos.length) { haptic('error'); toast(t("Kamida 1 ta rasm qo'shing")); return; }
+  const bad = { n: !S.name.trim(), p: !phoneOk(S.phone) };
+  $('l-name').classList.toggle('bad', bad.n); $('l-phone').classList.toggle('bad', bad.p);
+  if (bad.n || bad.p) { haptic('error'); toast(t("Ism va telefon raqamini to'liq kiriting")); return; }
+  if (sending) return;
+  const listing = { kind: 'listing', lang: LANG, src: SRC, brand: S.brand, model: S.model, memory: S.mem, color: S.color,
+    region: S.region ? S.region.label : '', battery: S.batteryUnknown ? '' : (S.battery ? S.battery + '%' : ''),
+    answers: buildAnswers(), price, cur: S.L.cur, desc: S.L.desc.trim().slice(0, 400), city: S.L.city.trim().slice(0, 60),
+    show_tg: S.L.showtg, name: S.name.trim(), phone: S.phone.trim(), est_cash: r.cash, photos: S.photos.slice(0, 3) };
+  const go = () => {
+    sending = true; const btn = $('lsend'); if (btn) { btn.disabled = true; btn.textContent = t('Yuborilmoqda…'); }
+    const ctl = window.AbortController ? new AbortController() : null; const timer = setTimeout(() => ctl && ctl.abort(), 90000);
+    fetch(D.api.replace(/\/$/, '') + '/api/listing', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ initData: tg.initData, listing }), signal: ctl ? ctl.signal : undefined })
+      .then(res => res.json().catch(() => ({})).then(j => ({ ok: res.ok && j.ok, err: j.error || res.status })))
+      .then(({ ok, err }) => {
+        if (ok) { haptic('success');
+          const sh = openSheet(`<div style="text-align:center;padding:6px 0 2px"><div style="font-size:46px;line-height:1">📢</div>
+              <h3 style="margin-top:10px">${t("E'loningiz tekshiruvga yuborildi!")}</h3>
+              <p>${t("Xodimlarimiz tekshirgach, e'lon Markab kanalida chiqadi va sizga bot orqali xabar beramiz.")}</p></div>
+            <div style="height:10px"></div><button class="btn" id="l-close">${t('Yopish')}</button>
+            <div style="height:8px"></div><button class="btn ghost" id="l-again">${t("Yana e'lon berish")}</button>`);
+          sh.querySelector('#l-close').onclick = () => { try { tg.close(); } catch (e) { closeSheet(); } };
+          sh.querySelector('#l-again').onclick = () => { closeSheet(); restart(); };
+        } else {
+          haptic('error');
+          toast(err === 'rate' ? t("Bugun 3 tadan ortiq e'lon berib bo'lmaydi.") : err === 'photos' ? t("Kamida 1 ta rasm qo'shing")
+              : err === 'auth' ? t('Sahifa eskirib qoldi. Ilovani yopib, qayta oching.') : t("Arizani yuborib bo'lmadi. Internetni tekshirib, qayta urinib ko'ring."));
+          if (btn) { btn.disabled = false; btn.textContent = t("E'lonni yuborish"); }
+        } })
+      .catch(() => { haptic('error'); toast(t("Arizani yuborib bo'lmadi. Internetni tekshirib, qayta urinib ko'ring."));
+        const b2 = $('lsend'); if (b2) { b2.disabled = false; b2.textContent = t("E'lonni yuborish"); } })
+      .finally(() => { clearTimeout(timer); sending = false; });
+  };
+  // natija haqida bot yozishi uchun ruxsat so'raymiz (bir marta)
+  try { if (tg.requestWriteAccess && tg.isVersionAtLeast && tg.isVersionAtLeast('6.9')) { tg.requestWriteAccess(() => go()); return; } } catch (e) {}
+  go();
+}
+
+function restart(){ Object.assign(S, { i: 0, model: '', mem: '', color: '', dmg: {}, region: null, battery: '', batteryUnknown: false, ans: {}, q: '', feedback: '', competitor: '',
+  photos: [], L: { price: '', cur: '$', desc: '', city: '', showtg: true } }); render(); }
 
 /* ---------- lead ---------- */
 function openSheet(html){ const sh = document.getElementById('sheet'); sh.innerHTML = '<div class="grab"></div>' + html;
@@ -664,7 +783,7 @@ function shrinkImage(file){
 }
 function photosHTML(){
   if (!canPhotos()) return '';
-  return `<div class="visit-sub">${t('Telefon rasmlari')} <i>(${t('ixtiyoriy, 3 tagacha')})</i></div>
+  return `<div class="visit-sub">${t('Telefon rasmlari')} <i>(${S.flow === 'listing' && S.i === steps().length - 1 ? t('1–3 ta, majburiy') : t('ixtiyoriy, 3 tagacha')})</i></div>
     <div class="ph-hint">${t('Ekran va orqa tomonini suratga oling — narxni aniqroq aytamiz')}</div>
     <div class="phs">${S.photos.map((p, i) => `<div class="tile"><img src="${p}" alt=""><button data-rm="${i}" aria-label="×">×</button></div>`).join('')}
       ${S.photos.length < 3 ? `<button class="add" id="phAdd"><span><b>+</b>${t("Rasm qo'shish")}</span></button>` : ''}</div>
@@ -717,12 +836,15 @@ function openLead(mode){
   };
 }
 
-function sendLead(){
-  const r = calc();
+function buildAnswers(){   // xodimlar uchun — doim o'zbekcha
   const answers = D.questions.map((q, qi) => ({ q: q.title, a: (S.ans[qi] || []).map(i => q.options[i] && q.options[i].label).filter(Boolean).join(', '),
     pct: (S.ans[qi] || []).reduce((s, i) => s + ((q.options[i] || {}).pct || 0), 0) }));
   const dmgAns = (D.damage || []).map(z => { const l = z.levels[S.dmg[z.code] || 0] || {}; return { q: z.name, a: l.label || '', pct: (S.dmg[z.code] > 0 && l.pct) || 0 }; });
-  answers.unshift(...dmgAns);
+  return [...dmgAns, ...answers];
+}
+function sendLead(){
+  const r = calc();
+  const answers = buildAnswers();
   const payload = { lang: LANG, src: SRC, kind: 'tradein', v: 2, mode: S.mode, name: S.name.trim(), phone: S.phone.trim(),
     brand: S.brand, model: S.model, memory: S.mem, color: S.color, region: S.region ? S.region.label : '',
     battery: S.batteryUnknown ? "noma'lum" : (S.battery ? S.battery + '%' : ''), answers,
