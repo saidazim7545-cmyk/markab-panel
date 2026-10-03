@@ -162,6 +162,20 @@ const inTelegram = !!(tg && (tg.initData || (tg.platform && tg.platform !== 'unk
 if (tg) { try { tg.ready(); tg.expand(); } catch(e){} }
 const D = Object.assign({ models: [], regions: [], battery: [], questions: [], tradein_bonus: 0, max_pct: 70, round_to: 50000, note: '' }, window.NARX_DATA || {});
 
+/* ---------- statistika (qaysi qadamgacha yetib kelishdi) ---------- */
+const SID = Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
+const SRC = (() => {
+  try { const sp = tg && tg.initDataUnsafe && tg.initDataUnsafe.start_param; if (sp) return String(sp).slice(0, 40); } catch (e) {}
+  const u = new URLSearchParams(location.search).get('src'); if (u) return u.slice(0, 40);
+  return tg && tg.initData ? 'havola' : inTelegram ? 'bot tugmasi' : 'brauzer';
+})();
+const _tracked = new Set();
+function track(ev, step = '', model = ''){
+  if (!D.api) return; const k = ev + '|' + step; if (ev !== 'lead_open' && _tracked.has(k)) return; _tracked.add(k);
+  try { fetch(D.api.replace(/\/$/, '') + '/api/ev', { method: 'POST', keepalive: true, headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ sid: SID, ev, step, src: SRC, model, initData: (tg && tg.initData) || '' }) }).catch(() => {}); } catch (e) {}
+}
+
 function applyTheme(){
   const dark = inTelegram ? tg.colorScheme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
   document.documentElement.classList.toggle('dark', dark);
@@ -364,6 +378,8 @@ function render(){
     : `<button class="back" id="backBtn" aria-label="Orqaga">${I.back}</button><div class="logo"><span class="m"></span><span class="w"></span></div>
        <span class="stepno">${s.k === 'result' ? 'Natija' : `${S.i + 1} / ${total}`}</span>`;
   document.getElementById('prog').style.width = (s.k === 'result' ? 100 : (S.i / total) * 100) + '%';
+  if (s.k === 'result') track('result', '', `${S.brand} ${S.model} ${S.mem}`.trim());
+  else track('step', s.k === 'q' ? 'q:' + String((D.questions[s.qi] || {}).title || '').slice(0, 28) : s.k);
   const V = { brand: vBrand, model: vModel, mem: vMem, color: vColor, damage: vDamage, region: vRegion, battery: vBattery, q: vQuestion, result: vResult }[s.k];
   const out = V(s);
   document.getElementById('view').innerHTML = out.html;
@@ -509,7 +525,7 @@ function maskPhone(v){ let d = String(v).replace(/\D/g, ''); if (d.startsWith('9
 const phoneOk = v => String(v).replace(/\D/g,'').replace(/^998/,'').length === 9;
 
 function openLead(mode){
-  S.mode = mode; const r = calc();
+  S.mode = mode; const r = calc(); track('lead_open', mode);
   if (!inTelegram) {   // Instagram yoki oddiy brauzer: ariza Telegram ichida yuboriladi
     const bot = (D.bot || '').replace(/^@/, ''), app = (D.app || '').replace(/^\//, '');
     const link = bot ? (app ? `https://t.me/${encodeURIComponent(bot)}/${encodeURIComponent(app)}` : `https://t.me/${encodeURIComponent(bot)}?start=narx`) : '';
@@ -546,7 +562,7 @@ function sendLead(){
     pct: (S.ans[qi] || []).reduce((s, i) => s + ((q.options[i] || {}).pct || 0), 0) }));
   const dmgAns = (D.damage || []).map(z => { const l = z.levels[S.dmg[z.code] || 0] || {}; return { q: z.name, a: l.label || '', pct: (S.dmg[z.code] > 0 && l.pct) || 0 }; });
   answers.unshift(...dmgAns);
-  const payload = { kind: 'tradein', v: 2, mode: S.mode, name: S.name.trim(), phone: S.phone.trim(),
+  const payload = { src: SRC, kind: 'tradein', v: 2, mode: S.mode, name: S.name.trim(), phone: S.phone.trim(),
     brand: S.brand, model: S.model, memory: S.mem, color: S.color, region: S.region ? S.region.label : '',
     battery: S.batteryUnknown ? "noma'lum" : (S.battery ? S.battery + '%' : ''), answers,
     blocked: r.blocked, cash: r.blocked ? 0 : r.cash, trade: r.blocked ? 0 : r.trade, base: r.base,
@@ -601,6 +617,7 @@ function leadFail(err){
   sh.querySelector('#l-retry').onclick = () => sendLead();
 }
 
+track('open');
 render();
 </script>
 </body>
