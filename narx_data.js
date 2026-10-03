@@ -1,6 +1,6 @@
 // Avtomatik yaratilgan: narx_to_data.py. Qo'lda tahrirlamang.
 window.NARX_DATA = {
- "updated": "03.10.2026 18:25",
+ "updated": "03.10.2026 18:33",
  "sample": false,
  "tradein_bonus": 8.0,
  "max_pct": 70.0,
@@ -442,6 +442,38 @@ window.NARX_DATA = {
    "model": "iPhone 11",
    "memory": "256 GB",
    "base": 1666000
+  }
+ ],
+ "banners": [
+  {
+   "id": "insta",
+   "place": "start",
+   "title": "Markab Electronics Instagram'da",
+   "title_ru": "Markab Electronics в Instagram",
+   "text": "Yangi kelgan telefonlar, aksiyalar va sovg'alar — birinchi bo'lib biling.",
+   "text_ru": "Новые поступления, акции и подарки — узнавайте первыми.",
+   "cta": "Kuzatish",
+   "cta_ru": "Подписаться",
+   "link": "https://instagram.com/markab_electronics",
+   "img": "",
+   "bg": "#8E1734",
+   "from": "2026-10-01",
+   "to": "2026-12-31"
+  },
+  {
+   "id": "tradein",
+   "place": "result",
+   "title": "Trade-in: +8% bonus",
+   "title_ru": "Трейд-ин: бонус +8%",
+   "text": "Eski telefoningizni topshirib, Markabdan yangisini olsangiz — naqd narxdan 8% ko'proq hisoblaymiz.",
+   "text_ru": "Сдайте старый телефон и купите новый в Markab — засчитаем на 8% больше цены выкупа.",
+   "cta": "Do'konlar manzili",
+   "cta_ru": "Адреса магазинов",
+   "link": "https://instagram.com/markab_electronics",
+   "img": "",
+   "bg": "#1F3B57",
+   "from": "2026-10-01",
+   "to": "2026-12-31"
   }
  ],
  "branches": [

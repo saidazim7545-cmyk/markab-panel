@@ -122,6 +122,15 @@
   textarea.f { resize: vertical; min-height: 78px; font-family: inherit; }
   .chk { display: flex; align-items: center; gap: 10px; margin-top: 14px; font-size: 14px; font-weight: 600; cursor: pointer; }
   .chk input { width: 20px; height: 20px; accent-color: var(--brand); }
+  .ban { display: block; width: 100%; text-align: left; border: 0; border-radius: 18px; overflow: hidden; cursor: pointer; margin: 0 0 14px; padding: 0;
+    background: var(--bb, #8E1734);
+    background: linear-gradient(130deg, var(--bb, #8E1734), color-mix(in srgb, var(--bb, #8E1734) 70%, #fff)); color: #fff; box-shadow: var(--shadow); position: relative; }
+  .ban img { display: block; width: 100%; aspect-ratio: 12 / 5; object-fit: cover; }
+  .ban .bt { padding: 14px 16px 15px; }
+  .ban b { display: block; font-size: 16px; font-weight: 800; margin-bottom: 3px; }
+  .ban span.tx { display: block; font-size: 13px; opacity: .92; line-height: 1.35; }
+  .ban .cta { display: inline-block; margin-top: 10px; background: #fff; color: var(--bb, #8E1734); font-weight: 800; font-size: 13px; padding: 7px 12px; border-radius: 999px; }
+  .ban .ad { position: absolute; top: 8px; right: 10px; font-size: 10px; font-weight: 700; opacity: .7; letter-spacing: .3px; }
   .langs { margin-left: auto; display: inline-flex; background: var(--field); border-radius: 10px; padding: 3px; gap: 2px; }
   .langs button { border: 0; background: none; color: var(--hint); font-weight: 800; font-size: 12.5px; padding: 6px 10px; border-radius: 8px; cursor: pointer; }
   .langs button.on { background: var(--card); color: var(--brand); box-shadow: 0 1px 3px rgba(0,0,0,.12); }
@@ -286,6 +295,7 @@ const RU = {
   "E'lonni Telegram ilovasi orqali bering": "Разместите объявление через Telegram",
   "E'lon berish uchun ilovani Telegram'da oching — rasm yuklash va tasdiqlash faqat u yerda ishlaydi.": "Откройте приложение в Telegram — загрузка фото и проверка работают только там.",
   "Bugun 3 tadan ortiq e'lon berib bo'lmaydi.": "Сегодня нельзя подать больше 3 объявлений.",
+  "Reklama": "Реклама",
   "Rang": "Цвет", "Mintaqa": "Регион", "Batareya": "Аккумулятор", "noma'lum": "неизвестно", "so'm": "сум",
 };
 const LANG = (() => {
@@ -502,6 +512,7 @@ function render(){
   document.querySelectorAll('[data-lang]').forEach(b => b.onclick = () => { if (b.dataset.lang !== LANG) setLang(b.dataset.lang); });
   if (inTelegram && tg.BackButton) { try { S.i > 0 ? tg.BackButton.show() : tg.BackButton.hide(); } catch(e){} }
   out.bind && out.bind();
+  bindBanners();
   const fh = foot.hidden ? 0 : foot.offsetHeight;
   document.getElementById('view').style.paddingBottom = (fh + 24) + 'px';
 }
@@ -516,6 +527,7 @@ function vBrand(){
     ${S.flow === 'listing'
       ? `<h1>${t("Telefoningizni e'lon qiling")}</h1><p class="sub">${t("Bir necha savolga javob bering — e'loningiz tekshiruvdan so'ng Markab kanalida bepul chiqadi.")}</p>`
       : `<h1>${t('Telefoningiz qancha turadi?')}</h1><p class="sub">${t('Bir necha savolga javob bering — 2 daqiqada naqd va trade-in narxini bilasiz. Bepul.')}</p>`}
+    ${bannerHTML('start')}
     <div class="opts two">${brands.map(b => `<button class="opt center ${S.brand===b?'on':''}" data-b="${esc(b)}">${esc(b)}</button>`).join('')}</div>`,
     bind(){ document.querySelectorAll('[data-flow]').forEach(el => el.onclick = () => { if (S.flow !== el.dataset.flow) { S.flow = el.dataset.flow; haptic(); render(); track('step', 'flow:' + S.flow); } });
       document.querySelectorAll('[data-b]').forEach(el => el.onclick = () => {
@@ -610,6 +622,7 @@ function vResult(){
       <div class="pcard ${bonus > 0 ? '' : 'main'}"><small>${t('Naqd pul')}</small><div class="v num">${som(r.cash)}</div>
         <div class="h" style="color:${bonus > 0 ? 'var(--hint)' : 'inherit'}">${t('Telefonni sotib, naqd pul olsangiz')}</div></div>
     </div>
+    <div style="height:12px"></div>${bannerHTML('result')}
     <details><summary>${t('Baholash tafsilotlari')} <span>${r.lines.length ? '−' + (Math.round(r.pct * 10) / 10) + '%' : t("chegirma yo'q")}</span></summary>
       <div class="rows"><div class="row"><span>${t("A'lo holatdagi narx")}</span><b class="num">${som(r.base)}</b></div>
       ${r.lines.map(l => `<div class="row"><span>${esc(l.label)}</span><b class="num">−${num(l.sum)}</b></div>`).join('')}</div></details>
@@ -729,6 +742,36 @@ document.getElementById('sheetBg').onclick = closeSheet;
 function maskPhone(v){ let d = String(v).replace(/\D/g, ''); if (d.startsWith('998')) d = d.slice(3); d = d.slice(0, 9);
   const p = [d.slice(0,2), d.slice(2,5), d.slice(5,7), d.slice(7,9)].filter(Boolean); return '+998' + (p.length ? ' ' + p.join(' ') : ' '); }
 const phoneOk = v => String(v).replace(/\D/g,'').replace(/^998/,'').length === 9;
+
+/* ---------- reklama bannerlari ---------- */
+const _banPick = {};
+function bannerFor(place){
+  const d = new Date(), today = `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
+  const list = (D.banners || []).filter(b => (b.place === place || b.place === 'both') && (!b.from || b.from <= today) && (!b.to || b.to >= today));
+  if (!list.length) return null;
+  if (_banPick[place] == null) _banPick[place] = Math.floor(Math.random() * list.length);   // bir sessiyada bitta, navbat bilan
+  return list[_banPick[place] % list.length];
+}
+function bannerHTML(place){
+  const b = bannerFor(place); if (!b) return '';
+  track('ban_view', b.id);
+  const bg = b.bg ? `--bb:${b.bg}` : '';
+  return `<button class="ban" data-ban="${esc(b.id)}" style="${bg}">${b.img ? `<img src="${esc(b.img)}" alt="" loading="lazy">` : ''}
+    <div class="bt"><span class="ad">${t('Reklama')}</span><b>${esc(tx(b, 'title'))}</b>${b.text ? `<span class="tx">${esc(tx(b, 'text'))}</span>` : ''}
+    ${b.cta && b.link ? `<span class="cta">${esc(tx(b, 'cta'))} →</span>` : ''}</div></button>`;
+}
+function bindBanners(){
+  document.querySelectorAll('[data-ban]').forEach(el => el.onclick = () => {
+    const b = (D.banners || []).find(x => x.id === el.dataset.ban); if (!b || !b.link) return;
+    track('ban_click', b.id); haptic();
+    try {
+      if (/^tel:/.test(b.link)) { location.href = b.link; return; }
+      if (/^https:\/\/t\.me\//.test(b.link) && tg && tg.openTelegramLink) { tg.openTelegramLink(b.link); return; }
+      if (tg && tg.openLink) { tg.openLink(b.link); return; }
+    } catch (e) {}
+    window.open(b.link, '_blank', 'noopener');
+  });
+}
 
 /* ---------- filial va kelish vaqti ---------- */
 const pad2 = n => String(n).padStart(2, '0');
