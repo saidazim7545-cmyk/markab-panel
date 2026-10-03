@@ -131,6 +131,34 @@
   .ban span.tx { display: block; font-size: 13px; opacity: .92; line-height: 1.35; }
   .ban .cta { display: inline-block; margin-top: 10px; background: #fff; color: var(--bb, #8E1734); font-weight: 800; font-size: 13px; padding: 7px 12px; border-radius: 999px; }
   .ban .ad { position: absolute; top: 8px; right: 10px; font-size: 10px; font-weight: 700; opacity: .7; letter-spacing: .3px; }
+  /* bosh sahifa */
+  .hero { position: relative; overflow: hidden; border-radius: 22px; padding: 20px 18px 18px; margin-bottom: 12px; color: #fff;
+    background: radial-gradient(120% 90% at 100% 0%, #E2587B 0%, transparent 55%), linear-gradient(140deg, #6B1229, #BB2548); min-height: 186px; }
+  .hero.ls { background: radial-gradient(120% 90% at 100% 0%, #4F86C6 0%, transparent 55%), linear-gradient(140deg, #14243A, #2C5A8C); }
+  .hero h1 { color: #fff; font-size: 24px; line-height: 1.15; max-width: 62%; margin: 0 0 8px; }
+  .hero p { margin: 0; font-size: 13.5px; line-height: 1.4; opacity: .9; max-width: 56%; }
+  .hero h1, .hero p, .hero .go { position: relative; z-index: 1; }
+  .hero .phs3 { position: absolute; right: -8px; bottom: -30px; width: 41%; height: 200px; pointer-events: none; }
+  .hero .phs3 svg { position: absolute; width: 58%; height: auto; filter: drop-shadow(0 8px 16px rgba(0,0,0,.35)); }
+  .hero .phs3 svg:first-child { left: 0; bottom: 6px; transform: rotate(-12deg); }
+  .hero .phs3 svg:last-child { right: 0; bottom: 30px; transform: rotate(9deg); }
+  .hero .go { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; background: #fff; color: #8E1734; font-weight: 800; font-size: 14px;
+    padding: 10px 14px; border-radius: 999px; border: 0; cursor: pointer; box-shadow: 0 4px 14px rgba(0,0,0,.18); }
+  .hero.ls .go { color: #1F3B57; }
+  .perks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px; }
+  .perk { background: var(--card); border-radius: 14px; padding: 10px 8px; text-align: center; box-shadow: var(--shadow); }
+  .perk i { font-style: normal; font-size: 20px; display: block; line-height: 1.2; }
+  .perk b { display: block; font-size: 12.5px; margin-top: 3px; } .perk span { display: block; font-size: 11px; color: var(--hint); margin-top: 1px; }
+  .sec { display: flex; align-items: baseline; justify-content: space-between; margin: 4px 2px 8px; }
+  .sec h2 { font-size: 16px; margin: 0; } .sec button { border: 0; background: none; color: var(--brand); font-weight: 800; font-size: 13.5px; cursor: pointer; padding: 4px; }
+  .pop { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px; }
+  .pop button { background: var(--card); border: 1.5px solid transparent; border-radius: 16px; padding: 10px 6px 9px; cursor: pointer; box-shadow: var(--shadow);
+    display: flex; flex-direction: column; align-items: center; gap: 6px; color: var(--text); font-weight: 700; font-size: 12.5px; line-height: 1.2; text-align: center; }
+  .pop button:active { border-color: var(--brand); }
+  .pop svg { width: 34px; height: auto; }
+  .how { background: var(--card); border-radius: 16px; padding: 12px 14px; box-shadow: var(--shadow); display: grid; gap: 10px; margin-bottom: 8px; }
+  .how div { display: flex; gap: 10px; align-items: center; font-size: 13.5px; }
+  .how em { font-style: normal; width: 24px; height: 24px; flex: none; border-radius: 50%; background: var(--brand-soft); color: var(--brand); font-weight: 800; font-size: 12.5px; display: grid; place-items: center; }
   .langs { margin-left: auto; display: inline-flex; background: var(--field); border-radius: 10px; padding: 3px; gap: 2px; }
   .langs button { border: 0; background: none; color: var(--hint); font-weight: 800; font-size: 12.5px; padding: 6px 10px; border-radius: 8px; cursor: pointer; }
   .langs button.on { background: var(--card); color: var(--brand); box-shadow: 0 1px 3px rgba(0,0,0,.12); }
@@ -296,6 +324,13 @@ const RU = {
   "E'lon berish uchun ilovani Telegram'da oching — rasm yuklash va tasdiqlash faqat u yerda ishlaydi.": "Откройте приложение в Telegram — загрузка фото и проверка работают только там.",
   "Bugun 3 tadan ortiq e'lon berib bo'lmaydi.": "Сегодня нельзя подать больше 3 объявлений.",
   "Reklama": "Реклама",
+  "Narxni bilish": "Узнать цену", "E'lon berish →": "Подать объявление →", "2 daqiqa": "2 минуты", "javob bering": "ответьте на вопросы",
+  "Naqd pul": "Наличными", "bugunoq": "в тот же день", "bonus": "бонус", "Ommabop modellar": "Популярные модели", "Hammasi": "Все",
+  "Qanday ishlaydi?": "Как это работает?", "Telefon haqidagi savollarga javob bering": "Ответьте на вопросы о телефоне",
+  "Naqd yoki trade-in narxini darhol ko'ring": "Сразу увидите цену выкупа и трейд-ин", "Filialga keling — pulni o'sha kuni olasiz": "Приходите в филиал — деньги в тот же день",
+  "Bepul": "Бесплатно", "e'lon": "объявление", "Tekshiruv": "Проверка", "spamsiz kanal": "канал без спама", "Rasmlar": "Фото", "1–3 ta": "1–3 шт.",
+  "Telefon haqida qisqa savollarga javob bering": "Ответьте на короткие вопросы о телефоне", "Narx, rasm va izoh qo'shing": "Добавьте цену, фото и описание",
+  "Tekshiruvdan so'ng e'lon kanalda chiqadi": "После проверки объявление появится в канале", "Brendni tanlang": "Выберите бренд",
   "Rang": "Цвет", "Mintaqa": "Регион", "Batareya": "Аккумулятор", "noma'lum": "неизвестно", "so'm": "сум",
 };
 const LANG = (() => {
@@ -522,16 +557,42 @@ if (inTelegram && tg.BackButton) { try { tg.BackButton.onClick(back); } catch(e)
 const chosenLine = () => S.model ? `<div class="chosen">${S.model.startsWith(S.brand) ? '' : esc(S.brand) + ' '}${esc(S.model)}${S.mem ? ' · ' + esc(S.mem) : ''}${S.color ? ' · ' + esc((colorEntry() ? tx(colorEntry(), 'name') : t(S.color)).replace(/\s*\(.*\)$/, '')) : ''}</div>` : '';
 
 function vBrand(){
+  const L = S.flow === 'listing', one = brands.length === 1;
+  const pal = ['#2F3D5C', '#E0703A', '#C2BCB2', '#9DC7C1', '#3C3C3D', '#F2B8C8'];
+  const mini = (b, m, col) => phoneSVG('back', { kind: phoneKind(b, m), color: col }).replace('viewBox="-14 -6 128 234"', 'viewBox="-2 -2 104 204"');
+  const firstColor = (b, m) => (colorsOf(b, m)[0] || {}).hex || '#C9C9CC';
+  const popular = [];
+  for (const m of D.models) { if (popular.length >= 6) break; if (!popular.some(x => x.b === m.brand && x.m === m.model)) popular.push({ b: m.brand, m: m.model }); }
+  const hb = brands[0] || 'Apple';
+  const perks = L ? [['🆓', t('Bepul'), t("e'lon")], ['🛡️', t('Tekshiruv'), t('spamsiz kanal')], ['📷', t('Rasmlar'), t('1–3 ta')]]
+                  : [['⏱️', t('2 daqiqa'), t('javob bering')], ['💵', t('Naqd pul'), t('bugunoq')], ['🔁', 'Trade-in', `+${D.tradein_bonus || 0}% ${t('bonus')}`]];
+  const how = L ? [t('Telefon haqida qisqa savollarga javob bering'), t("Narx, rasm va izoh qo'shing"), t("Tekshiruvdan so'ng e'lon kanalda chiqadi")]
+                : [t('Telefon haqidagi savollarga javob bering'), t("Naqd yoki trade-in narxini darhol ko'ring"), t("Filialga keling — pulni o'sha kuni olasiz")];
   return { html: `
-    <div class="seg"><button data-flow="sell" class="${S.flow === 'sell' ? 'on' : ''}">💰 ${t('Markabga sotish')}</button><button data-flow="listing" class="${S.flow === 'listing' ? 'on' : ''}">📢 ${t("E'lon berish")}</button></div>
-    ${S.flow === 'listing'
-      ? `<h1>${t("Telefoningizni e'lon qiling")}</h1><p class="sub">${t("Bir necha savolga javob bering — e'loningiz tekshiruvdan so'ng Markab kanalida bepul chiqadi.")}</p>`
-      : `<h1>${t('Telefoningiz qancha turadi?')}</h1><p class="sub">${t('Bir necha savolga javob bering — 2 daqiqada naqd va trade-in narxini bilasiz. Bepul.')}</p>`}
+    <div class="seg"><button data-flow="sell" class="${!L ? 'on' : ''}">💰 ${t('Markabga sotish')}</button><button data-flow="listing" class="${L ? 'on' : ''}">📢 ${t("E'lon berish")}</button></div>
+    <div class="hero ${L ? 'ls' : ''}">
+      <h1>${L ? t("Telefoningizni e'lon qiling") : t('Telefoningiz qancha turadi?')}</h1>
+      <p>${L ? t("E'lon tekshiruvdan so'ng Markab kanalida bepul chiqadi.") : t('Bir necha savolga javob bering — 2 daqiqada naqd va trade-in narxini bilasiz. Bepul.')}</p>
+      ${one ? `<button class="go" data-b="${esc(hb)}">${L ? t("E'lon berish →") : t('Narxni bilish') + ' →'}</button>` : ''}
+      <div class="phs3">${mini(hb, (popular[1] || popular[0] || {}).m || 'iPhone 16', L ? '#9DC7C1' : '#E8E4DC')}${mini(hb, (popular[0] || {}).m || 'iPhone 17 Pro', L ? '#2F3D5C' : '#E0703A')}</div>
+    </div>
+    <div class="perks">${perks.map(([i, b, sp]) => `<div class="perk"><i>${i}</i><b>${esc(b)}</b><span>${esc(sp)}</span></div>`).join('')}</div>
     ${bannerHTML('start')}
-    <div class="opts two">${brands.map(b => `<button class="opt center ${S.brand===b?'on':''}" data-b="${esc(b)}">${esc(b)}</button>`).join('')}</div>`,
-    bind(){ document.querySelectorAll('[data-flow]').forEach(el => el.onclick = () => { if (S.flow !== el.dataset.flow) { S.flow = el.dataset.flow; haptic(); render(); track('step', 'flow:' + S.flow); } });
-      document.querySelectorAll('[data-b]').forEach(el => el.onclick = () => {
-      if (S.brand !== el.dataset.b) { S.brand = el.dataset.b; S.model = ''; S.mem = ''; S.color = ''; S.dmg = {}; S.region = null; S.q = ''; } next(); }); } };
+    ${one ? `<div class="sec"><h2>${t('Ommabop modellar')}</h2><button data-b="${esc(hb)}">${t('Hammasi')} →</button></div>
+      <div class="pop">${popular.map((p, i) => `<button data-pm="${i}">${mini(p.b, p.m, firstColor(p.b, p.m) || pal[i % pal.length])}<span>${esc(p.m)}</span></button>`).join('')}</div>`
+          : `<div class="sec"><h2>${t('Brendni tanlang')}</h2></div>
+      <div class="opts two" style="margin-bottom:16px">${brands.map(b => `<button class="opt center ${S.brand===b?'on':''}" data-b="${esc(b)}">${esc(b)}</button>`).join('')}</div>`}
+    <div class="sec"><h2>${t('Qanday ishlaydi?')}</h2></div>
+    <div class="how">${how.map((x, i) => `<div><em>${i + 1}</em>${esc(x)}</div>`).join('')}</div>`,
+    bind(){
+      document.querySelectorAll('[data-flow]').forEach(el => el.onclick = () => { if (S.flow !== el.dataset.flow) { S.flow = el.dataset.flow; haptic(); render(); track('step', 'flow:' + S.flow); } });
+      const pickBrand = b => { if (S.brand !== b) { S.brand = b; S.model = ''; S.mem = ''; S.color = ''; S.dmg = {}; S.region = null; S.q = ''; } };
+      document.querySelectorAll('[data-b]').forEach(el => el.onclick = () => { pickBrand(el.dataset.b); next(); });
+      document.querySelectorAll('[data-pm]').forEach(el => el.onclick = () => {
+        const p = popular[+el.dataset.pm]; pickBrand(p.b);
+        if (S.model !== p.m) { S.model = p.m; S.color = ''; const ms = memsOf(S.brand, S.model); S.mem = ms.length === 1 ? ms[0].memory : ''; }
+        track('step', 'model'); S.i = steps().findIndex(x => x.k === 'model') + 1; haptic(); render(); window.scrollTo(0, 0); });
+    } };
 }
 function vModel(){
   const list = () => { const q = S.q.trim().toLowerCase(); const ms = modelsOf(S.brand).filter(m => !q || m.toLowerCase().includes(q));
