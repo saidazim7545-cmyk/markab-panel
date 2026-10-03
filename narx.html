@@ -95,6 +95,10 @@
   .col.ph { flex-direction: column; text-align: center; gap: 6px; padding: 12px 8px 10px; }
   .col.ph svg, .col.ph img { width: 56px; height: 104px; object-fit: contain; }
   .col.ph span { font-size: 13px; }
+  .sample + .langs { margin-left: 8px; }
+  .langs { margin-left: auto; display: inline-flex; background: var(--field); border-radius: 10px; padding: 3px; gap: 2px; }
+  .langs button { border: 0; background: none; color: var(--hint); font-weight: 800; font-size: 12.5px; padding: 6px 10px; border-radius: 8px; cursor: pointer; }
+  .langs button.on { background: var(--card); color: var(--brand); box-shadow: 0 1px 3px rgba(0,0,0,.12); }
   .foot { position: fixed; left: 0; right: 0; bottom: 0; z-index: 6; background: var(--card); box-shadow: 0 -1px 0 var(--line); padding: 10px 16px calc(12px + env(safe-area-inset-bottom)); }
   .foot .in { max-width: 640px; margin: 0 auto; display: grid; gap: 8px; }
   .btn { width: 100%; border: 0; border-radius: 14px; padding: 15px; font-size: 15.5px; font-weight: 800; cursor: pointer;
@@ -185,12 +189,72 @@ function applyTheme(){
 applyTheme();
 if (inTelegram) tg.onEvent('themeChanged', applyTheme);
 
+/* ---------- til (o'zbek / rus) ---------- */
+const RU = {
+  "Telefoningiz qancha turadi?": "Сколько стоит ваш телефон?",
+  "Bir necha savolga javob bering — 2 daqiqada naqd va trade-in narxini bilasiz. Bepul.": "Ответьте на несколько вопросов — за 2 минуты узнаете цену выкупа и трейд-ин. Бесплатно.",
+  "Namuna narxlar": "Пример цен", "Orqaga": "Назад", "Natija": "Итог",
+  "Model topilmadi. Ro'yxatda yo'q bo'lsa, filialimizga murojaat qiling.": "Модель не найдена. Если её нет в списке, обратитесь в наш филиал.",
+  "Qaysi model?": "Какая модель?", "{b} modelini tanlang": "Выберите модель {b}", "Qidirish, masalan 14 Pro": "Поиск, например 14 Pro",
+  "Xotira hajmi": "Объём памяти", "Sozlamalar → Umumiy → Qurilma haqida bo'limida ko'rinadi": "Смотрите: Настройки → Основные → Об этом устройстве",
+  "Telefon rangi": "Цвет телефона", "Telefoningiz qaysi rangda?": "Какого цвета ваш телефон?", "Boshqa rang": "Другой цвет",
+  "Qaysi mamlakat uchun chiqarilgan?": "Для какой страны выпущен?", "Qayerdan topish mumkin": "Где посмотреть",
+  "Sozlamalar → Umumiy → Qurilma haqida → Model raqami. Oxiridagi harflarga qarang, masalan MQ9U3": "Настройки → Основные → Об этом устройстве → Номер модели. Смотрите на буквы в конце, например MQ9U3",
+  "Sozlamalar → Batareya → Batareya holati": "Настройки → Аккумулятор → Состояние аккумулятора",
+  "Sozlamalar → Batareya (yoki Qurilma parvarishi → Batareya)": "Настройки → Батарея (или Обслуживание устройства → Батарея)",
+  "1 dan 100 gacha kiriting": "Введите от 1 до 100", " · narxni pasaytiradi": " · снижает цену",
+  "Batareya holati necha foiz?": "Состояние аккумулятора — сколько %?", "Bilmayman": "Не знаю", "Davom etish": "Продолжить",
+  "Bir nechtasini belgilash mumkin": "Можно выбрать несколько", "Model tanlanmagan": "Модель не выбрана",
+  "Afsus, onlayn baholab bo'lmaydi": "К сожалению, онлайн-оценка невозможна",
+  "Bu holatdagi telefonni ustalarimiz ko'rib chiqishi kerak. Ariza qoldiring — o'zimiz bog'lanamiz.": "Телефон в таком состоянии должны осмотреть наши мастера. Оставьте заявку — мы свяжемся с вами.",
+  "Ariza qoldirish": "Оставить заявку", "Qaytadan baholash": "Оценить заново", "Baholash natijasi": "Результат оценки",
+  "Telefoningiz uchun taxminiy narx": "Примерная цена вашего телефона", "Trade-in narxi": "Цена трейд-ин",
+  "Markabdan yangi telefon olsangiz, shu summa hisobga olinadi": "Эта сумма засчитывается при покупке нового телефона в Markab",
+  "Naqd pul": "Наличными", "Telefonni sotib, naqd pul olsangiz": "Если продаёте телефон за наличные",
+  "Baholash tafsilotlari": "Детали оценки", "chegirma yo'q": "без скидок", "A'lo holatdagi narx": "Цена в отличном состоянии",
+  "Narx yoqdimi?": "Цена устраивает?", "Past": "Низкая", "Yaxshi": "Хорошая", "Ajoyib": "Отличная",
+  "Boshqa joyda qancha taklif qilishdi? (so'm, ixtiyoriy)": "Сколько предложили в другом месте? (сум, необязательно)",
+  "Masalan, 7 000 000": "Например, 7 000 000", "Hoziroq Markabga sotish": "Продать в Markab сейчас",
+  "Naqd pul — {p}": "Наличными — {p}", "Trade-in qilaman": "Хочу трейд-ин", "Yangi telefonga almashtirish — {p}": "Обмен на новый телефон — {p}",
+  "Arizani Telegram orqali yuboring": "Отправьте заявку через Telegram", "Narxingiz": "Ваша цена", "naqd": "наличными",
+  "Telegram'da shu ilova ochiladi — javoblarni yana bir bor belgilab, arizani yuboring.": "В Telegram откроется это приложение — отметьте ответы ещё раз и отправьте заявку.",
+  "Telegram'da botimiz ochiladi: <b>Start</b> ni bosing, so'ng <b>📱 Telefonni narxlash</b> tugmasi orqali arizani yuboring.": "Откроется наш бот: нажмите <b>Start</b>, затем отправьте заявку кнопкой <b>📱 Telefonni narxlash</b>.",
+  "Telegram'da davom etish": "Продолжить в Telegram", "Trade-in arizasi": "Заявка на трейд-ин", "Ko'rikka yozilish": "Запись на осмотр",
+  "taxminan": "примерно", "Xodimimiz qo'ng'iroq qilib, filialga kelish vaqtini kelishadi.": "Наш сотрудник позвонит и согласует время визита в филиал.",
+  "Ismingiz": "Ваше имя", "Telefon raqamingiz": "Ваш номер телефона", "Yuborish": "Отправить",
+  "Ism va telefon raqamini to'liq kiriting": "Введите имя и номер телефона полностью",
+  "Yuborish uchun botdagi pastki «📱 Telefonni narxlash» tugmasi orqali oching (/narx)": "Для отправки откройте приложение кнопкой «📱 Telefonni narxlash» в боте (/narx)",
+  "Brauzerda ochilgan: ariza faqat Telegram ichida yuboriladi.": "Открыто в браузере: заявку можно отправить только в Telegram.",
+  "Yuborilmoqda…": "Отправляем…", "Arizangiz qabul qilindi!": "Заявка принята!",
+  "Xodimimiz {p} raqamiga tez orada qo'ng'iroq qiladi.": "Наш сотрудник скоро позвонит на номер {p}.",
+  "Yopish": "Закрыть", "Boshqa telefonni baholash": "Оценить другой телефон",
+  "Juda ko'p ariza yuborildi. Birozdan so'ng qayta urinib ko'ring.": "Слишком много заявок. Попробуйте чуть позже.",
+  "Sahifa eskirib qoldi. Ilovani yopib, qayta oching.": "Страница устарела. Закройте и откройте приложение заново.",
+  "Arizani yuborib bo'lmadi. Internetni tekshirib, qayta urinib ko'ring.": "Не удалось отправить заявку. Проверьте интернет и попробуйте снова.",
+  "Yuborilmadi": "Не отправлено", "Qayta yuborish": "Отправить снова", "Bot orqali yuborish": "Отправить через бота",
+  "Tirnalish va shikastlar": "Царапины и повреждения",
+  "Telefon rasmida shikastlangan joyni bosing. Belgilanmagan joylar ideal hisoblanadi.": "Нажмите на повреждённое место на изображении. Неотмеченные места считаются идеальными.",
+  "Hammasi ideal — davom etish": "Всё идеально — продолжить", "Holatini tanlang": "Выберите состояние",
+  "Ekran": "Экран", "Orqa": "Задняя", "Ramka": "Рамка", "Kamera": "Камера",
+  "Almashtirilgan qismni telefon rasmida bosing": "Нажмите на заменённую деталь на изображении",
+  "Almashtirilmagan — davom etish": "Ничего не менялось — продолжить", "Old tomoni": "Спереди", "Orqa tomoni": "Сзади",
+  "Rang": "Цвет", "Mintaqa": "Регион", "Batareya": "Аккумулятор", "noma'lum": "неизвестно", "so'm": "сум",
+};
+const LANG = (() => {
+  try { const v = localStorage.getItem('narx_lang'); if (v === 'uz' || v === 'ru') return v; } catch (e) {}
+  try { const lc = tg && tg.initDataUnsafe && tg.initDataUnsafe.user && tg.initDataUnsafe.user.language_code; if (lc) return /^ru|^be|^kk|^uk/.test(lc) ? 'ru' : 'uz'; } catch (e) {}
+  return /^ru/i.test(navigator.language || '') ? 'ru' : 'uz';
+})();
+function t(uz, vars){ let s = (LANG === 'ru' && RU[uz]) || uz; if (vars) for (const k in vars) s = s.split('{' + k + '}').join(vars[k]); return s; }
+const tx = (o, k) => (o && ((LANG === 'ru' && o[k + '_ru']) || o[k])) || '';
+function setLang(l){ try { localStorage.setItem('narx_lang', l); } catch (e) {} location.reload(); }
+
 /* ---------- state ---------- */
 const S = { i: 0, brand: '', model: '', mem: '', color: '', dmg: {}, region: null, battery: '', batteryUnknown: false, ans: {}, q: '',
             feedback: '', competitor: '', mode: '', name: '', phone: '' };
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num = n => Math.round(n || 0).toLocaleString('ru-RU').replace(/\s|,/g, ' ');
-const som = n => num(n) + " so'm";
+const som = n => num(n) + ' ' + t("so'm");
 const haptic = (k='sel') => { try { if (!tg || !tg.HapticFeedback) return; k === 'sel' ? tg.HapticFeedback.selectionChanged() : tg.HapticFeedback.notificationOccurred(k); } catch(e){} };
 function toast(m){ const el = document.getElementById('toast'); el.textContent = m; el.style.display = 'block'; clearTimeout(toast._t); toast._t = setTimeout(() => el.style.display = 'none', 2800); }
 
@@ -279,7 +343,7 @@ function phonesHTML(o){ // o: {kind, color, mark, battery, pins:[{code,label,on,
   const views = ['front', 'back'].map(v => {
     const pins = (o.pins || []).map(p => { const sp = spotOf(p.code, o.kind); if (!sp || sp[0] !== v) return '';
       return `<button class="pin ${p.on ? 'on' : ''}" data-pin="${esc(p.key)}" style="left:${(sp[1] + 14) / 128 * 100}%;top:${(sp[2] + 6) / 234 * 100}%"><b>${p.on ? p.sym : '+'}</b>${esc(p.label)}</button>`; }).join('');
-    return `<div><div class="pv">${phoneSVG(v, o)}${pins}</div><div class="cap">${v === 'front' ? 'Old tomoni' : 'Orqa tomoni'}</div></div>`; }).join('');
+    return `<div><div class="pv">${phoneSVG(v, o)}${pins}</div><div class="cap">${v === 'front' ? t('Old tomoni') : t('Orqa tomoni')}</div></div>`; }).join('');
   return `<div class="phones">${views}</div>`;
 }
 const curColorHex = () => { const c = colorEntry(); return c && c.hex ? c.hex : '#C9C9CC'; };
@@ -290,16 +354,16 @@ function vDamage(){
   const lvl = z => z.levels[S.dmg[z.code] || 0] || z.levels[0];
   const mark = {}; Z.forEach(z => { if ((S.dmg[z.code] || 0) > 0) mark[z.code] = true; });
   const short = { screen: 'Ekran', back: 'Orqa', frame: 'Ramka', camera: 'Kamera' };
-  const pins = Z.map(z => ({ key: z.code, code: z.code, label: short[z.code] || z.name, on: !!mark[z.code], sym: '!' }));
-  return { html: `${chosenLine()}<h1>Tirnalish va shikastlar</h1><p class="sub">Telefon rasmida shikastlangan joyni bosing. Belgilanmagan joylar ideal hisoblanadi.</p>
+  const pins = Z.map(z => ({ key: z.code, code: z.code, label: short[z.code] ? t(short[z.code]) : tx(z, 'name'), on: !!mark[z.code], sym: '!' }));
+  return { html: `${chosenLine()}<h1>${t('Tirnalish va shikastlar')}</h1><p class="sub">${t('Telefon rasmida shikastlangan joyni bosing. Belgilanmagan joylar ideal hisoblanadi.')}</p>
     ${phonesHTML({ kind, color: curColorHex(), mark, pins, hatch: true })}
     <div class="zl">${Z.map(z => { const L = lvl(z), on = (S.dmg[z.code] || 0) > 0;
-      return `<button class="zrow ${on ? 'on' : ''}" data-z="${esc(z.code)}">${esc(z.name)}<span class="r">${esc(L.label)}${on && L.pct ? ` · −${L.pct}%` : ''}</span>${I.chev}</button>`; }).join('')}</div>`,
-    foot: `<button class="btn" id="goNext">${Object.keys(mark).length ? 'Davom etish' : 'Hammasi ideal — davom etish'}</button>`,
+      return `<button class="zrow ${on ? 'on' : ''}" data-z="${esc(z.code)}">${esc(tx(z, 'name'))}<span class="r">${esc(tx(L, 'label'))}${on && L.pct ? ` · −${L.pct}%` : ''}</span>${I.chev}</button>`; }).join('')}</div>`,
+    foot: `<button class="btn" id="goNext">${Object.keys(mark).length ? t('Davom etish') : t('Hammasi ideal — davom etish')}</button>`,
     bind(){
       const open = code => { const z = Z.find(x => x.code === code); if (!z) return; haptic();
-        const sh = openSheet(`<h3>${esc(z.name)}</h3><p>Holatini tanlang</p><div style="height:10px"></div>
-          <div class="opts">${z.levels.map((l, i) => `<button class="opt ${(S.dmg[code] || 0) === i ? 'on' : ''}" data-l="${i}">${esc(l.label)}</button>`).join('')}</div>`);
+        const sh = openSheet(`<h3>${esc(tx(z, 'name'))}</h3><p>${t('Holatini tanlang')}</p><div style="height:10px"></div>
+          <div class="opts">${z.levels.map((l, i) => `<button class="opt ${(S.dmg[code] || 0) === i ? 'on' : ''}" data-l="${i}">${esc(tx(l, 'label'))}</button>`).join('')}</div>`);
         sh.querySelectorAll('[data-l]').forEach(b => b.onclick = () => { S.dmg[code] = +b.dataset.l; closeSheet(); haptic(); render(); }); };
       document.querySelectorAll('[data-pin],[data-z]').forEach(el => el.onclick = () => open(el.dataset.pin || el.dataset.z));
       document.getElementById('goNext').onclick = next; } };
@@ -314,12 +378,12 @@ function vParts(s){
     else { cur = cur.filter(x => x !== 0); cur = cur.includes(i) ? cur.filter(x => x !== i) : [...cur, i]; }
     S.ans[s.qi] = cur; haptic(); render(); };
   const mark = {}; sel().forEach(i => { const o = q.options[i]; if (o && o.pos) mark[o.pos] = true; });
-  const shortL = l => l.replace(/\s*\/.*$/, '').replace(/ skaneri$/, '');
-  const pins = q.options.map((o, i) => o.pos ? { key: String(i), code: o.pos, label: shortL(o.label), on: sel().includes(i), sym: '✓' } : null).filter(Boolean);
-  return { html: `${chosenLine()}<h1>${esc(q.title)}</h1><p class="sub">${esc(q.hint || 'Almashtirilgan qismni telefon rasmida bosing')}</p>
+  const shortL = l => l.replace(/\s*\/.*$/, '').replace(/ skaneri$/, '').replace(/^Разъём зарядки$/, 'Разъём');
+  const pins = q.options.map((o, i) => o.pos ? { key: String(i), code: o.pos, label: shortL(tx(o, 'label')), on: sel().includes(i), sym: '✓' } : null).filter(Boolean);
+  return { html: `${chosenLine()}<h1>${esc(tx(q, 'title'))}</h1><p class="sub">${esc(tx(q, 'hint') || t('Almashtirilgan qismni telefon rasmida bosing'))}</p>
     ${phonesHTML({ kind, color: curColorHex(), mark, pins, battery: pins.some(p => p.code === 'battery') })}
-    <div class="opts">${q.options.map((o, i) => `<button class="opt ${sel().includes(i) ? 'on' : ''}" data-o="${i}"><span class="box">${I.check}</span>${esc(o.label)}</button>`).join('')}</div>`,
-    foot: `<button class="btn" id="goNext">${sel().length && !sel().includes(0) ? 'Davom etish' : 'Almashtirilmagan — davom etish'}</button>`,
+    <div class="opts">${q.options.map((o, i) => `<button class="opt ${sel().includes(i) ? 'on' : ''}" data-o="${i}"><span class="box">${I.check}</span>${esc(tx(o, 'label'))}</button>`).join('')}</div>`,
+    foot: `<button class="btn" id="goNext">${sel().length && !sel().includes(0) ? t('Davom etish') : t('Almashtirilmagan — davom etish')}</button>`,
     bind(){
       document.querySelectorAll('[data-pin]').forEach(el => el.onclick = () => toggle(+el.dataset.pin));
       document.querySelectorAll('[data-o]').forEach(el => el.onclick = () => toggle(+el.dataset.o));
@@ -344,14 +408,14 @@ function calc(){
   const e = entry(); if (!e) return null;
   const lines = []; let pct = 0, blocked = false;
   const add = (label, p) => { if (p > 0) { pct += p; lines.push({ label, p }); } };
-  const ce = colorEntry(); if (ce) add(`Rang: ${ce.name}`, ce.pct);
-  if (S.region) add(`Mintaqa: ${S.region.label}`, S.region.pct);
+  const ce = colorEntry(); if (ce) add(`${t('Rang')}: ${tx(ce, 'name')}`, ce.pct);
+  if (S.region) add(`${t('Mintaqa')}: ${tx(S.region, 'label')}`, S.region.pct);
   const bt = S.batteryUnknown ? unknownTier() : batteryTier(+S.battery);
-  if (bt) add(`Batareya: ${S.batteryUnknown ? 'noma\'lum' : S.battery + '%'} (${bt.label})`, bt.pct);
+  if (bt) add(`${t('Batareya')}: ${S.batteryUnknown ? t("noma'lum") : S.battery + '%'} (${tx(bt, 'label')})`, bt.pct);
   (D.damage || []).forEach(z => { const l = z.levels[S.dmg[z.code] || 0]; if (!l || !(S.dmg[z.code] > 0)) return;
-    if (l.block) blocked = true; add(`${z.name}: ${l.label}`, l.pct); });
+    if (l.block) blocked = true; add(`${tx(z, 'name')}: ${tx(l, 'label')}`, l.pct); });
   D.questions.forEach((q, qi) => (S.ans[qi] || []).forEach(oi => { const o = q.options[oi]; if (!o) return;
-    if (o.block) blocked = true; add(`${q.title.replace(/\?$/, '')}: ${o.label}`, o.pct); }));
+    if (o.block) blocked = true; add(`${tx(q, 'title').replace(/\?$/, '')}: ${tx(o, 'label')}`, o.pct); }));
   pct = Math.min(pct, D.max_pct);
   const r = D.round_to || 1;
   const cash = Math.max(0, Math.round(e.base * (1 - pct / 100) / r) * r);
@@ -374,9 +438,9 @@ function render(){
   const st = steps(); if (S.i >= st.length) S.i = st.length - 1;
   const s = st[S.i], total = st.length - 1;
   document.getElementById('bar').innerHTML = S.i === 0
-    ? `<div class="logo"><span class="m"></span><span class="w"></span></div>${D.sample ? '<span class="sample">Namuna narxlar</span>' : ''}`
-    : `<button class="back" id="backBtn" aria-label="Orqaga">${I.back}</button><div class="logo"><span class="m"></span><span class="w"></span></div>
-       <span class="stepno">${s.k === 'result' ? 'Natija' : `${S.i + 1} / ${total}`}</span>`;
+    ? `<div class="logo"><span class="m"></span><span class="w"></span></div>${D.sample ? `<span class="sample">${t('Namuna narxlar')}</span>` : ''}<span class="langs"><button data-lang="uz" class="${LANG === 'uz' ? 'on' : ''}">UZ</button><button data-lang="ru" class="${LANG === 'ru' ? 'on' : ''}">RU</button></span>`
+    : `<button class="back" id="backBtn" aria-label="${t('Orqaga')}">${I.back}</button><div class="logo"><span class="m"></span><span class="w"></span></div>
+       <span class="stepno">${s.k === 'result' ? t('Natija') : `${S.i + 1} / ${total}`}</span>`;
   document.getElementById('prog').style.width = (s.k === 'result' ? 100 : (S.i / total) * 100) + '%';
   if (s.k === 'result') track('result', '', `${S.brand} ${S.model} ${S.mem}`.trim());
   else track('step', s.k === 'q' ? 'q:' + String((D.questions[s.qi] || {}).title || '').slice(0, 28) : s.k);
@@ -386,6 +450,7 @@ function render(){
   const foot = document.getElementById('foot');
   foot.hidden = !out.foot; document.getElementById('footIn').innerHTML = out.foot || '';
   if (document.getElementById('backBtn')) document.getElementById('backBtn').onclick = back;
+  document.querySelectorAll('[data-lang]').forEach(b => b.onclick = () => { if (b.dataset.lang !== LANG) setLang(b.dataset.lang); });
   if (inTelegram && tg.BackButton) { try { S.i > 0 ? tg.BackButton.show() : tg.BackButton.hide(); } catch(e){} }
   out.bind && out.bind();
   const fh = foot.hidden ? 0 : foot.offsetHeight;
@@ -394,12 +459,12 @@ function render(){
 function next(){ S.i++; haptic(); render(); window.scrollTo(0, 0); }
 function back(){ if (S.i > 0) { S.i--; haptic(); render(); window.scrollTo(0, 0); } }
 if (inTelegram && tg.BackButton) { try { tg.BackButton.onClick(back); } catch(e){} }
-const chosenLine = () => S.model ? `<div class="chosen">${S.model.startsWith(S.brand) ? '' : esc(S.brand) + ' '}${esc(S.model)}${S.mem ? ' · ' + esc(S.mem) : ''}${S.color ? ' · ' + esc(S.color.replace(/\s*\(.*\)$/, '')) : ''}</div>` : '';
+const chosenLine = () => S.model ? `<div class="chosen">${S.model.startsWith(S.brand) ? '' : esc(S.brand) + ' '}${esc(S.model)}${S.mem ? ' · ' + esc(S.mem) : ''}${S.color ? ' · ' + esc((colorEntry() ? tx(colorEntry(), 'name') : t(S.color)).replace(/\s*\(.*\)$/, '')) : ''}</div>` : '';
 
 function vBrand(){
   return { html: `
-    <h1>Telefoningiz qancha turadi?</h1>
-    <p class="sub">Bir necha savolga javob bering — 2 daqiqada naqd va trade-in narxini bilasiz. Bepul.</p>
+    <h1>${t('Telefoningiz qancha turadi?')}</h1>
+    <p class="sub">${t('Bir necha savolga javob bering — 2 daqiqada naqd va trade-in narxini bilasiz. Bepul.')}</p>
     <div class="opts two">${brands.map(b => `<button class="opt center ${S.brand===b?'on':''}" data-b="${esc(b)}">${esc(b)}</button>`).join('')}</div>`,
     bind(){ document.querySelectorAll('[data-b]').forEach(el => el.onclick = () => {
       if (S.brand !== el.dataset.b) { S.brand = el.dataset.b; S.model = ''; S.mem = ''; S.color = ''; S.dmg = {}; S.region = null; S.q = ''; } next(); }); } };
@@ -408,51 +473,51 @@ function vModel(){
   const list = () => { const q = S.q.trim().toLowerCase(); const ms = modelsOf(S.brand).filter(m => !q || m.toLowerCase().includes(q));
     return ms.map(m => { const mems = memsOf(S.brand, m).map(x => x.memory).filter(Boolean);
       return `<button class="opt ${S.model===m?'on':''}" data-m="${esc(m)}">${esc(m)}<span class="r">${esc(mems.join(' · '))}</span></button>`; }).join('')
-      || `<div class="empty">Model topilmadi. Ro'yxatda yo'q bo'lsa, filialimizga murojaat qiling.</div>`; };
+      || `<div class="empty">${t("Model topilmadi. Ro'yxatda yo'q bo'lsa, filialimizga murojaat qiling.")}</div>`; };
   const bindRows = () => document.querySelectorAll('[data-m]').forEach(el => el.onclick = () => {
     if (S.model !== el.dataset.m) { S.model = el.dataset.m; S.color = ''; const ms = memsOf(S.brand, S.model); S.mem = ms.length === 1 ? ms[0].memory : ''; }
     next(); });
   return { html: `
-    <h1>Qaysi model?</h1><p class="sub">${esc(S.brand)} modelini tanlang</p>
-    <div class="search">${I.search}<input id="q" type="search" placeholder="Qidirish, masalan 14 Pro" value="${esc(S.q)}" autocomplete="off"></div>
+    <h1>${t('Qaysi model?')}</h1><p class="sub">${t('{b} modelini tanlang', { b: esc(S.brand) })}</p>
+    <div class="search">${I.search}<input id="q" type="search" placeholder="${t('Qidirish, masalan 14 Pro')}" value="${esc(S.q)}" autocomplete="off"></div>
     <div class="opts" id="mlist">${list()}</div>`,
     bind(){ document.getElementById('q').oninput = e => { S.q = e.target.value; document.getElementById('mlist').innerHTML = list(); bindRows(); }; bindRows(); } };
 }
 function vMem(){
   const ms = memsOf(S.brand, S.model);
-  return { html: `${chosenLine()}<h1>Xotira hajmi</h1><p class="sub">Sozlamalar → Umumiy → Qurilma haqida bo'limida ko'rinadi</p>
+  return { html: `${chosenLine()}<h1>${t('Xotira hajmi')}</h1><p class="sub">${t("Sozlamalar → Umumiy → Qurilma haqida bo'limida ko'rinadi")}</p>
     <div class="opts two">${ms.map(m => `<button class="opt center ${S.mem===m.memory?'on':''}" data-mem="${esc(m.memory)}">${esc(m.memory)}</button>`).join('')}</div>`,
     bind(){ document.querySelectorAll('[data-mem]').forEach(el => el.onclick = () => { S.mem = el.dataset.mem; next(); }); } };
 }
 function vColor(){
   const cs = colorsOf(S.brand, S.model), kind = phoneKind(S.brand, S.model);
-  const nm = c => { const m = c.name.match(/^(.*?)\s*\((.*)\)$/); return m ? `${esc(m[1])}<small>${esc(m[2])}</small>` : esc(c.name); };
-  return { html: `${chosenLine()}<h1>Telefon rangi</h1><p class="sub">Telefoningiz qaysi rangda?</p>
+  const nm = c => { const m = tx(c, 'name').match(/^(.*?)\s*\((.*)\)$/); return m ? `${esc(m[1])}<small>${esc(m[2])}</small>` : esc(tx(c, 'name')); };
+  return { html: `${chosenLine()}<h1>${t('Telefon rangi')}</h1><p class="sub">${t('Telefoningiz qaysi rangda?')}</p>
     <div class="colors ph">${cs.map((c, i) => `<button class="col ph ${S.color===c.name?'on':''}" data-c="${i}">${c.img
         ? `<img src="${esc(c.img)}" alt="" loading="lazy">`
         : phoneSVG('back', { kind, color: /^#[0-9a-f]{6}$/i.test(c.hex) ? c.hex : '#C9C9CC' }).replace('viewBox="-14 -6 128 234"', 'viewBox="-2 -2 104 204"')}<span>${nm(c)}</span></button>`).join('')}</div>
-    <div style="text-align:center"><button class="linkbtn" id="colOther">Boshqa rang</button></div>`,
+    <div style="text-align:center"><button class="linkbtn" id="colOther">${t('Boshqa rang')}</button></div>`,
     bind(){ document.querySelectorAll('[data-c]').forEach(el => el.onclick = () => { S.color = cs[+el.dataset.c].name; next(); });
       document.getElementById('colOther').onclick = () => { S.color = 'Boshqa rang'; next(); }; } };
 }
 function vRegion(){
   const rs = regionsOf(S.brand);
-  return { html: `${chosenLine()}<h1>Qaysi mamlakat uchun chiqarilgan?</h1>
-    <div class="hint">${I.info}<div><b>Qayerdan topish mumkin</b>Sozlamalar → Umumiy → Qurilma haqida → Model raqami. Oxiridagi harflarga qarang, masalan MQ9U3<b style="display:inline">LL/A</b>.</div></div>
-    <div class="opts">${rs.map((r, i) => `<button class="opt ${S.region && S.region.code===r.code?'on':''}" data-r="${i}">${esc(r.label)}</button>`).join('')}</div>`,
+  return { html: `${chosenLine()}<h1>${t('Qaysi mamlakat uchun chiqarilgan?')}</h1>
+    <div class="hint">${I.info}<div><b>${t('Qayerdan topish mumkin')}</b>${t('Sozlamalar → Umumiy → Qurilma haqida → Model raqami. Oxiridagi harflarga qarang, masalan MQ9U3')}<b style="display:inline">LL/A</b>.</div></div>
+    <div class="opts">${rs.map((r, i) => `<button class="opt ${S.region && S.region.code===r.code?'on':''}" data-r="${i}">${esc(tx(r, 'label'))}</button>`).join('')}</div>`,
     bind(){ document.querySelectorAll('[data-r]').forEach(el => el.onclick = () => { S.region = rs[+el.dataset.r]; next(); }); } };
 }
 function vBattery(){
-  const hintPath = /apple/i.test(S.brand) ? 'Sozlamalar → Batareya → Batareya holati' : 'Sozlamalar → Batareya (yoki Qurilma parvarishi → Batareya)';
-  const statusHtml = () => { const t = batteryTier(+S.battery); if (!t || S.battery === '') return '<span class="st">1 dan 100 gacha kiriting</span>';
-    const cls = t.pct === 0 ? 'good' : t.pct <= 6 ? 'mid' : 'low'; return `<span class="st ${cls}">${esc(t.label)}${t.pct ? ' · narxni pasaytiradi' : ''}</span>`; };
+  const hintPath = /apple/i.test(S.brand) ? t('Sozlamalar → Batareya → Batareya holati') : t('Sozlamalar → Batareya (yoki Qurilma parvarishi → Batareya)');
+  const statusHtml = () => { const tr = batteryTier(+S.battery); if (!tr || S.battery === '') return `<span class="st">${t('1 dan 100 gacha kiriting')}</span>`;
+    const cls = tr.pct === 0 ? 'good' : tr.pct <= 6 ? 'mid' : 'low'; return `<span class="st ${cls}">${esc(tx(tr, 'label'))}${tr.pct ? t(' · narxni pasaytiradi') : ''}</span>`; };
   const valid = () => { const v = +S.battery; return S.battery !== '' && v >= 1 && v <= 100; };
-  return { html: `${chosenLine()}<h1>Batareya holati necha foiz?</h1>
-    <div class="hint">${I.info}<div><b>Qayerdan topish mumkin</b>${hintPath}</div></div>
+  return { html: `${chosenLine()}<h1>${t('Batareya holati necha foiz?')}</h1>
+    <div class="hint">${I.info}<div><b>${t('Qayerdan topish mumkin')}</b>${hintPath}</div></div>
     <div class="bat"><input id="bat" inputmode="numeric" maxlength="3" placeholder="87" value="${esc(S.battery)}" aria-label="Batareya foizi"><span class="pc">%</span>
       <div id="bst">${statusHtml()}</div>
-      <button class="linkbtn" id="batUnknown">Bilmayman</button></div>`,
-    foot: `<button class="btn" id="goNext" ${valid() ? '' : 'disabled'}>Davom etish</button>`,
+      <button class="linkbtn" id="batUnknown">${t('Bilmayman')}</button></div>`,
+    foot: `<button class="btn" id="goNext" ${valid() ? '' : 'disabled'}>${t('Davom etish')}</button>`,
     bind(){ const inp = document.getElementById('bat'), go = document.getElementById('goNext');
       inp.oninput = e => { e.target.value = e.target.value.replace(/\D/g, '').slice(0, 3); S.battery = e.target.value; S.batteryUnknown = false;
         document.getElementById('bst').innerHTML = statusHtml(); go.disabled = !valid(); };
@@ -463,13 +528,13 @@ function vBattery(){
 function vQuestion(s){
   const q = D.questions[s.qi]; const sel = S.ans[s.qi] || [];
   if (q.multi && q.options.some(o => o.pos)) return vParts(s);
-  if (!q.multi) return { html: `${chosenLine()}<h1>${esc(q.title)}</h1>${q.hint ? `<p class="sub">${esc(q.hint)}</p>` : '<div style="height:10px"></div>'}
-    <div class="opts">${q.options.map((o, i) => `<button class="opt ${sel.includes(i)?'on':''}" data-o="${i}">${esc(o.label)}</button>`).join('')}</div>`,
+  if (!q.multi) return { html: `${chosenLine()}<h1>${esc(tx(q, 'title'))}</h1>${q.hint ? `<p class="sub">${esc(tx(q, 'hint'))}</p>` : '<div style="height:10px"></div>'}
+    <div class="opts">${q.options.map((o, i) => `<button class="opt ${sel.includes(i)?'on':''}" data-o="${i}">${esc(tx(o, 'label'))}</button>`).join('')}</div>`,
     bind(){ document.querySelectorAll('[data-o]').forEach(el => el.onclick = () => { S.ans[s.qi] = [+el.dataset.o]; next(); }); } };
   const redraw = () => document.querySelectorAll('[data-o]').forEach(el => { const on = (S.ans[s.qi] || []).includes(+el.dataset.o); el.classList.toggle('on', on); });
-  return { html: `${chosenLine()}<h1>${esc(q.title)}</h1><p class="sub">${esc(q.hint || 'Bir nechtasini belgilash mumkin')}</p>
-    <div class="opts">${q.options.map((o, i) => `<button class="opt ${sel.includes(i)?'on':''}" data-o="${i}"><span class="box">${I.check}</span>${esc(o.label)}</button>`).join('')}</div>`,
-    foot: `<button class="btn" id="goNext" ${sel.length ? '' : 'disabled'}>Davom etish</button>`,
+  return { html: `${chosenLine()}<h1>${esc(tx(q, 'title'))}</h1><p class="sub">${esc(tx(q, 'hint') || t('Bir nechtasini belgilash mumkin'))}</p>
+    <div class="opts">${q.options.map((o, i) => `<button class="opt ${sel.includes(i)?'on':''}" data-o="${i}"><span class="box">${I.check}</span>${esc(tx(o, 'label'))}</button>`).join('')}</div>`,
+    foot: `<button class="btn" id="goNext" ${sel.length ? '' : 'disabled'}>${t('Davom etish')}</button>`,
     bind(){ document.querySelectorAll('[data-o]').forEach(el => el.onclick = () => { const i = +el.dataset.o; let cur = S.ans[s.qi] || [];
         if (i === 0) cur = cur.includes(0) ? [] : [0];            // birinchi javob ("hammasi yaxshi") boshqalarini bekor qiladi
         else { cur = cur.filter(x => x !== 0); cur = cur.includes(i) ? cur.filter(x => x !== i) : [...cur, i]; }
@@ -479,30 +544,30 @@ function vQuestion(s){
 
 function vResult(){
   const r = calc();
-  if (!r) return { html: `<div class="empty">Model tanlanmagan</div>` };
+  if (!r) return { html: `<div class="empty">${t('Model tanlanmagan')}</div>` };
   if (r.blocked) return { html: `
-    <div class="reject"><div class="ic">${I.x}</div><h1>Afsus, onlayn baholab bo'lmaydi</h1>
-      <p class="sub">Bu holatdagi telefonni ustalarimiz ko'rib chiqishi kerak. Ariza qoldiring — o'zimiz bog'lanamiz.</p></div>`,
-    foot: `<button class="btn" id="leadBlocked">Ariza qoldirish</button><button class="btn ghost" id="restart">Qaytadan baholash</button>`,
+    <div class="reject"><div class="ic">${I.x}</div><h1>${t("Afsus, onlayn baholab bo'lmaydi")}</h1>
+      <p class="sub">${t("Bu holatdagi telefonni ustalarimiz ko'rib chiqishi kerak. Ariza qoldiring — o'zimiz bog'lanamiz.")}</p></div>`,
+    foot: `<button class="btn" id="leadBlocked">${t('Ariza qoldirish')}</button><button class="btn ghost" id="restart">${t('Qaytadan baholash')}</button>`,
     bind(){ document.getElementById('leadBlocked').onclick = () => openLead('check'); document.getElementById('restart').onclick = restart; } };
   const bonus = D.tradein_bonus || 0;
-  return { html: `${chosenLine()}<h1>Baholash natijasi</h1><p class="sub">Telefoningiz uchun taxminiy narx</p>
+  return { html: `${chosenLine()}<h1>${t('Baholash natijasi')}</h1><p class="sub">${t('Telefoningiz uchun taxminiy narx')}</p>
     <div class="prices">
-      ${bonus > 0 ? `<div class="pcard main"><small>Trade-in narxi <span class="tag">+${bonus}%</span></small>
-        <div class="v num">${som(r.trade)}</div><div class="h">Markabdan yangi telefon olsangiz, shu summa hisobga olinadi</div></div>` : ''}
-      <div class="pcard ${bonus > 0 ? '' : 'main'}"><small>Naqd pul</small><div class="v num">${som(r.cash)}</div>
-        <div class="h" style="color:${bonus > 0 ? 'var(--hint)' : 'inherit'}">Telefonni sotib, naqd pul olsangiz</div></div>
+      ${bonus > 0 ? `<div class="pcard main"><small>${t('Trade-in narxi')} <span class="tag">+${bonus}%</span></small>
+        <div class="v num">${som(r.trade)}</div><div class="h">${t('Markabdan yangi telefon olsangiz, shu summa hisobga olinadi')}</div></div>` : ''}
+      <div class="pcard ${bonus > 0 ? '' : 'main'}"><small>${t('Naqd pul')}</small><div class="v num">${som(r.cash)}</div>
+        <div class="h" style="color:${bonus > 0 ? 'var(--hint)' : 'inherit'}">${t('Telefonni sotib, naqd pul olsangiz')}</div></div>
     </div>
-    <details><summary>Baholash tafsilotlari <span>${r.lines.length ? '−' + (Math.round(r.pct * 10) / 10) + '%' : "chegirma yo'q"}</span></summary>
-      <div class="rows"><div class="row"><span>A'lo holatdagi narx</span><b class="num">${som(r.base)}</b></div>
+    <details><summary>${t('Baholash tafsilotlari')} <span>${r.lines.length ? '−' + (Math.round(r.pct * 10) / 10) + '%' : t("chegirma yo'q")}</span></summary>
+      <div class="rows"><div class="row"><span>${t("A'lo holatdagi narx")}</span><b class="num">${som(r.base)}</b></div>
       ${r.lines.map(l => `<div class="row"><span>${esc(l.label)}</span><b class="num">−${num(l.sum)}</b></div>`).join('')}</div></details>
-    <div class="fb"><div class="t">Narx yoqdimi?</div>
-      <div class="fbopts">${['Past', 'Yaxshi', 'Ajoyib'].map(x => `<button data-fb="${x}" class="${S.feedback===x?'on':''}">${x}</button>`).join('')}</div>
-      <div id="compBox" ${S.feedback === 'Past' ? '' : 'hidden'}><label for="comp">Boshqa joyda qancha taklif qilishdi? (so'm, ixtiyoriy)</label>
-        <input class="f num" id="comp" inputmode="numeric" placeholder="Masalan, 7 000 000" value="${esc(S.competitor)}"></div></div>
-    <p class="note">${esc(D.note)}</p>`,
-    foot: `<button class="btn" id="leadCash">Hoziroq Markabga sotish<small>Naqd pul — ${som(r.cash)}</small></button>
-           ${bonus > 0 ? `<button class="btn ghost" id="leadTrade">Trade-in qilaman<small>Yangi telefonga almashtirish — ${som(r.trade)}</small></button>` : ''}`,
+    <div class="fb"><div class="t">${t('Narx yoqdimi?')}</div>
+      <div class="fbopts">${['Past', 'Yaxshi', 'Ajoyib'].map(x => `<button data-fb="${x}" class="${S.feedback===x?'on':''}">${t(x)}</button>`).join('')}</div>
+      <div id="compBox" ${S.feedback === 'Past' ? '' : 'hidden'}><label for="comp">${t("Boshqa joyda qancha taklif qilishdi? (so'm, ixtiyoriy)")}</label>
+        <input class="f num" id="comp" inputmode="numeric" placeholder="${t('Masalan, 7 000 000')}" value="${esc(S.competitor)}"></div></div>
+    <p class="note">${esc(tx(D, 'note'))}</p>`,
+    foot: `<button class="btn" id="leadCash">${t('Hoziroq Markabga sotish')}<small>${t('Naqd pul — {p}', { p: som(r.cash) })}</small></button>
+           ${bonus > 0 ? `<button class="btn ghost" id="leadTrade">${t('Trade-in qilaman')}<small>${t('Yangi telefonga almashtirish — {p}', { p: som(r.trade) })}</small></button>` : ''}`,
     bind(){
       document.querySelectorAll('[data-fb]').forEach(b => b.onclick = () => { S.feedback = b.dataset.fb; haptic();
         document.querySelectorAll('[data-fb]').forEach(x => x.classList.toggle('on', x === b));
@@ -529,29 +594,29 @@ function openLead(mode){
   if (!inTelegram) {   // Instagram yoki oddiy brauzer: ariza Telegram ichida yuboriladi
     const bot = (D.bot || '').replace(/^@/, ''), app = (D.app || '').replace(/^\//, '');
     const link = bot ? (app ? `https://t.me/${encodeURIComponent(bot)}/${encodeURIComponent(app)}` : `https://t.me/${encodeURIComponent(bot)}?start=narx`) : '';
-    openSheet(`<h3>Arizani Telegram orqali yuboring</h3>
-      <p>Narxingiz: ${esc(S.brand)} ${esc(S.model)} · ${esc(S.mem)}${r && !r.blocked ? ` — naqd ${som(r.cash)}${D.tradein_bonus ? `, trade-in ${som(r.trade)}` : ''}` : ''}.</p>
-      <p>${app ? 'Telegram\'da shu ilova ochiladi — javoblarni yana bir bor belgilab, arizani yuboring.'
-               : 'Telegram\'da botimiz ochiladi: <b>Start</b> ni bosing, so\'ng <b>📱 Telefonni narxlash</b> tugmasi orqali arizani yuboring.'}</p>
+    openSheet(`<h3>${t('Arizani Telegram orqali yuboring')}</h3>
+      <p>${t('Narxingiz')}: ${esc(S.brand)} ${esc(S.model)} · ${esc(S.mem)}${r && !r.blocked ? ` — ${t('naqd')} ${som(r.cash)}${D.tradein_bonus ? `, trade-in ${som(r.trade)}` : ''}` : ''}.</p>
+      <p>${app ? t("Telegram'da shu ilova ochiladi — javoblarni yana bir bor belgilab, arizani yuboring.")
+               : t("Telegram'da botimiz ochiladi: <b>Start</b> ni bosing, so'ng <b>📱 Telefonni narxlash</b> tugmasi orqali arizani yuboring.")}</p>
       <div style="height:14px"></div>
-      ${link ? `<a class="btn" style="text-decoration:none;display:block;text-align:center" href="${link}" target="_blank" rel="noopener">Telegram'da davom etish</a>` : ''}`);
+      ${link ? `<a class="btn" style="text-decoration:none;display:block;text-align:center" href="${link}" target="_blank" rel="noopener">${t("Telegram'da davom etish")}</a>` : ''}`);
     return;
   }
-  const title = { tradein: 'Trade-in arizasi', cash: 'Hoziroq Markabga sotish', check: 'Ko\'rikka yozilish' }[mode];
+  const title = t({ tradein: 'Trade-in arizasi', cash: 'Hoziroq Markabga sotish', check: "Ko'rikka yozilish" }[mode]);
   const price = mode === 'tradein' ? r.trade : mode === 'cash' ? r.cash : 0;
   const sh = openSheet(`<h3>${title}</h3>
-    <p>${esc(S.brand)} ${esc(S.model)} · ${esc(S.mem)}${price ? ` · taxminan ${som(price)}` : ''}</p>
-    <p>Xodimimiz qo'ng'iroq qilib, filialga kelish vaqtini kelishadi.</p>
-    <label for="l-name">Ismingiz</label><input class="f" id="l-name" autocomplete="name" value="${esc(S.name)}">
-    <label for="l-phone">Telefon raqamingiz</label><input class="f num" id="l-phone" inputmode="tel" value="${esc(S.phone || '+998 ')}" placeholder="+998 90 123 45 67">
-    <div style="height:14px"></div><button class="btn" id="l-send">Yuborish</button>`);
+    <p>${esc(S.brand)} ${esc(S.model)} · ${esc(S.mem)}${price ? ` · ${t('taxminan')} ${som(price)}` : ''}</p>
+    <p>${t("Xodimimiz qo'ng'iroq qilib, filialga kelish vaqtini kelishadi.")}</p>
+    <label for="l-name">${t('Ismingiz')}</label><input class="f" id="l-name" autocomplete="name" value="${esc(S.name)}">
+    <label for="l-phone">${t('Telefon raqamingiz')}</label><input class="f num" id="l-phone" inputmode="tel" value="${esc(S.phone || '+998 ')}" placeholder="+998 90 123 45 67">
+    <div style="height:14px"></div><button class="btn" id="l-send">${t('Yuborish')}</button>`);
   const n = sh.querySelector('#l-name'), p = sh.querySelector('#l-phone');
   n.oninput = e => { S.name = e.target.value; n.classList.remove('bad'); };
   p.oninput = e => { S.phone = maskPhone(e.target.value); e.target.value = S.phone; if (phoneOk(S.phone)) p.classList.remove('bad'); };
   sh.querySelector('#l-send').onclick = () => {
     const bad = { n: !S.name.trim(), p: !phoneOk(S.phone) };
     n.classList.toggle('bad', bad.n); p.classList.toggle('bad', bad.p);
-    if (bad.n || bad.p) { haptic('error'); toast("Ism va telefon raqamini to'liq kiriting"); return; }
+    if (bad.n || bad.p) { haptic('error'); toast(t("Ism va telefon raqamini to'liq kiriting")); return; }
     sendLead();
   };
 }
@@ -562,7 +627,7 @@ function sendLead(){
     pct: (S.ans[qi] || []).reduce((s, i) => s + ((q.options[i] || {}).pct || 0), 0) }));
   const dmgAns = (D.damage || []).map(z => { const l = z.levels[S.dmg[z.code] || 0] || {}; return { q: z.name, a: l.label || '', pct: (S.dmg[z.code] > 0 && l.pct) || 0 }; });
   answers.unshift(...dmgAns);
-  const payload = { src: SRC, kind: 'tradein', v: 2, mode: S.mode, name: S.name.trim(), phone: S.phone.trim(),
+  const payload = { lang: LANG, src: SRC, kind: 'tradein', v: 2, mode: S.mode, name: S.name.trim(), phone: S.phone.trim(),
     brand: S.brand, model: S.model, memory: S.mem, color: S.color, region: S.region ? S.region.label : '',
     battery: S.batteryUnknown ? "noma'lum" : (S.battery ? S.battery + '%' : ''), answers,
     blocked: r.blocked, cash: r.blocked ? 0 : r.cash, trade: r.blocked ? 0 : r.trade, base: r.base,
@@ -572,9 +637,9 @@ function sendLead(){
   // 2) Botdagi pastki tugma orqali ochilgan: Telegram o'zi botga yetkazadi
   if (inTelegram && tg.sendData) {
     try { tg.sendData(JSON.stringify(payload)); haptic('success'); }
-    catch (e) { haptic('error'); toast("Yuborish uchun botdagi pastki «📱 Telefonni narxlash» tugmasi orqali oching (/narx)"); }
+    catch (e) { haptic('error'); toast(t("Yuborish uchun botdagi pastki «📱 Telefonni narxlash» tugmasi orqali oching (/narx)")); }
   } else {
-    closeSheet(); toast('Brauzerda ochilgan: ariza faqat Telegram ichida yuboriladi.');
+    closeSheet(); toast(t('Brauzerda ochilgan: ariza faqat Telegram ichida yuboriladi.'));
     console.log('TRADEIN', payload);
   }
 }
@@ -583,7 +648,7 @@ let sending = false;
 function postLead(payload){
   if (sending) return; sending = true;
   const btn = document.getElementById('l-send') || document.getElementById('l-retry');
-  if (btn) { btn.disabled = true; btn.textContent = 'Yuborilmoqda…'; }
+  if (btn) { btn.disabled = true; btn.textContent = t('Yuborilmoqda…'); }
   const ctl = window.AbortController ? new AbortController() : null;
   const timer = setTimeout(() => ctl && ctl.abort(), 20000);
   fetch(D.api.replace(/\/$/, '') + '/api/lead', { method: 'POST', headers: { 'Content-Type': 'application/json' },
@@ -597,23 +662,23 @@ function leadDone(){
   haptic('success');
   const sh = openSheet(`<div style="text-align:center;padding:6px 0 2px">
       <div style="font-size:46px;line-height:1">✅</div>
-      <h3 style="margin-top:10px">Arizangiz qabul qilindi!</h3>
-      <p>Xodimimiz <b>${esc(S.phone)}</b> raqamiga tez orada qo'ng'iroq qiladi.</p></div>
+      <h3 style="margin-top:10px">${t('Arizangiz qabul qilindi!')}</h3>
+      <p>${t("Xodimimiz {p} raqamiga tez orada qo'ng'iroq qiladi.", { p: `<b>${esc(S.phone)}</b>` })}</p></div>
     <div style="height:10px"></div>
-    <button class="btn" id="l-close">Yopish</button>
-    <div style="height:8px"></div><button class="btn ghost" id="l-again">Boshqa telefonni baholash</button>`);
+    <button class="btn" id="l-close">${t('Yopish')}</button>
+    <div style="height:8px"></div><button class="btn ghost" id="l-again">${t('Boshqa telefonni baholash')}</button>`);
   sh.querySelector('#l-close').onclick = () => { try { tg.close(); } catch (e) { closeSheet(); } };
   sh.querySelector('#l-again').onclick = () => { closeSheet(); restart(); };
 }
 function leadFail(err){
   haptic('error');
-  const msg = err === 'rate' ? "Juda ko'p ariza yuborildi. Birozdan so'ng qayta urinib ko'ring."
+  const msg = t(err === 'rate' ? "Juda ko'p ariza yuborildi. Birozdan so'ng qayta urinib ko'ring."
             : err === 'auth' ? "Sahifa eskirib qoldi. Ilovani yopib, qayta oching."
-            : "Arizani yuborib bo'lmadi. Internetni tekshirib, qayta urinib ko'ring.";
+            : "Arizani yuborib bo'lmadi. Internetni tekshirib, qayta urinib ko'ring.");
   const bot = (D.bot || '').replace(/^@/, '');
-  const sh = openSheet(`<h3>Yuborilmadi</h3><p>${msg}</p><div style="height:14px"></div>
-    <button class="btn" id="l-retry">Qayta yuborish</button>
-    ${bot ? `<div style="height:8px"></div><a class="btn ghost" style="text-decoration:none;display:block;text-align:center" href="https://t.me/${encodeURIComponent(bot)}?start=narx">Bot orqali yuborish</a>` : ''}`);
+  const sh = openSheet(`<h3>${t('Yuborilmadi')}</h3><p>${msg}</p><div style="height:14px"></div>
+    <button class="btn" id="l-retry">${t('Qayta yuborish')}</button>
+    ${bot ? `<div style="height:8px"></div><a class="btn ghost" style="text-decoration:none;display:block;text-align:center" href="https://t.me/${encodeURIComponent(bot)}?start=narx">${t('Bot orqali yuborish')}</a>` : ''}`);
   sh.querySelector('#l-retry').onclick = () => sendLead();
 }
 
