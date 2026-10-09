@@ -144,6 +144,20 @@
   .ns-res .big small { display: block; font-size: 14px; font-weight: 700; opacity: .9; margin-top: 4px; }
   .ns-res .ln { display: flex; justify-content: space-between; font-size: 13.5px; padding-top: 8px; margin-top: 8px; border-top: 1px solid rgba(255,255,255,.25); }
   .ns-back { border: 0; background: none; color: var(--brand); font-weight: 800; font-size: 14px; padding: 0; margin: 0 0 10px; cursor: pointer; }
+  .pick { display: flex; gap: 12px; align-items: center; background: linear-gradient(130deg, #0F5132, #198754); color: #fff; border-radius: 18px; padding: 14px; margin: 12px 0; }
+  .pick .ic { font-size: 30px; line-height: 1; }
+  .pick b { display: block; font-size: 15px; margin-bottom: 2px; } .pick span { font-size: 12.5px; opacity: .92; display: block; }
+  .pick button { margin-left: auto; flex: none; border: 0; border-radius: 12px; background: #fff; color: #0F5132; font-weight: 800; font-size: 13px; padding: 10px 12px; cursor: pointer; }
+  .pk-seg { margin: 10px 0 4px; }
+  select.f { width: 100%; max-width: 100%; padding: 12px; border-radius: 12px; border: 1.5px solid transparent; background: var(--field); color: var(--text);
+    font-size: 14px; outline: none; text-overflow: ellipsis; }
+  .loc-btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; margin-top: 8px; padding: 12px; border-radius: 12px;
+    border: 1.5px dashed var(--brand); background: var(--brand-soft); color: var(--brand); font-weight: 800; font-size: 14px; cursor: pointer; }
+  .loc-btn.ok { border-style: solid; border-color: #198754; background: rgba(25,135,84,.1); color: #198754; }
+  .ns-open { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; border: 0; cursor: pointer; margin: 0 0 12px;
+    background: linear-gradient(130deg, #8E1734, #B8274B); color: #fff; border-radius: 16px; padding: 14px; }
+  .ns-open i { font-style: normal; font-size: 26px; } .ns-open b { display: block; font-size: 15px; } .ns-open span { font-size: 12.5px; opacity: .9; }
+  .ns-open em { margin-left: auto; font-style: normal; font-weight: 800; }
   .np-cta { background: var(--brand-soft); border-radius: 16px; padding: 14px; margin: 4px 0 16px; font-size: 13.5px; }
   .np-cta b { display: block; font-size: 15px; margin-bottom: 4px; }
   .np-cta .np-go { display: block; width: 100%; margin-top: 12px; border: 0; border-radius: 12px; padding: 13px; background: var(--brand); color: #fff; font-size: 14.5px; font-weight: 800; cursor: pointer; }
@@ -350,6 +364,20 @@ const RU = {
   "Eski telefonim narxini bilish": "Узнать цену моего телефона",
   "Narxlar kunlik, o'zgarishi mumkin. Aniq narx va mavjudligini filialda yoki operatordan so'rang.": "Цены на сегодня и могут меняться. Точную цену и наличие уточняйте в филиале или у оператора.",
   "Hozircha narxlar kiritilmagan.": "Цены пока не добавлены.",
+  "Telefoningizni o'zimiz olib ketamiz": "Заберём телефон сами",
+  "Toshkent bo'ylab bepul. Kuryer telefonni joyida tekshirib, pulni o'sha zahoti beradi.": "Бесплатно по Ташкенту. Курьер проверит телефон на месте и сразу отдаст деньги.",
+  "Kuryer chaqirish": "Вызвать курьера", "Filialga boraman": "Приеду в филиал", "Kuryer olib ketsin": "Пусть заберёт курьер",
+  "Bepul, Toshkent shahri bo'ylab. Kuryer telefonni joyida tekshiradi va pulni o'sha zahoti beradi.": "Бесплатно по Ташкенту. Курьер проверит телефон на месте и сразу отдаст деньги.",
+  "Manzil (Toshkent)": "Адрес (Ташкент)", "Masalan: Chilonzor 9-kvartal, 12-uy": "Например: Чиланзар 9 квартал, дом 12",
+  "Kuryer uchun manzilni yozing": "Укажите адрес для курьера", "Kuryer qachon kelsin?": "Когда приехать курьеру?",
+  "Joylashuvimni yuborish": "Отправить мою геолокацию", "Joylashuv qo'shildi": "Геолокация добавлена",
+  "Joylashuv aniqlanmoqda…": "Определяем местоположение…", "Joylashuvni aniqlab bo'lmadi — manzilni yozing": "Не удалось определить — укажите адрес",
+  "Joylashuvga ruxsat berilmadi — manzilni yozing": "Доступ к геолокации запрещён — укажите адрес",
+  "Telegram sozlamalarida joylashuvga ruxsat bering": "Разрешите доступ к геолокации в настройках Telegram",
+  "Kuryer uchun manzilni yozing yoki joylashuvni yuboring": "Укажите адрес или отправьте геолокацию для курьера",
+  "2 oydan 12 oygacha — oylik to'lovni hisoblang": "От 2 до 12 месяцев — рассчитайте ежемесячный платёж",
+  "Yoki ro'yxatdan kerakli telefonni bosing — nasiya shu telefon uchun hisoblanadi": "Или нажмите на нужный телефон в списке — рассрочка рассчитается для него",
+  "Telefon": "Телефон",
   "Nasiya": "Рассрочка", "Nasiyani hisoblash uchun kerakli telefonni bosing": "Нажмите на телефон, чтобы рассчитать рассрочку",
   "Narxlar": "Цены", "Nasiya kalkulyatori": "Калькулятор рассрочки", "Boshlang'ich to'lov ($)": "Первоначальный взнос ($)",
   "Muddat (oy)": "Срок (мес.)", "Oylik to'lov": "Ежемесячный платёж", "Boshlang'ich to'lov": "Первоначальный взнос", "Muddat": "Срок",
@@ -648,6 +676,8 @@ function vNasiya(seg){
     <div class="ns-phone">${x.color ? `<span class="np-dot" style="background:${npHex(x.model, x.color)}"></span>` : ''}
       <div><b>${esc(x.model)}</b><span>${esc([x.memory, x.color, x.sim].filter(Boolean).join(' · '))}</span></div>
       <div class="pr">${usd(x.usd)}<small>${som(x.usd)}</small></div></div>
+    <div class="ns-lbl">${t('Telefon')}</div>
+    <select class="f" id="nsPhone">${(D.new_phones || []).map((y, i) => `<option value="${i}" ${y === x ? 'selected' : ''}>${esc([y.model, y.memory, y.color || t('Barcha ranglar'), y.sim].filter(Boolean).join(' · '))} — $${fmtSum(y.usd)}</option>`).join('')}</select>
     <div class="ns-lbl">${t("Boshlang'ich to'lov ($)")}</div>
     <input class="f" id="nsDown" inputmode="numeric" placeholder="0" value="${S.nsDown ? esc(S.nsDown) : ''}">
     <div class="ns-quick">${[0, 20, 30, 50].map(p => `<button class="chip" data-dp="${p}">${p}%</button>`).join('')}</div>
@@ -661,6 +691,7 @@ function vNasiya(seg){
       <div class="ln"><span>${t("Jami to'lov")}</span><b>${usd(c.all)} <small style="opacity:.85">${som(c.all)}</small></b></div>` : ''}</div>
     <p class="np-rate">${t("Hisob taxminiy. Shartnoma filialda pasport bilan rasmiylashtiriladi.")}</p>`,
     bind(){
+      document.getElementById('nsPhone').onchange = e => { S.npPick = D.new_phones[+e.target.value]; haptic(); render(); };
       document.getElementById('nsBack').onclick = () => { S.npPick = null; haptic(); render(); window.scrollTo(0, 0); };
       const inp = document.getElementById('nsDown');
       inp.oninput = () => { S.nsDown = inp.value.replace(/[^0-9]/g, ''); if (inp.value !== S.nsDown) inp.value = S.nsDown;
@@ -690,7 +721,8 @@ function vNewPhones(seg){
     ${list.length ? `
     <div class="np-models">${models.map(m => `<button class="chip ${m === S.npModel ? 'on' : ''}" data-npm="${esc(m)}">${esc(m)}</button>`).join('')}</div>
     ${sims.length > 1 ? `<div class="seg np-sim">${sims.map(x => `<button data-nps="${esc(x)}" class="${x === S.npSim ? 'on' : ''}">${esc(x)}</button>`).join('')}</div>` : ''}
-    ${nasOn ? `<div class="np-hint">🧮 ${t("Nasiyani hisoblash uchun kerakli telefonni bosing")}</div>` : ''}
+    ${nasOn ? `<button class="ns-open" id="nsOpen"><i>🧮</i><div><b>${t('Nasiya kalkulyatori')}</b><span>${t("2 oydan 12 oygacha — oylik to'lovni hisoblang")}</span></div><em>→</em></button>
+      <div class="np-hint">${t("Yoki ro'yxatdan kerakli telefonni bosing — nasiya shu telefon uchun hisoblanadi")}</div>` : ''}
     ${mems.map(mem => `<div class="np-card"><h3>${esc(mem)}</h3>${rows.filter(x => x.memory === mem).map(x => `
       <div class="np-row" data-pick="${list.indexOf(x)}">${x.color ? `<span class="np-dot" style="background:${npHex(x.model, x.color)}"></span>` : ''}
         <span class="nm">${esc(x.color || t('Barcha ranglar'))}</span>${price(x)}</div>`).join('')}</div>`).join('')}
@@ -702,6 +734,7 @@ function vNewPhones(seg){
       document.querySelectorAll('[data-npm]').forEach(el => el.onclick = () => { S.npModel = el.dataset.npm; haptic(); render(); track('step', 'new:' + S.npModel); });
       const on = document.querySelector('.np-models .chip.on'); if (on && on.scrollIntoView) on.scrollIntoView({ block: 'nearest', inline: 'center' });
       document.querySelectorAll('[data-nps]').forEach(el => el.onclick = () => { S.npSim = el.dataset.nps; haptic(); render(); });
+      const nso = document.getElementById('nsOpen'); if (nso) nso.onclick = () => { S.npPick = rows[0] || list[0]; haptic(); render(); window.scrollTo(0, 0); track('step', 'nasiya_open'); };
       if (nasOn) document.querySelectorAll('[data-pick]').forEach(el => el.onclick = () => { S.npPick = list[+el.dataset.pick]; haptic(); render(); window.scrollTo(0, 0); track('step', 'nasiya:' + S.npPick.model); });
       const tb = document.getElementById('npTrade'); if (tb) tb.onclick = () => { S.flow = 'sell'; S.i = 0; haptic(); render(); window.scrollTo(0, 0); track('step', 'new:tradein'); };
     } };
@@ -837,7 +870,10 @@ function vResult(){
       <div class="pcard ${bonus > 0 ? '' : 'main'}"><small>${t('Naqd pul')}</small><div class="v num">${som(r.cash)}</div>
         <div class="h" style="color:${bonus > 0 ? 'var(--hint)' : 'inherit'}">${t('Telefonni sotib, naqd pul olsangiz')}</div></div>
     </div>
-    <div style="height:12px"></div>${bannerHTML('result')}
+    <div class="pick"><div class="ic">🚗</div><div><b>${t('Telefoningizni o\'zimiz olib ketamiz')}</b>
+      <span>${t("Toshkent bo'ylab bepul. Kuryer telefonni joyida tekshirib, pulni o'sha zahoti beradi.")}</span></div>
+      <button id="pickBtn">${t('Kuryer chaqirish')}</button></div>
+    <div style="height:4px"></div>${bannerHTML('result')}
     <details><summary>${t('Baholash tafsilotlari')} <span>${r.lines.length ? '−' + (Math.round(r.pct * 10) / 10) + '%' : t("chegirma yo'q")}</span></summary>
       <div class="rows"><div class="row"><span>${t("A'lo holatdagi narx")}</span><b class="num">${som(r.base)}</b></div>
       ${r.lines.map(l => `<div class="row"><span>${esc(l.label)}</span><b class="num">−${num(l.sum)}</b></div>`).join('')}</div></details>
@@ -856,6 +892,7 @@ function vResult(){
       comp.oninput = e => { const n = +e.target.value.replace(/\D/g, ''); S.competitor = n ? num(n) : ''; e.target.value = S.competitor; };
       if (document.getElementById('leadTrade')) document.getElementById('leadTrade').onclick = () => openLead('tradein');
       document.getElementById('leadCash').onclick = () => openLead('cash');
+      const pb = document.getElementById('pickBtn'); if (pb) pb.onclick = () => { S.pickup = true; track('step', 'pickup'); openLead('cash'); };
     } };
 }
 /* ---------- mijoz e'loni ---------- */
@@ -1005,10 +1042,10 @@ function visitHTML(){
   const bs = branches(); if (!bs.length) return '';
   const days = [0, 1, 2].filter(i => i > 0 || slotsFor(curBranch(), 0).length);
   const dn = ['Bugun', 'Ertaga', 'Indinga'];
-  let h = `<div class="visit-sub">${t('Qaysi filialga kelasiz?')} <i>(${t('ixtiyoriy')})</i></div><div class="chips">
+  let h = (S.pickup ? '' : `<div class="visit-sub">${t('Qaysi filialga kelasiz?')} <i>(${t('ixtiyoriy')})</i></div><div class="chips">
     ${bs.map((b, i) => `<button class="chip ${S.branch === i ? 'on' : ''}" data-br="${i}">${esc(tx(b, 'name'))}</button>`).join('')}
-    <button class="chip ${S.branch === -1 ? 'on' : ''}" data-br="-1">${t("Farqi yo'q")}</button></div>
-    <div class="visit-sub">${t('Qachon kelasiz?')}</div><div class="chips">
+    <button class="chip ${S.branch === -1 ? 'on' : ''}" data-br="-1">${t("Farqi yo'q")}</button></div>`) + `
+    <div class="visit-sub">${S.pickup ? t('Kuryer qachon kelsin?') : t('Qachon kelasiz?')}</div><div class="chips">
     ${days.map(i => { const d = dayDate(i); return `<button class="chip ${S.day === i ? 'on' : ''}" data-day="${i}">${t(dn[i])}<small>${pad2(d.getDate())}.${pad2(d.getMonth() + 1)}</small></button>`; }).join('')}
     <button class="chip ${S.day === -1 ? 'on' : ''}" data-day="-1">${t("Qo'ng'iroqda kelishamiz")}</button></div>`;
   if (S.day != null && S.day >= 0) {
@@ -1059,6 +1096,30 @@ function bindPhotos(box){
   box.querySelectorAll('[data-rm]').forEach(b => b.onclick = () => { S.photos.splice(+b.dataset.rm, 1); haptic(); redraw(); });
 }
 
+function getLocation(cb){
+  let done = false; const fin = (l, e) => { if (!done) { done = true; cb(l, e); } };
+  const viaBrowser = () => {
+    if (!navigator.geolocation) return fin(null, t("Joylashuvni aniqlab bo'lmadi — manzilni yozing"));
+    navigator.geolocation.getCurrentPosition(p => fin({ lat: +p.coords.latitude.toFixed(6), lon: +p.coords.longitude.toFixed(6) }),
+      e => fin(null, e && e.code === 1 ? t("Joylashuvga ruxsat berilmadi — manzilni yozing") : t("Joylashuvni aniqlab bo'lmadi — manzilni yozing")),
+      { enableHighAccuracy: true, timeout: 15000, maximumAge: 60000 });
+  };
+  const lm = tg && tg.LocationManager;
+  if (lm && typeof lm.init === 'function') {
+    try {
+      const go = () => {
+        if (!lm.isLocationAvailable) return viaBrowser();
+        lm.getLocation(d => { if (d && d.latitude) fin({ lat: +(+d.latitude).toFixed(6), lon: +(+d.longitude).toFixed(6) });
+          else if (lm.isAccessRequested && !lm.isAccessGranted) { try { lm.openSettings(); } catch (e) {} fin(null, t("Telegram sozlamalarida joylashuvga ruxsat bering")); }
+          else viaBrowser(); });
+      };
+      lm.isInited ? go() : lm.init(go);
+      setTimeout(() => { if (!done) viaBrowser(); }, 8000);
+      return;
+    } catch (e) { /* eski Telegram — brauzer usuli */ }
+  }
+  viaBrowser();
+}
 function openLead(mode){
   S.mode = mode; const r = calc(); track('lead_open', mode);
   if (!inTelegram) {   // Instagram yoki oddiy brauzer: ariza Telegram ichida yuboriladi
@@ -1076,20 +1137,36 @@ function openLead(mode){
   const price = mode === 'tradein' ? r.trade : mode === 'cash' ? r.cash : 0;
   const sh = openSheet(`<h3>${title}</h3>
     <p>${esc(S.brand)} ${esc(S.model)} · ${esc(S.mem)}${price ? ` · ${t('taxminan')} ${som(price)}` : ''}</p>
-    <p>${t("Xodimimiz qo'ng'iroq qilib, filialga kelish vaqtini kelishadi.")}</p>
+    <div class="seg pk-seg"><button data-pk="0" class="${!S.pickup ? 'on' : ''}">🏬 ${t('Filialga boraman')}</button><button data-pk="1" class="${S.pickup ? 'on' : ''}">🚗 ${t('Kuryer olib ketsin')}</button></div>
+    <p id="pkNote">${S.pickup ? t("Bepul, Toshkent shahri bo'ylab. Kuryer telefonni joyida tekshiradi va pulni o'sha zahoti beradi.") : t("Xodimimiz qo'ng'iroq qilib, filialga kelish vaqtini kelishadi.")}</p>
     <label for="l-name">${t('Ismingiz')}</label><input class="f" id="l-name" autocomplete="name" value="${esc(S.name)}">
     <label for="l-phone">${t('Telefon raqamingiz')}</label><input class="f num" id="l-phone" inputmode="tel" value="${esc(S.phone || '+998 ')}" placeholder="+998 90 123 45 67">
+    <div id="pkAddr" style="${S.pickup ? '' : 'display:none'}"><label for="l-addr">${t('Manzil (Toshkent)')}</label>
+      <input class="f" id="l-addr" autocomplete="street-address" placeholder="${t("Masalan: Chilonzor 9-kvartal, 12-uy")}" value="${esc(S.addr || '')}">
+      <button type="button" class="loc-btn ${S.loc ? 'ok' : ''}" id="l-loc">${S.loc ? '✅ ' + t('Joylashuv qo\'shildi') : '📍 ' + t('Joylashuvimni yuborish')}</button></div>
     <div id="visit">${visitHTML()}</div>
     <div id="photos">${photosHTML()}</div>
     <div style="height:14px"></div><button class="btn" id="l-send">${t('Yuborish')}</button>`);
   const n = sh.querySelector('#l-name'), p = sh.querySelector('#l-phone');
   bindVisit(sh.querySelector('#visit')); bindPhotos(sh.querySelector('#photos'));
+  const ad = sh.querySelector('#l-addr'); ad.oninput = e => { S.addr = e.target.value; ad.classList.remove('bad'); };
+  const lb = sh.querySelector('#l-loc');
+  lb.onclick = () => { lb.textContent = '⏳ ' + t('Joylashuv aniqlanmoqda…'); getLocation((loc, err) => {
+    if (loc) { S.loc = loc; lb.classList.add('ok'); lb.textContent = '✅ ' + t("Joylashuv qo'shildi"); ad.classList.remove('bad'); haptic('success'); }
+    else { lb.textContent = '📍 ' + t('Joylashuvimni yuborish'); toast(err || t("Joylashuvni aniqlab bo'lmadi — manzilni yozing")); } }); };
+  sh.querySelectorAll('[data-pk]').forEach(b => b.onclick = () => {
+    S.pickup = b.dataset.pk === '1'; haptic();
+    sh.querySelectorAll('[data-pk]').forEach(x => x.classList.toggle('on', x === b));
+    sh.querySelector('#pkAddr').style.display = S.pickup ? '' : 'none';
+    sh.querySelector('#pkNote').textContent = S.pickup ? t("Bepul, Toshkent shahri bo'ylab. Kuryer telefonni joyida tekshiradi va pulni o'sha zahoti beradi.") : t("Xodimimiz qo'ng'iroq qilib, filialga kelish vaqtini kelishadi.");
+    const vb = sh.querySelector('#visit'); vb.innerHTML = visitHTML(); bindVisit(vb); });
   n.oninput = e => { S.name = e.target.value; n.classList.remove('bad'); };
   p.oninput = e => { S.phone = maskPhone(e.target.value); e.target.value = S.phone; if (phoneOk(S.phone)) p.classList.remove('bad'); };
   sh.querySelector('#l-send').onclick = () => {
-    const bad = { n: !S.name.trim(), p: !phoneOk(S.phone) };
-    n.classList.toggle('bad', bad.n); p.classList.toggle('bad', bad.p);
+    const bad = { n: !S.name.trim(), p: !phoneOk(S.phone), a: !!S.pickup && !S.loc && (S.addr || '').trim().length < 5 };
+    n.classList.toggle('bad', bad.n); p.classList.toggle('bad', bad.p); ad.classList.toggle('bad', bad.a);
     if (bad.n || bad.p) { haptic('error'); toast(t("Ism va telefon raqamini to'liq kiriting")); return; }
+    if (bad.a) { haptic('error'); toast(t('Kuryer uchun manzilni yozing yoki joylashuvni yuboring')); return; }
     sendLead();
   };
 }
@@ -1107,7 +1184,9 @@ function sendLead(){
     brand: S.brand, model: S.model, memory: S.mem, color: S.color, region: S.region ? S.region.label : '',
     battery: S.batteryUnknown ? "noma'lum" : (S.battery ? S.battery + '%' : ''), answers,
     blocked: r.blocked, cash: r.blocked ? 0 : r.cash, trade: r.blocked ? 0 : r.trade, base: r.base,
-    branch: curBranch() ? curBranch().name : (S.branch === -1 ? "Farqi yo'q" : ''), visit: visitText(),
+    branch: S.pickup ? '' : (curBranch() ? curBranch().name : (S.branch === -1 ? "Farqi yo'q" : '')), visit: visitText(),
+    pickup: !!S.pickup, address: S.pickup ? (S.addr || '').trim().slice(0, 200) : '',
+    lat: S.pickup && S.loc ? S.loc.lat : null, lon: S.pickup && S.loc ? S.loc.lon : null,
     feedback: S.feedback, competitor: +String(S.competitor).replace(/\D/g, '') || 0 };
   // 1) Havola orqali ochilgan (t.me/<bot>/narx): initData bor -> arizani serverimizga yuboramiz
   if (inTelegram && tg.initData && D.api) { if (S.photos.length) payload.photos = S.photos.slice(0, 3); postLead(payload); return; }
