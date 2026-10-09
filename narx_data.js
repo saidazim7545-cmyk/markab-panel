@@ -1,6 +1,6 @@
 // Avtomatik yaratilgan: narx_to_data.py. Qo'lda tahrirlamang.
 window.NARX_DATA = {
- "updated": "09.10.2026 18:50",
+ "updated": "09.10.2026 21:55",
  "sample": false,
  "tradein_bonus": 8.0,
  "max_pct": 70.0,
@@ -463,10 +463,10 @@ window.NARX_DATA = {
   {
    "id": "tradein",
    "place": "result",
-   "title": "Trade-in: +8% bonus",
-   "title_ru": "Трейд-ин: бонус +8%",
-   "text": "Eski telefoningizni topshirib, Markabdan yangisini olsangiz — naqd narxdan 8% ko'proq hisoblaymiz.",
-   "text_ru": "Сдайте старый телефон и купите новый в Markab — засчитаем на 8% больше цены выкупа.",
+   "title": "Trade-in: +3% bonus",
+   "title_ru": "Трейд-ин: бонус +3%",
+   "text": "iPhone 16 yoki 17 seriyasini topshirib, Markabdan yangisini olsangiz — naqd narxdan 3% ko'proq hisoblaymiz.",
+   "text_ru": "Сдайте iPhone 16 или 17 серии и купите новый в Markab — засчитаем на 3% больше цены выкупа.",
    "cta": "Do'konlar manzili",
    "cta_ru": "Адреса магазинов",
    "link": "https://instagram.com/markab_electronics",
@@ -2600,6 +2600,16 @@ window.NARX_DATA = {
   {
    "months": 12,
    "pct": 54.0
+  }
+ ],
+ "tradein": [
+  {
+   "pct": 3.0,
+   "models": "16,17"
+  },
+  {
+   "pct": 0.0,
+   "models": ""
   }
  ]
 };

@@ -377,7 +377,7 @@ const RU = {
   "Kuryer uchun manzilni yozing yoki joylashuvni yuboring": "Укажите адрес или отправьте геолокацию для курьера",
   "2 oydan 12 oygacha — oylik to'lovni hisoblang": "От 2 до 12 месяцев — рассчитайте ежемесячный платёж",
   "Yoki ro'yxatdan kerakli telefonni bosing — nasiya shu telefon uchun hisoblanadi": "Или нажмите на нужный телефон в списке — рассрочка рассчитается для него",
-  "Telefon": "Телефон",
+  "Telefon": "Телефон", "Qolgan summa": "Остаток", "Ustama": "Наценка",
   "Nasiya": "Рассрочка", "Nasiyani hisoblash uchun kerakli telefonni bosing": "Нажмите на телефон, чтобы рассчитать рассрочку",
   "Narxlar": "Цены", "Nasiya kalkulyatori": "Калькулятор рассрочки", "Boshlang'ich to'lov ($)": "Первоначальный взнос ($)",
   "Muddat (oy)": "Срок (мес.)", "Oylik to'lov": "Ежемесячный платёж", "Boshlang'ich to'lov": "Первоначальный взнос", "Muddat": "Срок",
@@ -441,6 +441,9 @@ function forModel(list){
 }
 const regionsOf = b => forModel(D.regions.filter(r => !r.brand || r.brand.toLowerCase() === b.toLowerCase()));
 const batteries = () => forModel(D.battery);
+/* Trade-in bonusi: Excel "Trade-in" varag'i (seriya bo'yicha); varaq bo'lmasa — umumiy foiz */
+const tradeBonus = () => (D.tradein && D.tradein.length) ? ((forModel(D.tradein)[0] || {}).pct || 0) : (D.tradein_bonus || 0);
+const maxTradeBonus = () => (D.tradein && D.tradein.length) ? Math.max(0, ...D.tradein.map(x => x.pct || 0)) : (D.tradein_bonus || 0);
 const entry = () => D.models.find(m => m.brand === S.brand && m.model === S.model && m.memory === S.mem);
 function batteryTier(p){ const B = batteries(); if (p === '' || isNaN(p)) return null; return B.find(b => p >= b.from && p <= b.to) || B[B.length - 1] || null; }
 function unknownTier(){ const B = batteries(); return B.find(b => /normal/i.test(b.label)) || B.find(b => 80 >= b.from && 80 <= b.to) || B[Math.min(2, B.length - 1)] || null; }
@@ -599,8 +602,9 @@ function calc(){
   pct = Math.min(pct, D.max_pct);
   const r = D.round_to || 1;
   const cash = Math.max(0, Math.round(e.base * (1 - pct / 100) / r) * r);
-  const trade = Math.round(cash * (1 + (D.tradein_bonus || 0) / 100) / r) * r;
-  return { base: e.base, pct, cash, trade, blocked, lines: lines.map(l => ({ ...l, sum: Math.round(e.base * l.p / 100 / 1000) * 1000 })) };
+  const tb = tradeBonus();
+  const trade = Math.round(cash * (1 + tb / 100) / r) * r;
+  return { base: e.base, pct, cash, trade, tb, blocked, lines: lines.map(l => ({ ...l, sum: Math.round(e.base * l.p / 100 / 1000) * 1000 })) };
 }
 
 /* ---------- icons ---------- */
@@ -665,10 +669,18 @@ function vNasiya(seg){
   const x = S.npPick, r = S.rate && S.rate.usd;
   const opts = (D.nasiya || []).map(n => n.months);
   if (!opts.includes(S.nsMonths)) S.nsMonths = opts[opts.length - 1];
-  const down = Math.min(Math.max(0, +S.nsDown || 0), x.usd);
-  const c = nasiyaCalc(x.usd, down, S.nsMonths);
   const som = v => r ? `≈ ${fmtSum(Math.round(v * r / 1000) * 1000)} ${t("so'm")}` : '';
   const usd = v => '$' + fmtSum(Math.ceil(v));
+  const resHTML = () => {
+    const down = Math.min(Math.max(0, +S.nsDown || 0), x.usd);
+    const c = nasiyaCalc(x.usd, down, S.nsMonths); if (!c) return '';
+    return `<div>${t("Oylik to'lov")}</div>
+      <div class="big">${usd(c.monthly)}<small>${som(c.monthly)}</small></div>
+      <div class="ln"><span>${t("Boshlang'ich to'lov")}</span><b>${usd(down)}</b></div>
+      <div class="ln"><span>${t('Qolgan summa')}</span><b>${usd(c.rest)}</b></div>
+      <div class="ln"><span>${t('Ustama')} (${S.nsMonths} ${t('oy')} — ${c.pct}%)</span><b>+${usd(c.total - c.rest)}</b></div>
+      <div class="ln"><span>${t("Jami to'lov")}</span><b>${usd(c.all)} <small style="opacity:.85">${som(c.all)}</small></b></div>`;
+  };
   loadRate();
   return { html: `${seg}
     <button class="ns-back" id="nsBack">← ${t('Narxlar')}</button>
@@ -683,20 +695,15 @@ function vNasiya(seg){
     <div class="ns-quick">${[0, 20, 30, 50].map(p => `<button class="chip" data-dp="${p}">${p}%</button>`).join('')}</div>
     <div class="ns-lbl">${t('Muddat (oy)')}</div>
     <div class="ns-months">${opts.map(m => `<button class="chip ${m === S.nsMonths ? 'on' : ''}" data-mo="${m}">${m}</button>`).join('')}</div>
-    <div class="ns-res" id="nsRes">${c ? `
-      <div>${t("Oylik to'lov")}</div>
-      <div class="big">${usd(c.monthly)}<small>${som(c.monthly)}</small></div>
-      <div class="ln"><span>${t("Boshlang'ich to'lov")}</span><b>${usd(down)}</b></div>
-      <div class="ln"><span>${t('Muddat')}</span><b>${S.nsMonths} ${t('oy')}</b></div>
-      <div class="ln"><span>${t("Jami to'lov")}</span><b>${usd(c.all)} <small style="opacity:.85">${som(c.all)}</small></b></div>` : ''}</div>
+    <div class="ns-res" id="nsRes">${resHTML()}</div>
     <p class="np-rate">${t("Hisob taxminiy. Shartnoma filialda pasport bilan rasmiylashtiriladi.")}</p>`,
     bind(){
       document.getElementById('nsPhone').onchange = e => { S.npPick = D.new_phones[+e.target.value]; haptic(); render(); };
       document.getElementById('nsBack').onclick = () => { S.npPick = null; haptic(); render(); window.scrollTo(0, 0); };
       const inp = document.getElementById('nsDown');
-      inp.oninput = () => { S.nsDown = inp.value.replace(/[^0-9]/g, ''); if (inp.value !== S.nsDown) inp.value = S.nsDown;
-        const cc = nasiyaCalc(x.usd, Math.min(+S.nsDown || 0, x.usd), S.nsMonths);
-        const keep = inp.selectionStart; render(); const ni = document.getElementById('nsDown'); ni.focus(); try { ni.setSelectionRange(keep, keep); } catch (e) {} };
+      // faqat natija qismi yangilanadi — klaviatura yopilmaydi
+      inp.oninput = () => { const v = inp.value.replace(/[^0-9]/g, ''); if (inp.value !== v) inp.value = v; S.nsDown = v;
+        document.getElementById('nsRes').innerHTML = resHTML(); };
       document.querySelectorAll('[data-dp]').forEach(el => el.onclick = () => { S.nsDown = String(Math.round(x.usd * +el.dataset.dp / 100 / 10) * 10); haptic(); render(); });
       document.querySelectorAll('[data-mo]').forEach(el => el.onclick = () => { S.nsMonths = +el.dataset.mo; haptic(); render(); track('step', 'nasiya_m:' + S.nsMonths); });
     } };
@@ -752,7 +759,7 @@ function vBrand(){
   for (const m of D.models) { if (popular.length >= 6) break; if (!popular.some(x => x.b === m.brand && x.m === m.model)) popular.push({ b: m.brand, m: m.model }); }
   const hb = brands[0] || 'Apple';
   const perks = L ? [['🆓', t('Bepul'), t("e'lon")], ['🛡️', t('Tekshiruv'), t('spamsiz kanal')], ['📷', t('Rasmlar'), t('1–3 ta')]]
-                  : [['⏱️', t('2 daqiqa'), t('javob bering')], ['💵', t('Naqd pul'), t('bugunoq')], ['🔁', 'Trade-in', `+${D.tradein_bonus || 0}% ${t('bonus')}`]];
+                  : [['⏱️', t('2 daqiqa'), t('javob bering')], ['💵', t('Naqd pul'), t('bugunoq')], ['🔁', 'Trade-in', `+${maxTradeBonus()}% ${t('bonus')}`]];
   const how = L ? [t('Telefon haqida qisqa savollarga javob bering'), t("Narx, rasm va izoh qo'shing"), t("Tekshiruvdan so'ng e'lon kanalda chiqadi")]
                 : [t('Telefon haqidagi savollarga javob bering'), t("Naqd yoki trade-in narxini darhol ko'ring"), t("Filialga keling — pulni o'sha kuni olasiz")];
   return { html: `
@@ -862,7 +869,7 @@ function vResult(){
       <p class="sub">${t("Bu holatdagi telefonni ustalarimiz ko'rib chiqishi kerak. Ariza qoldiring — o'zimiz bog'lanamiz.")}</p></div>`,
     foot: `<button class="btn" id="leadBlocked">${t('Ariza qoldirish')}</button><button class="btn ghost" id="restart">${t('Qaytadan baholash')}</button>`,
     bind(){ document.getElementById('leadBlocked').onclick = () => openLead('check'); document.getElementById('restart').onclick = restart; } };
-  const bonus = D.tradein_bonus || 0;
+  const bonus = r.tb || 0;
   return { html: `${chosenLine()}<h1>${t('Baholash natijasi')}</h1><p class="sub">${t('Telefoningiz uchun taxminiy narx')}</p>
     <div class="prices">
       ${bonus > 0 ? `<div class="pcard main"><small>${t('Trade-in narxi')} <span class="tag">+${bonus}%</span></small>
@@ -999,7 +1006,9 @@ const phoneOk = v => String(v).replace(/\D/g,'').replace(/^998/,'').length === 9
 const _banPick = {};
 function bannerFor(place){
   const d = new Date(), today = `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
-  const list = (D.banners || []).filter(b => (b.place === place || b.place === 'both') && (!b.from || b.from <= today) && (!b.to || b.to >= today));
+  let list = (D.banners || []).filter(b => (b.place === place || b.place === 'both') && (!b.from || b.from <= today) && (!b.to || b.to >= today));
+  // trade-in bonusi yo'q model uchun natijada trade-in reklamasini ko'rsatmaymiz
+  if (place === 'result' && S.model && !tradeBonus()) list = list.filter(b => !/trade.?in|трейд/i.test(`${b.title} ${b.text} ${b.title_ru || ''}`));
   if (!list.length) return null;
   if (_banPick[place] == null) _banPick[place] = Math.floor(Math.random() * list.length);   // bir sessiyada bitta, navbat bilan
   return list[_banPick[place] % list.length];
@@ -1126,7 +1135,7 @@ function openLead(mode){
     const bot = (D.bot || '').replace(/^@/, ''), app = (D.app || '').replace(/^\//, '');
     const link = bot ? (app ? `https://t.me/${encodeURIComponent(bot)}/${encodeURIComponent(app)}` : `https://t.me/${encodeURIComponent(bot)}?start=narx`) : '';
     openSheet(`<h3>${t('Arizani Telegram orqali yuboring')}</h3>
-      <p>${t('Narxingiz')}: ${esc(S.brand)} ${esc(S.model)} · ${esc(S.mem)}${r && !r.blocked ? ` — ${t('naqd')} ${som(r.cash)}${D.tradein_bonus ? `, trade-in ${som(r.trade)}` : ''}` : ''}.</p>
+      <p>${t('Narxingiz')}: ${esc(S.brand)} ${esc(S.model)} · ${esc(S.mem)}${r && !r.blocked ? ` — ${t('naqd')} ${som(r.cash)}${r.tb ? `, trade-in ${som(r.trade)}` : ''}` : ''}.</p>
       <p>${app ? t("Telegram'da shu ilova ochiladi — javoblarni yana bir bor belgilab, arizani yuboring.")
                : t("Telegram'da botimiz ochiladi: <b>Start</b> ni bosing, so'ng <b>📱 Telefonni narxlash</b> tugmasi orqali arizani yuboring.")}</p>
       <div style="height:14px"></div>
@@ -1183,7 +1192,7 @@ function sendLead(){
   const payload = { lang: LANG, src: SRC, kind: 'tradein', v: 2, mode: S.mode, name: S.name.trim(), phone: S.phone.trim(),
     brand: S.brand, model: S.model, memory: S.mem, color: S.color, region: S.region ? S.region.label : '',
     battery: S.batteryUnknown ? "noma'lum" : (S.battery ? S.battery + '%' : ''), answers,
-    blocked: r.blocked, cash: r.blocked ? 0 : r.cash, trade: r.blocked ? 0 : r.trade, base: r.base,
+    blocked: r.blocked, cash: r.blocked ? 0 : r.cash, trade: r.blocked ? 0 : (r.tb ? r.trade : null), base: r.base,
     branch: S.pickup ? '' : (curBranch() ? curBranch().name : (S.branch === -1 ? "Farqi yo'q" : '')), visit: visitText(),
     pickup: !!S.pickup, address: S.pickup ? (S.addr || '').trim().slice(0, 200) : '',
     lat: S.pickup && S.loc ? S.loc.lat : null, lon: S.pickup && S.loc ? S.loc.lon : null,
