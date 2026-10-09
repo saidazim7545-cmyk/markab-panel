@@ -1,6 +1,6 @@
 // Avtomatik yaratilgan: narx_to_data.py. Qo'lda tahrirlamang.
 window.NARX_DATA = {
- "updated": "09.10.2026 17:40",
+ "updated": "09.10.2026 18:50",
  "sample": false,
  "tradein_bonus": 8.0,
  "max_pct": 70.0,
@@ -2554,6 +2554,52 @@ window.NARX_DATA = {
    "sim": "SIM + eSIM",
    "color": "Silver",
    "usd": 2519
+  }
+ ],
+ "nasiya": [
+  {
+   "months": 2,
+   "pct": 9.0
+  },
+  {
+   "months": 3,
+   "pct": 13.5
+  },
+  {
+   "months": 4,
+   "pct": 18.0
+  },
+  {
+   "months": 5,
+   "pct": 22.5
+  },
+  {
+   "months": 6,
+   "pct": 27.0
+  },
+  {
+   "months": 7,
+   "pct": 31.5
+  },
+  {
+   "months": 8,
+   "pct": 36.0
+  },
+  {
+   "months": 9,
+   "pct": 40.5
+  },
+  {
+   "months": 10,
+   "pct": 45.0
+  },
+  {
+   "months": 11,
+   "pct": 49.5
+  },
+  {
+   "months": 12,
+   "pct": 54.0
   }
  ]
 };

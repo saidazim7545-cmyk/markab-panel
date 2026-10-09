@@ -127,6 +127,23 @@
   .np-row .nm { flex: 1; font-size: 14px; font-weight: 600; }
   .np-row .pr { text-align: right; font-weight: 800; font-size: 15px; }
   .np-row .pr small { display: block; font-size: 12px; font-weight: 600; color: var(--hint); }
+  .np-row { cursor: pointer; } .np-row:active { opacity: .7; }
+  .np-row .ns { display: block; font-size: 11.5px; font-weight: 700; color: var(--brand); margin-top: 2px; }
+  .np-hint { background: var(--field); border-radius: 12px; padding: 10px 12px; font-size: 13px; margin: 0 0 12px; }
+  .ns-phone { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 14px; margin-bottom: 14px; display: flex; gap: 12px; align-items: center; }
+  .ns-phone .np-dot { width: 28px; height: 28px; }
+  .ns-phone b { display: block; font-size: 15px; } .ns-phone span { font-size: 13px; color: var(--hint); }
+  .ns-phone .pr { margin-left: auto; text-align: right; font-weight: 800; }
+  .ns-phone .pr small { display: block; font-size: 12px; color: var(--hint); font-weight: 600; }
+  .ns-lbl { font-size: 13px; font-weight: 800; color: var(--hint); margin: 14px 0 6px; }
+  .ns-months { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
+  .ns-months .chip { padding: 9px 0; text-align: center; }
+  .ns-quick { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+  .ns-res { background: linear-gradient(130deg, #8E1734, #B8274B); color: #fff; border-radius: 18px; padding: 16px; margin: 16px 0 10px; }
+  .ns-res .big { font-size: 28px; font-weight: 900; line-height: 1.1; }
+  .ns-res .big small { display: block; font-size: 14px; font-weight: 700; opacity: .9; margin-top: 4px; }
+  .ns-res .ln { display: flex; justify-content: space-between; font-size: 13.5px; padding-top: 8px; margin-top: 8px; border-top: 1px solid rgba(255,255,255,.25); }
+  .ns-back { border: 0; background: none; color: var(--brand); font-weight: 800; font-size: 14px; padding: 0; margin: 0 0 10px; cursor: pointer; }
   .np-cta { background: var(--brand-soft); border-radius: 16px; padding: 14px; margin: 4px 0 16px; font-size: 13.5px; }
   .np-cta b { display: block; font-size: 15px; margin-bottom: 4px; }
   .np-cta .np-go { display: block; width: 100%; margin-top: 12px; border: 0; border-radius: 12px; padding: 13px; background: var(--brand); color: #fff; font-size: 14.5px; font-weight: 800; cursor: pointer; }
@@ -333,6 +350,10 @@ const RU = {
   "Eski telefonim narxini bilish": "Узнать цену моего телефона",
   "Narxlar kunlik, o'zgarishi mumkin. Aniq narx va mavjudligini filialda yoki operatordan so'rang.": "Цены на сегодня и могут меняться. Точную цену и наличие уточняйте в филиале или у оператора.",
   "Hozircha narxlar kiritilmagan.": "Цены пока не добавлены.",
+  "Nasiya": "Рассрочка", "Nasiyani hisoblash uchun kerakli telefonni bosing": "Нажмите на телефон, чтобы рассчитать рассрочку",
+  "Narxlar": "Цены", "Nasiya kalkulyatori": "Калькулятор рассрочки", "Boshlang'ich to'lov ($)": "Первоначальный взнос ($)",
+  "Muddat (oy)": "Срок (мес.)", "Oylik to'lov": "Ежемесячный платёж", "Boshlang'ich to'lov": "Первоначальный взнос", "Muddat": "Срок",
+  "oy": "мес.", "Jami to'lov": "Итого", "Hisob taxminiy. Shartnoma filialda pasport bilan rasmiylashtiriladi.": "Расчёт примерный. Договор оформляется в филиале по паспорту.",
   "Telefoningizni e'lon qiling": "Разместите объявление о продаже",
   "Bir necha savolga javob bering — e'loningiz tekshiruvdan so'ng Markab kanalida bepul chiqadi.": "Ответьте на несколько вопросов — после проверки объявление бесплатно появится в канале Markab.",
   "E'lon ma'lumotlari": "Данные объявления", "E'lon tekshiruvdan so'ng Markab kanalida bepul chiqadi.": "После проверки объявление бесплатно появится в канале Markab.",
@@ -606,7 +627,51 @@ function loadRate(){
     .catch(() => {}).finally(() => { S.rateLoading = false; });
 }
 const fmtSum = n => Math.round(n).toLocaleString('ru-RU').replace(/,/g, ' ');
+function nasiyaCalc(price, down, months){
+  const row = (D.nasiya || []).find(x => x.months === months); if (!row) return null;
+  const rest = Math.max(0, price - down);
+  const total = rest * (1 + row.pct / 100);
+  return { pct: row.pct, rest, total, monthly: months ? total / months : 0, all: down + total };
+}
+function vNasiya(seg){
+  const x = S.npPick, r = S.rate && S.rate.usd;
+  const opts = (D.nasiya || []).map(n => n.months);
+  if (!opts.includes(S.nsMonths)) S.nsMonths = opts[opts.length - 1];
+  const down = Math.min(Math.max(0, +S.nsDown || 0), x.usd);
+  const c = nasiyaCalc(x.usd, down, S.nsMonths);
+  const som = v => r ? `≈ ${fmtSum(Math.round(v * r / 1000) * 1000)} ${t("so'm")}` : '';
+  const usd = v => '$' + fmtSum(Math.ceil(v));
+  loadRate();
+  return { html: `${seg}
+    <button class="ns-back" id="nsBack">← ${t('Narxlar')}</button>
+    <h1>${t('Nasiya kalkulyatori')}</h1>
+    <div class="ns-phone">${x.color ? `<span class="np-dot" style="background:${npHex(x.model, x.color)}"></span>` : ''}
+      <div><b>${esc(x.model)}</b><span>${esc([x.memory, x.color, x.sim].filter(Boolean).join(' · '))}</span></div>
+      <div class="pr">${usd(x.usd)}<small>${som(x.usd)}</small></div></div>
+    <div class="ns-lbl">${t("Boshlang'ich to'lov ($)")}</div>
+    <input class="f" id="nsDown" inputmode="numeric" placeholder="0" value="${S.nsDown ? esc(S.nsDown) : ''}">
+    <div class="ns-quick">${[0, 20, 30, 50].map(p => `<button class="chip" data-dp="${p}">${p}%</button>`).join('')}</div>
+    <div class="ns-lbl">${t('Muddat (oy)')}</div>
+    <div class="ns-months">${opts.map(m => `<button class="chip ${m === S.nsMonths ? 'on' : ''}" data-mo="${m}">${m}</button>`).join('')}</div>
+    <div class="ns-res" id="nsRes">${c ? `
+      <div>${t("Oylik to'lov")}</div>
+      <div class="big">${usd(c.monthly)}<small>${som(c.monthly)}</small></div>
+      <div class="ln"><span>${t("Boshlang'ich to'lov")}</span><b>${usd(down)}</b></div>
+      <div class="ln"><span>${t('Muddat')}</span><b>${S.nsMonths} ${t('oy')}</b></div>
+      <div class="ln"><span>${t("Jami to'lov")}</span><b>${usd(c.all)} <small style="opacity:.85">${som(c.all)}</small></b></div>` : ''}</div>
+    <p class="np-rate">${t("Hisob taxminiy. Shartnoma filialda pasport bilan rasmiylashtiriladi.")}</p>`,
+    bind(){
+      document.getElementById('nsBack').onclick = () => { S.npPick = null; haptic(); render(); window.scrollTo(0, 0); };
+      const inp = document.getElementById('nsDown');
+      inp.oninput = () => { S.nsDown = inp.value.replace(/[^0-9]/g, ''); if (inp.value !== S.nsDown) inp.value = S.nsDown;
+        const cc = nasiyaCalc(x.usd, Math.min(+S.nsDown || 0, x.usd), S.nsMonths);
+        const keep = inp.selectionStart; render(); const ni = document.getElementById('nsDown'); ni.focus(); try { ni.setSelectionRange(keep, keep); } catch (e) {} };
+      document.querySelectorAll('[data-dp]').forEach(el => el.onclick = () => { S.nsDown = String(Math.round(x.usd * +el.dataset.dp / 100 / 10) * 10); haptic(); render(); });
+      document.querySelectorAll('[data-mo]').forEach(el => el.onclick = () => { S.nsMonths = +el.dataset.mo; haptic(); render(); track('step', 'nasiya_m:' + S.nsMonths); });
+    } };
+}
 function vNewPhones(seg){
+  if (S.npPick && (D.nasiya || []).length) return vNasiya(seg);
   const list = D.new_phones || [];
   const models = [...new Set(list.map(x => x.model))];
   if (!S.npModel || !models.includes(S.npModel)) S.npModel = models[0] || '';
@@ -617,15 +682,17 @@ function vNewPhones(seg){
   const mems = [...new Set(rows.map(x => x.memory))];
   const r = S.rate && S.rate.usd;
   loadRate();
-  const price = x => `<div class="pr">$${fmtSum(x.usd)}${r ? `<small>≈ ${fmtSum(Math.round(x.usd * r / 1000) * 1000)} ${t("so'm")}</small>` : ''}</div>`;
+  const nasOn = (D.nasiya || []).length > 0;
+  const price = x => `<div class="pr">$${fmtSum(x.usd)}${r ? `<small>≈ ${fmtSum(Math.round(x.usd * r / 1000) * 1000)} ${t("so'm")}</small>` : ''}${nasOn ? `<span class="ns">${t('Nasiya')} →</span>` : ''}</div>`;
   return { html: `${seg}
     <h1>${t('iPhone narxlari')}</h1>
     <p class="np-rate">${r ? `${t('Kurs')}: <b>1$ = ${fmtSum(r)} ${t("so'm")}</b> · ${esc(S.rate.src || '')} ${esc(S.rate.date || '')}` : t("So'mdagi narx kurs yuklangach ko'rinadi")}</p>
     ${list.length ? `
     <div class="np-models">${models.map(m => `<button class="chip ${m === S.npModel ? 'on' : ''}" data-npm="${esc(m)}">${esc(m)}</button>`).join('')}</div>
     ${sims.length > 1 ? `<div class="seg np-sim">${sims.map(x => `<button data-nps="${esc(x)}" class="${x === S.npSim ? 'on' : ''}">${esc(x)}</button>`).join('')}</div>` : ''}
+    ${nasOn ? `<div class="np-hint">🧮 ${t("Nasiyani hisoblash uchun kerakli telefonni bosing")}</div>` : ''}
     ${mems.map(mem => `<div class="np-card"><h3>${esc(mem)}</h3>${rows.filter(x => x.memory === mem).map(x => `
-      <div class="np-row">${x.color ? `<span class="np-dot" style="background:${npHex(x.model, x.color)}"></span>` : ''}
+      <div class="np-row" data-pick="${list.indexOf(x)}">${x.color ? `<span class="np-dot" style="background:${npHex(x.model, x.color)}"></span>` : ''}
         <span class="nm">${esc(x.color || t('Barcha ranglar'))}</span>${price(x)}</div>`).join('')}</div>`).join('')}
     <div class="np-cta"><b>🔁 ${t('Eski telefoningiz bormi?')}</b>${t("Uni Markabga topshiring — narxi yangi telefon narxidan ayiriladi. Avval eski telefoningiz narxini bilib oling.")}
       <button class="np-go" id="npTrade">${t('Eski telefonim narxini bilish')} →</button></div>
@@ -635,6 +702,7 @@ function vNewPhones(seg){
       document.querySelectorAll('[data-npm]').forEach(el => el.onclick = () => { S.npModel = el.dataset.npm; haptic(); render(); track('step', 'new:' + S.npModel); });
       const on = document.querySelector('.np-models .chip.on'); if (on && on.scrollIntoView) on.scrollIntoView({ block: 'nearest', inline: 'center' });
       document.querySelectorAll('[data-nps]').forEach(el => el.onclick = () => { S.npSim = el.dataset.nps; haptic(); render(); });
+      if (nasOn) document.querySelectorAll('[data-pick]').forEach(el => el.onclick = () => { S.npPick = list[+el.dataset.pick]; haptic(); render(); window.scrollTo(0, 0); track('step', 'nasiya:' + S.npPick.model); });
       const tb = document.getElementById('npTrade'); if (tb) tb.onclick = () => { S.flow = 'sell'; S.i = 0; haptic(); render(); window.scrollTo(0, 0); track('step', 'new:tradein'); };
     } };
 }
