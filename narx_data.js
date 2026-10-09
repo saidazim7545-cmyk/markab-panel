@@ -1,6 +1,6 @@
 // Avtomatik yaratilgan: narx_to_data.py. Qo'lda tahrirlamang.
 window.NARX_DATA = {
- "updated": "09.10.2026 21:57",
+ "updated": "09.10.2026 22:12",
  "sample": false,
  "tradein_bonus": 8.0,
  "max_pct": 70.0,
@@ -469,7 +469,7 @@ window.NARX_DATA = {
    "text_ru": "Сдайте iPhone 16 или 17 серии и купите новый в Markab — засчитаем на 3% больше цены выкупа.",
    "cta": "Do'konlar manzili",
    "cta_ru": "Адреса магазинов",
-   "link": "https://instagram.com/markab_electronics",
+   "link": "",
    "img": "",
    "bg": "#1F3B57",
    "from": "2026-10-01",
@@ -478,44 +478,40 @@ window.NARX_DATA = {
  ],
  "branches": [
   {
-   "name": "Yunusobod",
-   "name_ru": "Юнусабад",
-   "addr": "",
-   "addr_ru": "",
-   "phone": "+998 55 517 65 55",
-   "open": "09:00",
-   "close": "20:00",
-   "map": ""
-  },
-  {
    "name": "Qoratosh",
    "name_ru": "Каратош",
-   "addr": "",
-   "addr_ru": "",
+   "addr": "Samarqand darvoza savdo majmuasi ro'parasi",
+   "addr_ru": "Напротив ТЦ «Samarqand Darvoza»",
    "phone": "+998 55 517 65 55",
-   "open": "09:00",
+   "open": "10:00",
    "close": "20:00",
-   "map": ""
+   "map": "https://www.google.com/maps/search/?api=1&query=41.317056,69.231639",
+   "lat": 41.317056,
+   "lon": 69.231639
   },
   {
    "name": "Farxod bozor",
    "name_ru": "Фархадский базар",
-   "addr": "",
-   "addr_ru": "",
+   "addr": "Farxod bozori ro'parasi",
+   "addr_ru": "Напротив Фархадского базара",
    "phone": "+998 55 517 65 55",
-   "open": "09:00",
+   "open": "10:00",
    "close": "20:00",
-   "map": ""
+   "map": "https://www.google.com/maps/search/?api=1&query=41.284944,69.187861",
+   "lat": 41.284944,
+   "lon": 69.187861
   },
   {
-   "name": "Chilonzor",
-   "name_ru": "Чиланзар",
-   "addr": "",
-   "addr_ru": "",
+   "name": "Malika",
+   "name_ru": "Малика",
+   "addr": "Malika bozori, Iftixor ko'chasi",
+   "addr_ru": "Рынок «Малика», ул. Ифтихор",
    "phone": "+998 55 517 65 55",
-   "open": "09:00",
+   "open": "10:00",
    "close": "20:00",
-   "map": ""
+   "map": "https://www.google.com/maps/search/?api=1&query=41.340062,69.270859",
+   "lat": 41.340062,
+   "lon": 69.270859
   }
  ],
  "colors": {

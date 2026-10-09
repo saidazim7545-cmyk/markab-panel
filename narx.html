@@ -257,6 +257,14 @@
   .sheet h3 { margin: 0 0 4px; font-size: 19px; } .sheet p { color: var(--hint); font-size: 13.5px; margin: 0 0 4px; }
   .toast { position: fixed; left: 50%; bottom: calc(120px + env(safe-area-inset-bottom)); transform: translateX(-50%); background: #231C1F; color: #fff;
     padding: 11px 16px; border-radius: 12px; font-size: 14px; z-index: 30; display: none; max-width: 90%; text-align: center; }
+  .brl { display: grid; gap: 10px; margin-bottom: 14px; }
+  .brc { background: var(--card); border-radius: 16px; padding: 12px 14px; box-shadow: var(--shadow); }
+  .brc b { font-size: 15.5px; display: block; } .brc .ad { color: var(--hint); font-size: 13px; margin-top: 2px; line-height: 1.35; }
+  .brc .hr { font-size: 12.5px; margin-top: 4px; color: var(--hint); } .brc .hr .op { color: #1E8E4E; font-weight: 700; } .brc .hr .cl { color: var(--brand); font-weight: 700; }
+  .brc .bb { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+  .brc .bb button { flex: 1; min-width: 92px; border: 0; border-radius: 10px; padding: 9px 8px; font: inherit; font-size: 13px; font-weight: 700;
+    background: var(--brand-soft); color: var(--brand); cursor: pointer; }
+  .brsel { font-size: 13px; color: var(--hint); margin: 8px 2px 0; } .brsel a { color: var(--brand); font-weight: 700; text-decoration: none; }
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
 </head>
@@ -350,6 +358,8 @@ const RU = {
   "Ekran": "Экран", "Orqa": "Задняя", "Ramka": "Рамка", "Kamera": "Камера",
   "Almashtirilgan qismni telefon rasmida bosing": "Нажмите на заменённую деталь на изображении",
   "Almashtirilmagan — davom etish": "Ничего не менялось — продолжить", "Old tomoni": "Спереди", "Orqa tomoni": "Сзади",
+  "Filiallarimiz": "Наши филиалы", "Hozir ochiq": "Сейчас открыто", "Hozir yopiq": "Сейчас закрыто", "Qo'ng'iroq": "Позвонить",
+  "Xaritada": "На карте", "Har kuni": "Ежедневно", "bepul baholash": "бесплатная оценка",
   "Qaysi filialga kelasiz?": "В какой филиал придёте?", "Farqi yo'q": "Без разницы", "Qachon kelasiz?": "Когда придёте?",
   "Bugun": "Сегодня", "Ertaga": "Завтра", "Indinga": "Послезавтра", "Qo'ng'iroqda kelishamiz": "Договоримся по телефону",
   "Xaritada ochish": "Открыть на карте", "Sizni kutamiz": "Ждём вас", "ixtiyoriy": "необязательно",
@@ -781,9 +791,10 @@ function vBrand(){
           : `<div class="sec"><h2>${t('Brendni tanlang')}</h2></div>
       <div class="opts two" style="margin-bottom:16px">${brands.map(b => `<button class="opt center ${S.brand===b?'on':''}" data-b="${esc(b)}">${esc(b)}</button>`).join('')}</div>`}
     <div class="sec"><h2>${t('Qanday ishlaydi?')}</h2></div>
-    <div class="how">${how.map((x, i) => `<div><em>${i + 1}</em>${esc(x)}</div>`).join('')}</div>`,
+    <div class="how">${how.map((x, i) => `<div><em>${i + 1}</em>${esc(x)}</div>`).join('')}</div>
+    ${branches().length ? `<div class="sec"><h2 id="filiallar">${t('Filiallarimiz')}</h2></div>${branchCards()}` : ''}`,
     bind(){
-      bindFlow();
+      bindFlow(); bindBranchCards();
       const pickBrand = b => { if (S.brand !== b) { S.brand = b; S.model = ''; S.mem = ''; S.color = ''; S.dmg = {}; S.region = null; S.q = ''; } };
       document.querySelectorAll('[data-b]').forEach(el => el.onclick = () => { pickBrand(el.dataset.b); next(); });
       document.querySelectorAll('[data-pm]').forEach(el => el.onclick = () => {
@@ -1030,6 +1041,7 @@ function bindBanners(){
     const b = (D.banners || []).find(x => x.id === el.dataset.ban); if (!b || !b.link) return;
     track('ban_click', b.id); haptic();
     try {
+      if (b.link === '#filiallar') { openBranches(); return; }
       if (/^tel:/.test(b.link)) { location.href = b.link; return; }
       if (/^https:\/\/t\.me\//.test(b.link) && tg && tg.openTelegramLink) { tg.openTelegramLink(b.link); return; }
       if (tg && tg.openLink) { tg.openLink(b.link); return; }
@@ -1042,6 +1054,25 @@ function bindBanners(){
 const pad2 = n => String(n).padStart(2, '0');
 const branches = () => D.branches || [];
 const curBranch = () => (S.branch != null && S.branch >= 0) ? branches()[S.branch] : null;
+const brMap = (b, kind) => b.lat && b.lon ? (kind === 'y' ? `https://yandex.uz/maps/?pt=${b.lon},${b.lat}&z=17&l=map` : `https://www.google.com/maps/search/?api=1&query=${b.lat},${b.lon}`) : (b.map || '');
+function openExt(url){ if (!url) return; haptic(); try { if (/^tel:/.test(url)) { location.href = url; return; } if (tg && tg.openLink) { tg.openLink(url); return; } } catch (e) {} window.open(url, '_blank', 'noopener'); }
+function brOpenNow(b){ const n = new Date(), m = n.getHours() * 60 + n.getMinutes(); const p = x => { const [h, mi] = String(x).split(':').map(Number); return h * 60 + (mi || 0); };
+  return m >= p(b.open) && m < p(b.close); }
+function branchCards(){
+  const bs = branches(); if (!bs.length) return '';
+  return `<div class="brl">${bs.map((b, i) => `<div class="brc"><b>📍 ${esc(tx(b, 'name'))}</b>
+    ${tx(b, 'addr') ? `<div class="ad">${esc(tx(b, 'addr'))}</div>` : ''}
+    <div class="hr">🕙 ${esc(b.open)}–${esc(b.close)} · ${brOpenNow(b) ? `<span class="op">${t('Hozir ochiq')}</span>` : `<span class="cl">${t('Hozir yopiq')}</span>`}</div>
+    <div class="bb">${brMap(b, 'g') ? `<button data-brm="${i}">🗺 Google</button><button data-bry="${i}">🧭 Yandex</button>` : ''}
+      ${b.phone ? `<button data-brt="${i}">📞 ${t("Qo'ng'iroq")}</button>` : ''}</div></div>`).join('')}</div>`;
+}
+function bindBranchCards(root){
+  const bs = branches(), q = (a, f) => (root || document).querySelectorAll(`[${a}]`).forEach(el => el.onclick = () => f(bs[+el.getAttribute(a)]));
+  q('data-brm', b => { track('br_map', b.name); openExt(brMap(b, 'g')); });
+  q('data-bry', b => { track('br_map', b.name); openExt(brMap(b, 'y')); });
+  q('data-brt', b => { track('br_call', b.name); openExt('tel:' + String(b.phone).replace(/[^\d+]/g, '')); });
+}
+function openBranches(){ const sh = openSheet(`<h3>${t('Filiallarimiz')}</h3><p>${t("Har kuni")} · ${t('bepul baholash')}</p><div style="height:8px"></div>${branchCards()}`); bindBranchCards(sh); }
 function dayDate(i){ const d = new Date(); d.setDate(d.getDate() + i); return d; }
 function slotsFor(br, day){
   const [oh] = String((br && br.open) || (branches()[0] || {}).open || '09:00').split(':').map(Number);
@@ -1057,7 +1088,8 @@ function visitHTML(){
   const dn = ['Bugun', 'Ertaga', 'Indinga'];
   let h = (S.pickup ? '' : `<div class="visit-sub">${t('Qaysi filialga kelasiz?')} <i>(${t('ixtiyoriy')})</i></div><div class="chips">
     ${bs.map((b, i) => `<button class="chip ${S.branch === i ? 'on' : ''}" data-br="${i}">${esc(tx(b, 'name'))}</button>`).join('')}
-    <button class="chip ${S.branch === -1 ? 'on' : ''}" data-br="-1">${t("Farqi yo'q")}</button></div>`) + `
+    <button class="chip ${S.branch === -1 ? 'on' : ''}" data-br="-1">${t("Farqi yo'q")}</button></div>
+    ${curBranch() ? `<div class="brsel">📍 ${esc(tx(curBranch(), 'addr') || tx(curBranch(), 'name'))}${brMap(curBranch(), 'g') ? ` · <a href="#" data-brm="${S.branch}">${t('Xaritada')}</a>` : ''}</div>` : ''}`) + `
     <div class="visit-sub">${S.pickup ? t('Kuryer qachon kelsin?') : t('Qachon kelasiz?')}</div><div class="chips">
     ${days.map(i => { const d = dayDate(i); return `<button class="chip ${S.day === i ? 'on' : ''}" data-day="${i}">${t(dn[i])}<small>${pad2(d.getDate())}.${pad2(d.getMonth() + 1)}</small></button>`; }).join('')}
     <button class="chip ${S.day === -1 ? 'on' : ''}" data-day="-1">${t("Qo'ng'iroqda kelishamiz")}</button></div>`;
@@ -1070,6 +1102,7 @@ function visitHTML(){
 function bindVisit(box){
   const redraw = () => { box.innerHTML = visitHTML(); bindVisit(box); };
   box.querySelectorAll('[data-br]').forEach(b => b.onclick = () => { S.branch = +b.dataset.br; haptic(); redraw(); });
+  bindBranchCards(box); box.querySelectorAll('a[data-brm]').forEach(a => a.addEventListener('click', e => e.preventDefault()));
   box.querySelectorAll('[data-day]').forEach(b => b.onclick = () => { S.day = +b.dataset.day; S.slot = ''; haptic(); redraw(); });
   box.querySelectorAll('[data-slot]').forEach(b => b.onclick = () => { S.slot = b.dataset.slot; haptic(); redraw(); });
 }
