@@ -661,8 +661,12 @@ function loadRate(){
 const fmtSum = n => Math.round(n).toLocaleString('ru-RU').replace(/,/g, ' ');
 function nasiyaCalc(price, down, months){
   const row = (D.nasiya || []).find(x => x.months === months); if (!row) return null;
+  // 1-variant: ustama (+20$) dan oldingi asl narxdan boshlang'ich to'lov ayiriladi, qoldiqqa oylik foiz qo'yiladi,
+  // keyin bir martalik ustama (+20$) qo'shiladi.  Masalan: (1809−20−800)×1.27+20 = 1276 → 6 oyga 213$
+  const mk = Math.min(D.new_markup || 0, price);
   const rest = Math.max(0, price - down);
-  const total = rest * (1 + row.pct / 100);
+  const base = Math.max(0, price - mk - down);
+  const total = base * (1 + row.pct / 100) + Math.min(mk, rest);
   return { pct: row.pct, rest, total, monthly: months ? total / months : 0, all: down + total };
 }
 function vNasiya(seg){

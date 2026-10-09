@@ -1,6 +1,6 @@
 // Avtomatik yaratilgan: narx_to_data.py. Qo'lda tahrirlamang.
 window.NARX_DATA = {
- "updated": "09.10.2026 21:55",
+ "updated": "09.10.2026 21:57",
  "sample": false,
  "tradein_bonus": 8.0,
  "max_pct": 70.0,
@@ -2611,5 +2611,6 @@ window.NARX_DATA = {
    "pct": 0.0,
    "models": ""
   }
- ]
+ ],
+ "new_markup": 20.0
 };
