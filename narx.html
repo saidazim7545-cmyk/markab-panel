@@ -1231,6 +1231,7 @@ function sendLead(){
     battery: S.batteryUnknown ? "noma'lum" : (S.battery ? S.battery + '%' : ''), answers,
     blocked: r.blocked, cash: r.blocked ? 0 : r.cash, trade: r.blocked ? 0 : (r.tb ? r.trade : null), base: r.base,
     branch: S.pickup ? '' : (curBranch() ? curBranch().name : (S.branch === -1 ? "Farqi yo'q" : '')), visit: visitText(),
+    bi: !S.pickup && curBranch() && curBranch().lat ? (b => ({ name: tx(b, 'name'), addr: tx(b, 'addr'), lat: b.lat, lon: b.lon, phone: b.phone, open: b.open, close: b.close }))(curBranch()) : null,
     pickup: !!S.pickup, address: S.pickup ? (S.addr || '').trim().slice(0, 200) : '',
     lat: S.pickup && S.loc ? S.loc.lat : null, lon: S.pickup && S.loc ? S.loc.lon : null,
     feedback: S.feedback, competitor: +String(S.competitor).replace(/\D/g, '') || 0 };
