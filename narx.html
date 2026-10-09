@@ -112,6 +112,24 @@
   .phs .add { aspect-ratio: 1; border-radius: 12px; border: 1.5px dashed var(--line); background: var(--field); color: var(--brand); font-weight: 800; font-size: 12.5px; cursor: pointer; display: grid; place-items: center; text-align: center; padding: 6px; }
   .phs .add b { display: block; font-size: 24px; line-height: 1; }
   .ph-hint { font-size: 12px; color: var(--hint); margin: -2px 0 8px; }
+  .seg.three { grid-template-columns: 1fr 1fr 1fr; } .seg.three button { font-size: 12.5px; line-height: 1.25; padding: 9px 4px; }
+  .np-rate { font-size: 12.5px; color: var(--hint); margin: -4px 0 12px; }
+  .np-rate b { color: var(--text); }
+  .np-models { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; margin: 0 -2px 12px; scrollbar-width: none; }
+  .np-models::-webkit-scrollbar { display: none; }
+  .np-models .chip { white-space: nowrap; flex: none; }
+  .np-sim { margin-bottom: 12px; }
+  .np-card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 4px 14px; margin-bottom: 12px; }
+  .np-card h3 { margin: 10px 0 4px; font-size: 15px; }
+  .np-row { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-top: 1px solid var(--line); }
+  .np-card h3 + .np-row { border-top: 0; }
+  .np-dot { width: 18px; height: 18px; border-radius: 50%; flex: none; box-shadow: inset 0 0 0 1px rgba(0,0,0,.15); }
+  .np-row .nm { flex: 1; font-size: 14px; font-weight: 600; }
+  .np-row .pr { text-align: right; font-weight: 800; font-size: 15px; }
+  .np-row .pr small { display: block; font-size: 12px; font-weight: 600; color: var(--hint); }
+  .np-cta { background: var(--brand-soft); border-radius: 16px; padding: 14px; margin: 4px 0 16px; font-size: 13.5px; }
+  .np-cta b { display: block; font-size: 15px; margin-bottom: 4px; }
+  .np-cta .np-go { display: block; width: 100%; margin-top: 12px; border: 0; border-radius: 12px; padding: 13px; background: var(--brand); color: #fff; font-size: 14.5px; font-weight: 800; cursor: pointer; }
   .seg { display: grid; grid-template-columns: 1fr 1fr; background: var(--field); border-radius: 14px; padding: 4px; gap: 4px; margin-bottom: 16px; }
   .seg button { border: 0; background: none; border-radius: 11px; padding: 11px 6px; font-size: 14px; font-weight: 800; color: var(--hint); cursor: pointer; }
   .seg button.on { background: var(--card); color: var(--brand); box-shadow: 0 1px 4px rgba(0,0,0,.12); }
@@ -308,6 +326,13 @@ const RU = {
   "Ekran va orqa tomonini suratga oling — narxni aniqroq aytamiz": "Сфотографируйте экран и заднюю сторону — назовём цену точнее",
   "Rasm qo'shish": "Добавить фото", "Rasmni o'qib bo'lmadi": "Не удалось прочитать фото",
   "Markabga sotish": "Продать Markab", "E'lon berish": "Дать объявление",
+  "Telefon narxlash": "Оценка телефона", "iPhone narxlari": "Цены на iPhone", "E'lon": "Объявление",
+  "Kurs": "Курс", "So'mdagi narx kurs yuklangach ko'rinadi": "Цена в сумах появится после загрузки курса", "Barcha ranglar": "Все цвета",
+  "Eski telefoningiz bormi?": "Есть старый телефон?",
+  "Uni Markabga topshiring — narxi yangi telefon narxidan ayiriladi. Avval eski telefoningiz narxini bilib oling.": "Сдайте его в Markab — его стоимость вычтем из цены нового. Сначала узнайте, сколько стоит ваш телефон.",
+  "Eski telefonim narxini bilish": "Узнать цену моего телефона",
+  "Narxlar kunlik, o'zgarishi mumkin. Aniq narx va mavjudligini filialda yoki operatordan so'rang.": "Цены на сегодня и могут меняться. Точную цену и наличие уточняйте в филиале или у оператора.",
+  "Hozircha narxlar kiritilmagan.": "Цены пока не добавлены.",
   "Telefoningizni e'lon qiling": "Разместите объявление о продаже",
   "Bir necha savolga javob bering — e'loningiz tekshiruvdan so'ng Markab kanalida bepul chiqadi.": "Ответьте на несколько вопросов — после проверки объявление бесплатно появится в канале Markab.",
   "E'lon ma'lumotlari": "Данные объявления", "E'lon tekshiruvdan so'ng Markab kanalida bepul chiqadi.": "После проверки объявление бесплатно появится в канале Markab.",
@@ -495,6 +520,7 @@ function vParts(s){
 
 /* ---------- steps (dynamic) ---------- */
 function steps(){
+  if (S.flow === 'new') return [{ k: 'brand' }];
   const st = [{ k: 'brand' }, { k: 'model' }];
   if (S.model && memsOf(S.brand, S.model).length > 1) st.push({ k: 'mem' });
   if (S.model && colorsOf(S.brand, S.model).length) st.push({ k: 'color' });
@@ -546,7 +572,7 @@ function render(){
     ? `<div class="logo"><span class="m"></span><span class="w"></span></div>${D.sample ? `<span class="sample">${t('Namuna narxlar')}</span>` : ''}<span class="langs"><button data-lang="uz" class="${LANG === 'uz' ? 'on' : ''}">UZ</button><button data-lang="ru" class="${LANG === 'ru' ? 'on' : ''}">RU</button></span>`
     : `<button class="back" id="backBtn" aria-label="${t('Orqaga')}">${I.back}</button><div class="logo"><span class="m"></span><span class="w"></span></div>
        <span class="stepno">${s.k === 'result' ? t('Natija') : s.k === 'listing' ? t("E'lon berish") : `${S.i + 1} / ${total}`}</span>`;
-  document.getElementById('prog').style.width = (s.k === 'result' || s.k === 'listing' ? 100 : (S.i / total) * 100) + '%';
+  document.getElementById('prog').style.width = (s.k === 'result' || s.k === 'listing' ? 100 : total ? (S.i / total) * 100 : 0) + '%';
   if (s.k === 'result') track('result', '', `${S.brand} ${S.model} ${S.mem}`.trim());
   else track('step', s.k === 'q' ? 'q:' + String((D.questions[s.qi] || {}).title || '').slice(0, 28) : s.k);
   const V = { brand: vBrand, model: vModel, mem: vMem, color: vColor, damage: vDamage, region: vRegion, battery: vBattery, q: vQuestion, result: vResult, listing: vListing }[s.k];
@@ -567,7 +593,56 @@ function back(){ if (S.i > 0) { S.i--; haptic(); render(); window.scrollTo(0, 0)
 if (inTelegram && tg.BackButton) { try { tg.BackButton.onClick(back); } catch(e){} }
 const chosenLine = () => S.model ? `<div class="chosen">${S.model.startsWith(S.brand) ? '' : esc(S.brand) + ' '}${esc(S.model)}${S.mem ? ' · ' + esc(S.mem) : ''}${S.color ? ' · ' + esc((colorEntry() ? tx(colorEntry(), 'name') : t(S.color)).replace(/\s*\(.*\)$/, '')) : ''}</div>` : '';
 
+const NP_HEX = { silver: '#DADCDD', black: '#2B2B2D', glacier: '#CFE3EE', burgundy: '#6E2433', orange: '#E0703A', 'deep blue': '#2F3D5C',
+  blue: '#A9C4DD', gold: '#E9D9B8', white: '#F2F2F0' };
+function npHex(model, color){
+  const c = String(color || '').toLowerCase(); if (!c) return '';
+  const own = colorsOf('Apple', model).find(x => (x.name || '').toLowerCase().includes('(' + c) || (x.name || '').toLowerCase().includes(c));
+  return (own && own.hex) || NP_HEX[c] || '#C9C9CC';
+}
+function loadRate(){
+  if (S.rate || S.rateLoading || !D.api) return; S.rateLoading = true;
+  fetch(D.api.replace(/\/$/, '') + '/api/rate').then(r => r.json()).then(j => { if (j && j.usd) { S.rate = j; if (S.flow === 'new') render(); } })
+    .catch(() => {}).finally(() => { S.rateLoading = false; });
+}
+const fmtSum = n => Math.round(n).toLocaleString('ru-RU').replace(/,/g, ' ');
+function vNewPhones(seg){
+  const list = D.new_phones || [];
+  const models = [...new Set(list.map(x => x.model))];
+  if (!S.npModel || !models.includes(S.npModel)) S.npModel = models[0] || '';
+  const ofModel = list.filter(x => x.model === S.npModel);
+  const sims = [...new Set(ofModel.map(x => x.sim).filter(Boolean))];
+  if (!S.npSim || !sims.includes(S.npSim)) S.npSim = sims[0] || '';
+  const rows = ofModel.filter(x => !sims.length || x.sim === S.npSim);
+  const mems = [...new Set(rows.map(x => x.memory))];
+  const r = S.rate && S.rate.usd;
+  loadRate();
+  const price = x => `<div class="pr">$${fmtSum(x.usd)}${r ? `<small>≈ ${fmtSum(Math.round(x.usd * r / 1000) * 1000)} ${t("so'm")}</small>` : ''}</div>`;
+  return { html: `${seg}
+    <h1>${t('iPhone narxlari')}</h1>
+    <p class="np-rate">${r ? `${t('Kurs')}: <b>1$ = ${fmtSum(r)} ${t("so'm")}</b> · ${esc(S.rate.src || '')} ${esc(S.rate.date || '')}` : t("So'mdagi narx kurs yuklangach ko'rinadi")}</p>
+    ${list.length ? `
+    <div class="np-models">${models.map(m => `<button class="chip ${m === S.npModel ? 'on' : ''}" data-npm="${esc(m)}">${esc(m)}</button>`).join('')}</div>
+    ${sims.length > 1 ? `<div class="seg np-sim">${sims.map(x => `<button data-nps="${esc(x)}" class="${x === S.npSim ? 'on' : ''}">${esc(x)}</button>`).join('')}</div>` : ''}
+    ${mems.map(mem => `<div class="np-card"><h3>${esc(mem)}</h3>${rows.filter(x => x.memory === mem).map(x => `
+      <div class="np-row">${x.color ? `<span class="np-dot" style="background:${npHex(x.model, x.color)}"></span>` : ''}
+        <span class="nm">${esc(x.color || t('Barcha ranglar'))}</span>${price(x)}</div>`).join('')}</div>`).join('')}
+    <div class="np-cta"><b>🔁 ${t('Eski telefoningiz bormi?')}</b>${t("Uni Markabga topshiring — narxi yangi telefon narxidan ayiriladi. Avval eski telefoningiz narxini bilib oling.")}
+      <button class="np-go" id="npTrade">${t('Eski telefonim narxini bilish')} →</button></div>
+    <p class="np-rate">${t("Narxlar kunlik, o'zgarishi mumkin. Aniq narx va mavjudligini filialda yoki operatordan so'rang.")}</p>`
+    : `<div class="empty">${t("Hozircha narxlar kiritilmagan.")}</div>`}`,
+    bind(){
+      document.querySelectorAll('[data-npm]').forEach(el => el.onclick = () => { S.npModel = el.dataset.npm; haptic(); render(); track('step', 'new:' + S.npModel); });
+      const on = document.querySelector('.np-models .chip.on'); if (on && on.scrollIntoView) on.scrollIntoView({ block: 'nearest', inline: 'center' });
+      document.querySelectorAll('[data-nps]').forEach(el => el.onclick = () => { S.npSim = el.dataset.nps; haptic(); render(); });
+      const tb = document.getElementById('npTrade'); if (tb) tb.onclick = () => { S.flow = 'sell'; S.i = 0; haptic(); render(); window.scrollTo(0, 0); track('step', 'new:tradein'); };
+    } };
+}
 function vBrand(){
+  const hasNew = (D.new_phones || []).length > 0;
+  const seg = `<div class="seg ${hasNew ? 'three' : ''}"><button data-flow="sell" class="${S.flow !== 'listing' && S.flow !== 'new' ? 'on' : ''}">💰 ${t(hasNew ? 'Telefon narxlash' : 'Markabga sotish')}</button>${hasNew ? `<button data-flow="new" class="${S.flow === 'new' ? 'on' : ''}">📱 ${t('iPhone narxlari')}</button>` : ''}<button data-flow="listing" class="${S.flow === 'listing' ? 'on' : ''}">📢 ${t(hasNew ? "E'lon" : "E'lon berish")}</button></div>`;
+  const bindFlow = () => document.querySelectorAll('[data-flow]').forEach(el => el.onclick = () => { if (S.flow !== el.dataset.flow) { S.flow = el.dataset.flow; S.i = 0; haptic(); render(); window.scrollTo(0, 0); track('step', 'flow:' + S.flow); } });
+  if (S.flow === 'new') { const v = vNewPhones(seg); const b = v.bind; v.bind = () => { bindFlow(); b(); }; return v; }
   const L = S.flow === 'listing', one = brands.length === 1;
   const pal = ['#2F3D5C', '#E0703A', '#C2BCB2', '#9DC7C1', '#3C3C3D', '#F2B8C8'];
   const mini = (b, m, col) => phoneSVG('back', { kind: phoneKind(b, m), color: col }).replace('viewBox="-14 -6 128 234"', 'viewBox="-2 -2 104 204"');
@@ -580,7 +655,7 @@ function vBrand(){
   const how = L ? [t('Telefon haqida qisqa savollarga javob bering'), t("Narx, rasm va izoh qo'shing"), t("Tekshiruvdan so'ng e'lon kanalda chiqadi")]
                 : [t('Telefon haqidagi savollarga javob bering'), t("Naqd yoki trade-in narxini darhol ko'ring"), t("Filialga keling — pulni o'sha kuni olasiz")];
   return { html: `
-    <div class="seg"><button data-flow="sell" class="${!L ? 'on' : ''}">💰 ${t('Markabga sotish')}</button><button data-flow="listing" class="${L ? 'on' : ''}">📢 ${t("E'lon berish")}</button></div>
+    ${seg}
     <div class="hero ${L ? 'ls' : ''}">
       <h1>${L ? t("Telefoningizni e'lon qiling") : t('Telefoningiz qancha turadi?')}</h1>
       <p>${L ? t("E'lon tekshiruvdan so'ng Markab kanalida bepul chiqadi.") : t('Bir necha savolga javob bering — 2 daqiqada naqd va trade-in narxini bilasiz. Bepul.')}</p>
@@ -596,7 +671,7 @@ function vBrand(){
     <div class="sec"><h2>${t('Qanday ishlaydi?')}</h2></div>
     <div class="how">${how.map((x, i) => `<div><em>${i + 1}</em>${esc(x)}</div>`).join('')}</div>`,
     bind(){
-      document.querySelectorAll('[data-flow]').forEach(el => el.onclick = () => { if (S.flow !== el.dataset.flow) { S.flow = el.dataset.flow; haptic(); render(); track('step', 'flow:' + S.flow); } });
+      bindFlow();
       const pickBrand = b => { if (S.brand !== b) { S.brand = b; S.model = ''; S.mem = ''; S.color = ''; S.dmg = {}; S.region = null; S.q = ''; } };
       document.querySelectorAll('[data-b]').forEach(el => el.onclick = () => { pickBrand(el.dataset.b); next(); });
       document.querySelectorAll('[data-pm]').forEach(el => el.onclick = () => {

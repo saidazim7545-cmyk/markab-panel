@@ -1,6 +1,6 @@
 // Avtomatik yaratilgan: narx_to_data.py. Qo'lda tahrirlamang.
 window.NARX_DATA = {
- "updated": "09.10.2026 17:18",
+ "updated": "09.10.2026 17:40",
  "sample": false,
  "tradein_bonus": 8.0,
  "max_pct": 70.0,
@@ -2020,6 +2020,540 @@ window.NARX_DATA = {
      "pos": ""
     }
    ]
+  }
+ ],
+ "new_phones": [
+  {
+   "model": "iPhone 18 Pro",
+   "memory": "256 GB",
+   "sim": "eSIM + eSIM",
+   "color": "Silver",
+   "usd": 1599
+  },
+  {
+   "model": "iPhone 18 Pro",
+   "memory": "256 GB",
+   "sim": "eSIM + eSIM",
+   "color": "Glacier",
+   "usd": 1619
+  },
+  {
+   "model": "iPhone 18 Pro",
+   "memory": "256 GB",
+   "sim": "eSIM + eSIM",
+   "color": "Black",
+   "usd": 1609
+  },
+  {
+   "model": "iPhone 18 Pro",
+   "memory": "256 GB",
+   "sim": "eSIM + eSIM",
+   "color": "Burgundy",
+   "usd": 1619
+  },
+  {
+   "model": "iPhone 18 Pro",
+   "memory": "512 GB",
+   "sim": "eSIM + eSIM",
+   "color": "",
+   "usd": 1919
+  },
+  {
+   "model": "iPhone 18 Pro",
+   "memory": "1 TB",
+   "sim": "eSIM + eSIM",
+   "color": "",
+   "usd": 2919
+  },
+  {
+   "model": "iPhone 18 Pro Max",
+   "memory": "256 GB",
+   "sim": "eSIM + eSIM",
+   "color": "Black",
+   "usd": 1719
+  },
+  {
+   "model": "iPhone 18 Pro Max",
+   "memory": "256 GB",
+   "sim": "eSIM + eSIM",
+   "color": "Silver",
+   "usd": 1769
+  },
+  {
+   "model": "iPhone 18 Pro Max",
+   "memory": "256 GB",
+   "sim": "eSIM + eSIM",
+   "color": "Glacier",
+   "usd": 1749
+  },
+  {
+   "model": "iPhone 18 Pro Max",
+   "memory": "256 GB",
+   "sim": "eSIM + eSIM",
+   "color": "Burgundy",
+   "usd": 1809
+  },
+  {
+   "model": "iPhone 18 Pro Max",
+   "memory": "512 GB",
+   "sim": "eSIM + eSIM",
+   "color": "Black",
+   "usd": 2069
+  },
+  {
+   "model": "iPhone 18 Pro Max",
+   "memory": "512 GB",
+   "sim": "eSIM + eSIM",
+   "color": "Silver",
+   "usd": 2119
+  },
+  {
+   "model": "iPhone 18 Pro Max",
+   "memory": "512 GB",
+   "sim": "eSIM + eSIM",
+   "color": "Glacier",
+   "usd": 2069
+  },
+  {
+   "model": "iPhone 18 Pro Max",
+   "memory": "512 GB",
+   "sim": "eSIM + eSIM",
+   "color": "Burgundy",
+   "usd": 2169
+  },
+  {
+   "model": "iPhone 18 Pro Max",
+   "memory": "1 TB",
+   "sim": "eSIM + eSIM",
+   "color": "",
+   "usd": 2719
+  },
+  {
+   "model": "iPhone 18 Pro",
+   "memory": "256 GB",
+   "sim": "SIM + eSIM",
+   "color": "Silver",
+   "usd": 1599
+  },
+  {
+   "model": "iPhone 18 Pro",
+   "memory": "256 GB",
+   "sim": "SIM + eSIM",
+   "color": "Glacier",
+   "usd": 1619
+  },
+  {
+   "model": "iPhone 18 Pro",
+   "memory": "256 GB",
+   "sim": "SIM + eSIM",
+   "color": "Black",
+   "usd": 1639
+  },
+  {
+   "model": "iPhone 18 Pro",
+   "memory": "256 GB",
+   "sim": "SIM + eSIM",
+   "color": "Burgundy",
+   "usd": 1639
+  },
+  {
+   "model": "iPhone 18 Pro",
+   "memory": "512 GB",
+   "sim": "SIM + eSIM",
+   "color": "",
+   "usd": 1969
+  },
+  {
+   "model": "iPhone 18 Pro",
+   "memory": "1 TB",
+   "sim": "SIM + eSIM",
+   "color": "",
+   "usd": 3019
+  },
+  {
+   "model": "iPhone 18 Pro Max",
+   "memory": "256 GB",
+   "sim": "SIM + eSIM",
+   "color": "Glacier",
+   "usd": 1819
+  },
+  {
+   "model": "iPhone 18 Pro Max",
+   "memory": "256 GB",
+   "sim": "SIM + eSIM",
+   "color": "Black",
+   "usd": 1819
+  },
+  {
+   "model": "iPhone 18 Pro Max",
+   "memory": "256 GB",
+   "sim": "SIM + eSIM",
+   "color": "Silver",
+   "usd": 1819
+  },
+  {
+   "model": "iPhone 18 Pro Max",
+   "memory": "256 GB",
+   "sim": "SIM + eSIM",
+   "color": "Burgundy",
+   "usd": 1859
+  },
+  {
+   "model": "iPhone 18 Pro Max",
+   "memory": "512 GB",
+   "sim": "SIM + eSIM",
+   "color": "Black",
+   "usd": 2199
+  },
+  {
+   "model": "iPhone 18 Pro Max",
+   "memory": "512 GB",
+   "sim": "SIM + eSIM",
+   "color": "Silver",
+   "usd": 2319
+  },
+  {
+   "model": "iPhone 18 Pro Max",
+   "memory": "512 GB",
+   "sim": "SIM + eSIM",
+   "color": "Burgundy",
+   "usd": 2219
+  },
+  {
+   "model": "iPhone 18 Pro Max",
+   "memory": "512 GB",
+   "sim": "SIM + eSIM",
+   "color": "Glacier",
+   "usd": 2319
+  },
+  {
+   "model": "iPhone 18 Pro Max",
+   "memory": "1 TB",
+   "sim": "SIM + eSIM",
+   "color": "",
+   "usd": 2719
+  },
+  {
+   "model": "iPhone 17",
+   "memory": "256 GB",
+   "sim": "eSIM + eSIM",
+   "color": "",
+   "usd": 969
+  },
+  {
+   "model": "iPhone Air",
+   "memory": "256 GB",
+   "sim": "eSIM + eSIM",
+   "color": "Blue",
+   "usd": 969
+  },
+  {
+   "model": "iPhone Air",
+   "memory": "256 GB",
+   "sim": "eSIM + eSIM",
+   "color": "Black",
+   "usd": 979
+  },
+  {
+   "model": "iPhone Air",
+   "memory": "256 GB",
+   "sim": "eSIM + eSIM",
+   "color": "Gold",
+   "usd": 959
+  },
+  {
+   "model": "iPhone Air",
+   "memory": "256 GB",
+   "sim": "eSIM + eSIM",
+   "color": "White",
+   "usd": 969
+  },
+  {
+   "model": "iPhone 17 Pro",
+   "memory": "256 GB",
+   "sim": "eSIM + eSIM",
+   "color": "Orange",
+   "usd": 1269
+  },
+  {
+   "model": "iPhone 17 Pro",
+   "memory": "256 GB",
+   "sim": "eSIM + eSIM",
+   "color": "Deep Blue",
+   "usd": 1319
+  },
+  {
+   "model": "iPhone 17 Pro",
+   "memory": "256 GB",
+   "sim": "eSIM + eSIM",
+   "color": "Silver",
+   "usd": 1319
+  },
+  {
+   "model": "iPhone 17 Pro",
+   "memory": "512 GB",
+   "sim": "eSIM + eSIM",
+   "color": "Deep Blue",
+   "usd": 1679
+  },
+  {
+   "model": "iPhone 17 Pro",
+   "memory": "512 GB",
+   "sim": "eSIM + eSIM",
+   "color": "Orange",
+   "usd": 1469
+  },
+  {
+   "model": "iPhone 17 Pro",
+   "memory": "512 GB",
+   "sim": "eSIM + eSIM",
+   "color": "Silver",
+   "usd": 1619
+  },
+  {
+   "model": "iPhone 17 Pro",
+   "memory": "1 TB",
+   "sim": "eSIM + eSIM",
+   "color": "Orange",
+   "usd": 1669
+  },
+  {
+   "model": "iPhone 17 Pro Max",
+   "memory": "256 GB",
+   "sim": "eSIM + eSIM",
+   "color": "Deep Blue",
+   "usd": 1389
+  },
+  {
+   "model": "iPhone 17 Pro Max",
+   "memory": "256 GB",
+   "sim": "eSIM + eSIM",
+   "color": "Orange",
+   "usd": 1369
+  },
+  {
+   "model": "iPhone 17 Pro Max",
+   "memory": "256 GB",
+   "sim": "eSIM + eSIM",
+   "color": "Silver",
+   "usd": 1429
+  },
+  {
+   "model": "iPhone 17 Pro Max",
+   "memory": "512 GB",
+   "sim": "eSIM + eSIM",
+   "color": "Deep Blue",
+   "usd": 1619
+  },
+  {
+   "model": "iPhone 17 Pro Max",
+   "memory": "512 GB",
+   "sim": "eSIM + eSIM",
+   "color": "Orange",
+   "usd": 1569
+  },
+  {
+   "model": "iPhone 17 Pro Max",
+   "memory": "512 GB",
+   "sim": "eSIM + eSIM",
+   "color": "Silver",
+   "usd": 1639
+  },
+  {
+   "model": "iPhone 17 Pro Max",
+   "memory": "1 TB",
+   "sim": "eSIM + eSIM",
+   "color": "Orange",
+   "usd": 1919
+  },
+  {
+   "model": "iPhone 17 Pro Max",
+   "memory": "1 TB",
+   "sim": "eSIM + eSIM",
+   "color": "Deep Blue",
+   "usd": 1869
+  },
+  {
+   "model": "iPhone 17 Pro Max",
+   "memory": "1 TB",
+   "sim": "eSIM + eSIM",
+   "color": "Silver",
+   "usd": 1919
+  },
+  {
+   "model": "iPhone 17 Pro Max",
+   "memory": "2 TB",
+   "sim": "eSIM + eSIM",
+   "color": "Deep Blue",
+   "usd": 2219
+  },
+  {
+   "model": "iPhone 17 Pro Max",
+   "memory": "2 TB",
+   "sim": "eSIM + eSIM",
+   "color": "Orange",
+   "usd": 2219
+  },
+  {
+   "model": "iPhone 17 Pro Max",
+   "memory": "2 TB",
+   "sim": "eSIM + eSIM",
+   "color": "Silver",
+   "usd": 2419
+  },
+  {
+   "model": "iPhone 17",
+   "memory": "256 GB",
+   "sim": "SIM + eSIM",
+   "color": "",
+   "usd": 979
+  },
+  {
+   "model": "iPhone 17 Pro",
+   "memory": "256 GB",
+   "sim": "SIM + eSIM",
+   "color": "Orange",
+   "usd": 1319
+  },
+  {
+   "model": "iPhone 17 Pro",
+   "memory": "256 GB",
+   "sim": "SIM + eSIM",
+   "color": "Deep Blue",
+   "usd": 1349
+  },
+  {
+   "model": "iPhone 17 Pro",
+   "memory": "256 GB",
+   "sim": "SIM + eSIM",
+   "color": "Silver",
+   "usd": 1379
+  },
+  {
+   "model": "iPhone 17 Pro",
+   "memory": "512 GB",
+   "sim": "SIM + eSIM",
+   "color": "Orange",
+   "usd": 1569
+  },
+  {
+   "model": "iPhone 17 Pro",
+   "memory": "512 GB",
+   "sim": "SIM + eSIM",
+   "color": "Silver",
+   "usd": 1619
+  },
+  {
+   "model": "iPhone 17 Pro",
+   "memory": "512 GB",
+   "sim": "SIM + eSIM",
+   "color": "Deep Blue",
+   "usd": 1649
+  },
+  {
+   "model": "iPhone 17 Pro",
+   "memory": "1 TB",
+   "sim": "SIM + eSIM",
+   "color": "Orange",
+   "usd": 1719
+  },
+  {
+   "model": "iPhone 17 Pro",
+   "memory": "1 TB",
+   "sim": "SIM + eSIM",
+   "color": "Silver",
+   "usd": 1899
+  },
+  {
+   "model": "iPhone 17 Pro",
+   "memory": "1 TB",
+   "sim": "SIM + eSIM",
+   "color": "Deep Blue",
+   "usd": 2019
+  },
+  {
+   "model": "iPhone 17 Pro Max",
+   "memory": "256 GB",
+   "sim": "SIM + eSIM",
+   "color": "Deep Blue",
+   "usd": 1499
+  },
+  {
+   "model": "iPhone 17 Pro Max",
+   "memory": "256 GB",
+   "sim": "SIM + eSIM",
+   "color": "Orange",
+   "usd": 1499
+  },
+  {
+   "model": "iPhone 17 Pro Max",
+   "memory": "256 GB",
+   "sim": "SIM + eSIM",
+   "color": "Silver",
+   "usd": 1499
+  },
+  {
+   "model": "iPhone 17 Pro Max",
+   "memory": "512 GB",
+   "sim": "SIM + eSIM",
+   "color": "Orange",
+   "usd": 1719
+  },
+  {
+   "model": "iPhone 17 Pro Max",
+   "memory": "512 GB",
+   "sim": "SIM + eSIM",
+   "color": "Deep Blue",
+   "usd": 1699
+  },
+  {
+   "model": "iPhone 17 Pro Max",
+   "memory": "512 GB",
+   "sim": "SIM + eSIM",
+   "color": "Silver",
+   "usd": 1739
+  },
+  {
+   "model": "iPhone 17 Pro Max",
+   "memory": "1 TB",
+   "sim": "SIM + eSIM",
+   "color": "Orange",
+   "usd": 2049
+  },
+  {
+   "model": "iPhone 17 Pro Max",
+   "memory": "1 TB",
+   "sim": "SIM + eSIM",
+   "color": "Deep Blue",
+   "usd": 2119
+  },
+  {
+   "model": "iPhone 17 Pro Max",
+   "memory": "1 TB",
+   "sim": "SIM + eSIM",
+   "color": "Silver",
+   "usd": 2019
+  },
+  {
+   "model": "iPhone 17 Pro Max",
+   "memory": "2 TB",
+   "sim": "SIM + eSIM",
+   "color": "Deep Blue",
+   "usd": 2419
+  },
+  {
+   "model": "iPhone 17 Pro Max",
+   "memory": "2 TB",
+   "sim": "SIM + eSIM",
+   "color": "Orange",
+   "usd": 2419
+  },
+  {
+   "model": "iPhone 17 Pro Max",
+   "memory": "2 TB",
+   "sim": "SIM + eSIM",
+   "color": "Silver",
+   "usd": 2519
   }
  ]
 };
