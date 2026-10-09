@@ -357,10 +357,19 @@ const modelsOf = b => [...new Set(D.models.filter(m => m.brand === b).map(m => m
 const memsOf = (b, md) => D.models.filter(m => m.brand === b && m.model === md);
 const colorsOf = (b, md) => (D.colors || {})[b + '|' + md] || [];
 const colorEntry = () => colorsOf(S.brand, S.model).find(c => c.name === S.color);
-const regionsOf = b => D.regions.filter(r => !r.brand || r.brand.toLowerCase() === b.toLowerCase());
+/* Mintaqa va batareya chegirmalari model seriyasiga qarab: Excel'dagi "Qaysi modellar" ustuni
+   ("16, 17, Air") — shu seriyalarga; bo'sh qatorlar — qolgan barcha modellarga. */
+const seriesOf = m => { const s = String(m || '').toLowerCase(); const n = s.match(/\b(\d{1,2})(?:e)?\b/); return n ? n[1] : (/\bair\b/.test(s) ? 'air' : ''); };
+function forModel(list){
+  const s = seriesOf(S.model);
+  const spec = (list || []).filter(r => r.models && s && r.models.split(',').includes(s));
+  return spec.length ? spec : (list || []).filter(r => !r.models);
+}
+const regionsOf = b => forModel(D.regions.filter(r => !r.brand || r.brand.toLowerCase() === b.toLowerCase()));
+const batteries = () => forModel(D.battery);
 const entry = () => D.models.find(m => m.brand === S.brand && m.model === S.model && m.memory === S.mem);
-function batteryTier(p){ if (p === '' || isNaN(p)) return null; return D.battery.find(b => p >= b.from && p <= b.to) || D.battery[D.battery.length - 1] || null; }
-function unknownTier(){ return D.battery.find(b => /normal/i.test(b.label)) || D.battery[Math.min(2, D.battery.length - 1)] || null; }
+function batteryTier(p){ const B = batteries(); if (p === '' || isNaN(p)) return null; return B.find(b => p >= b.from && p <= b.to) || B[B.length - 1] || null; }
+function unknownTier(){ const B = batteries(); return B.find(b => /normal/i.test(b.label)) || B.find(b => 80 >= b.from && 80 <= b.to) || B[Math.min(2, B.length - 1)] || null; }
 
 /* ---------- telefon rasmi (SVG, oddiy chizma — brend rasmi emas) ---------- */
 function shade(hex, f){
@@ -503,7 +512,9 @@ function calc(){
   const lines = []; let pct = 0, blocked = false;
   const add = (label, p) => { if (p > 0) { pct += p; lines.push({ label, p }); } };
   const ce = colorEntry(); if (ce) add(`${t('Rang')}: ${tx(ce, 'name')}`, ce.pct);
-  if (S.region) add(`${t('Mintaqa')}: ${tx(S.region, 'label')}`, S.region.pct);
+  // model o'zgargan bo'lsa ham — tanlangan region kodi shu modelga tegishli foiz bilan olinadi
+  const reg = S.region ? (regionsOf(S.brand).find(r => r.code === S.region.code) || S.region) : null;
+  if (reg) add(`${t('Mintaqa')}: ${tx(reg, 'label')}`, reg.pct);
   const bt = S.batteryUnknown ? unknownTier() : batteryTier(+S.battery);
   if (bt) add(`${t('Batareya')}: ${S.batteryUnknown ? t("noma'lum") : S.battery + '%'} (${tx(bt, 'label')})`, bt.pct);
   (D.damage || []).forEach(z => { const l = z.levels[S.dmg[z.code] || 0]; if (!l || !(S.dmg[z.code] > 0)) return;
@@ -689,7 +700,7 @@ function vResult(){
       ${r.lines.map(l => `<div class="row"><span>${esc(l.label)}</span><b class="num">−${num(l.sum)}</b></div>`).join('')}</div></details>
     <div class="fb"><div class="t">${t('Narx yoqdimi?')}</div>
       <div class="fbopts">${['Past', 'Yaxshi', 'Ajoyib'].map(x => `<button data-fb="${x}" class="${S.feedback===x?'on':''}">${t(x)}</button>`).join('')}</div>
-      <div id="compBox" ${S.feedback === 'Past' ? '' : 'hidden'}><label for="comp">${t("Boshqa joyda qancha taklif qilishdi? (so'm, ixtiyoriy)")}</label>
+      <div id="compBox"><label for="comp">${t("Boshqa joyda qancha taklif qilishdi? (so'm, ixtiyoriy)")}</label>
         <input class="f num" id="comp" inputmode="numeric" placeholder="${t('Masalan, 7 000 000')}" value="${esc(S.competitor)}"></div></div>
     <p class="note">${esc(tx(D, 'note'))}</p>`,
     foot: `<button class="btn" id="leadCash">${t('Hoziroq Markabga sotish')}<small>${t('Naqd pul — {p}', { p: som(r.cash) })}</small></button>
@@ -697,7 +708,7 @@ function vResult(){
     bind(){
       document.querySelectorAll('[data-fb]').forEach(b => b.onclick = () => { S.feedback = b.dataset.fb; haptic();
         document.querySelectorAll('[data-fb]').forEach(x => x.classList.toggle('on', x === b));
-        document.getElementById('compBox').hidden = S.feedback !== 'Past'; });
+ });
       const comp = document.getElementById('comp');
       comp.oninput = e => { const n = +e.target.value.replace(/\D/g, ''); S.competitor = n ? num(n) : ''; e.target.value = S.competitor; };
       if (document.getElementById('leadTrade')) document.getElementById('leadTrade').onclick = () => openLead('tradein');
