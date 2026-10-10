@@ -444,9 +444,13 @@ const colorEntry = () => colorsOf(S.brand, S.model).find(c => c.name === S.color
 /* Mintaqa va batareya chegirmalari model seriyasiga qarab: Excel'dagi "Qaysi modellar" ustuni
    ("16, 17, Air") — shu seriyalarga; bo'sh qatorlar — qolgan barcha modellarga. */
 const seriesOf = m => { const s = String(m || '').toLowerCase(); const n = s.match(/\b(\d{1,2})(?:e)?\b/); return n ? n[1] : (/\bair\b/.test(s) ? 'air' : ''); };
+/* "Qaysi modellar"da aniq model ham yozish mumkin ("16 Pro Max, 17 Pro Max") — u seriyadan ustun turadi */
+const modelKey = m => String(m || '').toLowerCase().replace(/^\s*(apple\s+)?iphone\s+/, '').replace(/\s+/g, ' ').trim();
 function forModel(list){
-  const s = seriesOf(S.model);
-  const spec = (list || []).filter(r => r.models && s && r.models.split(',').includes(s));
+  const s = seriesOf(S.model), mk = modelKey(S.model), keys = r => r.models.split(',').map(x => x.trim());
+  const byModel = (list || []).filter(r => r.models && mk && keys(r).includes(mk));
+  if (byModel.length) return byModel;
+  const spec = (list || []).filter(r => r.models && s && keys(r).includes(s));
   return spec.length ? spec : (list || []).filter(r => !r.models);
 }
 const regionsOf = b => forModel(D.regions.filter(r => !r.brand || r.brand.toLowerCase() === b.toLowerCase()));
@@ -455,8 +459,12 @@ const batteries = () => forModel(D.battery);
 const tradeBonus = () => (D.tradein && D.tradein.length) ? ((forModel(D.tradein)[0] || {}).pct || 0) : (D.tradein_bonus || 0);
 const maxTradeBonus = () => (D.tradein && D.tradein.length) ? Math.max(0, ...D.tradein.map(x => x.pct || 0)) : (D.tradein_bonus || 0);
 const entry = () => D.models.find(m => m.brand === S.brand && m.model === S.model && m.memory === S.mem);
-function batteryTier(p){ const B = batteries(); if (p === '' || isNaN(p)) return null; return B.find(b => p >= b.from && p <= b.to) || B[B.length - 1] || null; }
-function unknownTier(){ const B = batteries(); return B.find(b => /normal/i.test(b.label)) || B.find(b => 80 >= b.from && 80 <= b.to) || B[Math.min(2, B.length - 1)] || null; }
+/* "Har 1% uchun" to'ldirilgan qator: chegirma = (100 − batareya%) × shu foiz (masalan 88% → −12%) */
+const linTier = (b, p) => b && b.per1 > 0 ? { ...b, pct: Math.max(0, Math.round((100 - p) * b.per1 * 10) / 10) } : b;
+function batteryTier(p){ const B = batteries(); if (p === '' || isNaN(p)) return null; return linTier(B.find(b => p >= b.from && p <= b.to) || B[B.length - 1] || null, p); }
+const UNKNOWN_BAT = 85;   // "Bilmayman" — sig'im bo'yicha hisoblanadigan modellarda 85% deb olinadi
+function unknownTier(){ const B = batteries(); const lin = B.find(b => b.per1 > 0); if (lin) return linTier(lin, UNKNOWN_BAT);
+  return B.find(b => /normal/i.test(b.label)) || B.find(b => 80 >= b.from && 80 <= b.to) || B[Math.min(2, B.length - 1)] || null; }
 
 /* ---------- telefon rasmi (SVG, oddiy chizma — brend rasmi emas) ---------- */
 function shade(hex, f){
@@ -844,7 +852,7 @@ function vRegion(){
 function vBattery(){
   const hintPath = /apple/i.test(S.brand) ? t('Sozlamalar → Batareya → Batareya holati') : t('Sozlamalar → Batareya (yoki Qurilma parvarishi → Batareya)');
   const statusHtml = () => { const tr = batteryTier(+S.battery); if (!tr || S.battery === '') return `<span class="st">${t('1 dan 100 gacha kiriting')}</span>`;
-    const cls = tr.pct === 0 ? 'good' : tr.pct <= 6 ? 'mid' : 'low'; return `<span class="st ${cls}">${esc(tx(tr, 'label'))}${tr.pct ? t(' · narxni pasaytiradi') : ''}</span>`; };
+    const cls = tr.pct === 0 ? 'good' : tr.pct <= 6 ? 'mid' : 'low'; return `<span class="st ${cls}">${esc(tx(tr, 'label'))}${tr.per1 > 0 ? (tr.pct ? ` · −${tr.pct}%` : '') : (tr.pct ? t(' · narxni pasaytiradi') : '')}</span>`; };
   const valid = () => { const v = +S.battery; return S.battery !== '' && v >= 1 && v <= 100; };
   return { html: `${chosenLine()}<h1>${t('Batareya holati necha foiz?')}</h1>
     <div class="hint">${I.info}<div><b>${t('Qayerdan topish mumkin')}</b>${hintPath}</div></div>

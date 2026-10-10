@@ -1,6 +1,6 @@
 // Avtomatik yaratilgan: narx_to_data.py. Qo'lda tahrirlamang.
 window.NARX_DATA = {
- "updated": "09.10.2026 22:12",
+ "updated": "10.10.2026 17:25",
  "sample": false,
  "tradein_bonus": 8.0,
  "max_pct": 70.0,
@@ -1664,9 +1664,9 @@ window.NARX_DATA = {
    "code": "LL/A",
    "label": "LL/A — AQSH",
    "label_ru": "LL/A — США",
-   "pct": 5.0,
+   "pct": 10.0,
    "brand": "Apple",
-   "models": "16,17,air"
+   "models": "17,air"
   },
   {
    "code": "ZA/A",
@@ -1674,7 +1674,7 @@ window.NARX_DATA = {
    "label_ru": "ZA/A — Гонконг (2 SIM)",
    "pct": 0.0,
    "brand": "Apple",
-   "models": "16,17,air"
+   "models": "17,air"
   },
   {
    "code": "ZP/A",
@@ -1682,7 +1682,7 @@ window.NARX_DATA = {
    "label_ru": "ZP/A — Гонконг / Макао",
    "pct": 0.0,
    "brand": "Apple",
-   "models": "16,17,air"
+   "models": "17,air"
   },
   {
    "code": "B/A",
@@ -1690,7 +1690,7 @@ window.NARX_DATA = {
    "label_ru": "B/A — Великобритания / Европа",
    "pct": 0.0,
    "brand": "Apple",
-   "models": "16,17,air"
+   "models": "17,air"
   },
   {
    "code": "X/A",
@@ -1698,15 +1698,15 @@ window.NARX_DATA = {
    "label_ru": "X/A — Австралия",
    "pct": 0.0,
    "brand": "Apple",
-   "models": "16,17,air"
+   "models": "17,air"
   },
   {
    "code": "J/A",
    "label": "J/A — Yaponiya (kamera ovozi o'chmaydi)",
    "label_ru": "J/A — Япония (звук камеры не отключается)",
-   "pct": 5.0,
+   "pct": 10.0,
    "brand": "Apple",
-   "models": "16,17,air"
+   "models": "17,air"
   },
   {
    "code": "CH/A",
@@ -1714,7 +1714,7 @@ window.NARX_DATA = {
    "label_ru": "CH/A — Китай",
    "pct": 0.0,
    "brand": "Apple",
-   "models": "16,17,air"
+   "models": "17,air"
   },
   {
    "code": "KH/A",
@@ -1722,7 +1722,15 @@ window.NARX_DATA = {
    "label_ru": "KH/A — Корея",
    "pct": 0.0,
    "brand": "Apple",
-   "models": "16,17,air"
+   "models": "17,air"
+  },
+  {
+   "code": "VC/A",
+   "label": "VC/A — Kanada",
+   "label_ru": "VC/A — Канада",
+   "pct": 10.0,
+   "brand": "Apple",
+   "models": "17,air"
   },
   {
    "code": "?",
@@ -1730,7 +1738,87 @@ window.NARX_DATA = {
    "label_ru": "Другая / не знаю",
    "pct": 0.0,
    "brand": "Apple",
-   "models": "16,17,air"
+   "models": "17,air"
+  },
+  {
+   "code": "LL/A",
+   "label": "LL/A — AQSH",
+   "label_ru": "LL/A — США",
+   "pct": 10.0,
+   "brand": "Apple",
+   "models": "14,15,16"
+  },
+  {
+   "code": "ZA/A",
+   "label": "ZA/A — Gonkong (2 SIM)",
+   "label_ru": "ZA/A — Гонконг (2 SIM)",
+   "pct": 0.0,
+   "brand": "Apple",
+   "models": "14,15,16"
+  },
+  {
+   "code": "ZP/A",
+   "label": "ZP/A — Gonkong / Makao",
+   "label_ru": "ZP/A — Гонконг / Макао",
+   "pct": 0.0,
+   "brand": "Apple",
+   "models": "14,15,16"
+  },
+  {
+   "code": "B/A",
+   "label": "B/A — Buyuk Britaniya / Yevropa",
+   "label_ru": "B/A — Великобритания / Европа",
+   "pct": 0.0,
+   "brand": "Apple",
+   "models": "14,15,16"
+  },
+  {
+   "code": "X/A",
+   "label": "X/A — Avstraliya",
+   "label_ru": "X/A — Австралия",
+   "pct": 0.0,
+   "brand": "Apple",
+   "models": "14,15,16"
+  },
+  {
+   "code": "J/A",
+   "label": "J/A — Yaponiya (kamera ovozi o'chmaydi)",
+   "label_ru": "J/A — Япония (звук камеры не отключается)",
+   "pct": 0.0,
+   "brand": "Apple",
+   "models": "14,15,16"
+  },
+  {
+   "code": "CH/A",
+   "label": "CH/A — Xitoy",
+   "label_ru": "CH/A — Китай",
+   "pct": 0.0,
+   "brand": "Apple",
+   "models": "14,15,16"
+  },
+  {
+   "code": "KH/A",
+   "label": "KH/A — Koreya",
+   "label_ru": "KH/A — Корея",
+   "pct": 0.0,
+   "brand": "Apple",
+   "models": "14,15,16"
+  },
+  {
+   "code": "VC/A",
+   "label": "VC/A — Kanada",
+   "label_ru": "VC/A — Канада",
+   "pct": 0.0,
+   "brand": "Apple",
+   "models": "14,15,16"
+  },
+  {
+   "code": "?",
+   "label": "Boshqa / bilmayman",
+   "label_ru": "Другая / не знаю",
+   "pct": 0.0,
+   "brand": "Apple",
+   "models": "14,15,16"
   },
   {
    "code": "LL/A",
@@ -1797,6 +1885,14 @@ window.NARX_DATA = {
    "models": ""
   },
   {
+   "code": "VC/A",
+   "label": "VC/A — Kanada",
+   "label_ru": "VC/A — Канада",
+   "pct": 0.0,
+   "brand": "Apple",
+   "models": ""
+  },
+  {
    "code": "?",
    "label": "Boshqa / bilmayman",
    "label_ru": "Другая / не знаю",
@@ -1812,7 +1908,8 @@ window.NARX_DATA = {
    "label_ru": "Отличное",
    "label": "A'lo",
    "pct": 0.0,
-   "models": "16,17,air"
+   "models": "16,17,air",
+   "per1": 0
   },
   {
    "from": 85.0,
@@ -1820,7 +1917,8 @@ window.NARX_DATA = {
    "label_ru": "Хорошее",
    "label": "Yaxshi",
    "pct": 3.0,
-   "models": "16,17,air"
+   "models": "16,17,air",
+   "per1": 0
   },
   {
    "from": 80.0,
@@ -1828,7 +1926,8 @@ window.NARX_DATA = {
    "label_ru": "Нормальное",
    "label": "Normal",
    "pct": 6.0,
-   "models": "16,17,air"
+   "models": "16,17,air",
+   "per1": 0
   },
   {
    "from": 80.0,
@@ -1836,7 +1935,8 @@ window.NARX_DATA = {
    "label_ru": "Хорошее",
    "label": "Yaxshi",
    "pct": 0.0,
-   "models": ""
+   "models": "",
+   "per1": 0
   },
   {
    "from": 75.0,
@@ -1844,7 +1944,17 @@ window.NARX_DATA = {
    "label_ru": "Изношенное",
    "label": "Eskirgan",
    "pct": 10.0,
-   "models": "16,17,air"
+   "models": "16,17,air",
+   "per1": 0
+  },
+  {
+   "from": 1.0,
+   "to": 100.0,
+   "label_ru": "По ёмкости",
+   "label": "Sig'im bo'yicha",
+   "pct": 0.0,
+   "models": "16 pro max,17 pro max",
+   "per1": 1.0
   },
   {
    "from": 1.0,
@@ -1852,7 +1962,8 @@ window.NARX_DATA = {
    "label_ru": "Требует замены",
    "label": "Almashtirilishi kerak",
    "pct": 15.0,
-   "models": "16,17,air"
+   "models": "16,17,air",
+   "per1": 0
   },
   {
    "from": 1.0,
@@ -1860,7 +1971,8 @@ window.NARX_DATA = {
    "label_ru": "Требует замены",
    "label": "Almashtirilishi kerak",
    "pct": 10.0,
-   "models": ""
+   "models": "",
+   "per1": 0
   }
  ],
  "questions": [
