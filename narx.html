@@ -637,7 +637,7 @@ function calc(){
   const add = (label, p) => { if (p > 0) { pct += p; lines.push({ label, p }); } };
   const pu = partUsd(), rate = usdRate();
   const addFix = (label, usd) => { const som = Math.round(usd * rate / 1000) * 1000; fix += som; lines.push({ label: `${label} ($${usd})`, p: 0, fix: som }); };
-  const ce = colorEntry(); if (ce) add(`${t('Rang')}: ${tx(ce, 'name')}`, ce.pct);
+  const ce = colorEntry(); if (ce) { add(`${t('Rang')}: ${tx(ce, 'name')}`, ce.pct); if (ce.usd > 0 && rate) addFix(`${t('Rang')}: ${tx(ce, 'name')}`, ce.usd); }
   // model o'zgargan bo'lsa ham — tanlangan region kodi shu modelga tegishli foiz bilan olinadi
   const reg = S.region ? (regionsOf(S.brand).find(r => r.code === S.region.code) || S.region) : null;
   if (reg) add(`${t('Mintaqa')}: ${tx(reg, 'label')}`, reg.pct);

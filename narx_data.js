@@ -1,6 +1,6 @@
 // Avtomatik yaratilgan: narx_to_data.py. Qo'lda tahrirlamang.
 window.NARX_DATA = {
- "updated": "15.10.2026 15:50",
+ "updated": "15.10.2026 19:48",
  "sample": false,
  "tradein_bonus": 8.0,
  "max_pct": 70.0,
@@ -521,6 +521,7 @@ window.NARX_DATA = {
     "name_ru": "Оранжевый (Cosmic Orange)",
     "hex": "#E0703A",
     "pct": 0.0,
+    "usd": 70.0,
     "img": ""
    },
    {
@@ -528,6 +529,7 @@ window.NARX_DATA = {
     "name_ru": "Тёмно-синий (Deep Blue)",
     "hex": "#2F3D5C",
     "pct": 0.0,
+    "usd": 70.0,
     "img": ""
    },
    {
@@ -535,6 +537,7 @@ window.NARX_DATA = {
     "name_ru": "Серебристый (Silver)",
     "hex": "#DADCDD",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    }
   ],
@@ -544,6 +547,7 @@ window.NARX_DATA = {
     "name_ru": "Оранжевый (Cosmic Orange)",
     "hex": "#E0703A",
     "pct": 0.0,
+    "usd": 70.0,
     "img": ""
    },
    {
@@ -551,6 +555,7 @@ window.NARX_DATA = {
     "name_ru": "Тёмно-синий (Deep Blue)",
     "hex": "#2F3D5C",
     "pct": 0.0,
+    "usd": 70.0,
     "img": ""
    },
    {
@@ -558,6 +563,7 @@ window.NARX_DATA = {
     "name_ru": "Серебристый (Silver)",
     "hex": "#DADCDD",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    }
   ],
@@ -567,6 +573,7 @@ window.NARX_DATA = {
     "name_ru": "Чёрный (Black)",
     "hex": "#2B2B2D",
     "pct": 0.0,
+    "usd": 70.0,
     "img": ""
    },
    {
@@ -574,6 +581,7 @@ window.NARX_DATA = {
     "name_ru": "Белый (White)",
     "hex": "#F2F2F0",
     "pct": 0.0,
+    "usd": 70.0,
     "img": ""
    },
    {
@@ -581,6 +589,7 @@ window.NARX_DATA = {
     "name_ru": "Голубой (Mist Blue)",
     "hex": "#A9BCD0",
     "pct": 0.0,
+    "usd": 70.0,
     "img": ""
    },
    {
@@ -588,6 +597,7 @@ window.NARX_DATA = {
     "name_ru": "Зелёный (Sage)",
     "hex": "#B7C3A5",
     "pct": 0.0,
+    "usd": 70.0,
     "img": ""
    },
    {
@@ -595,6 +605,7 @@ window.NARX_DATA = {
     "name_ru": "Лавандовый (Lavender)",
     "hex": "#CFC3E0",
     "pct": 0.0,
+    "usd": 70.0,
     "img": ""
    }
   ],
@@ -604,6 +615,7 @@ window.NARX_DATA = {
     "name_ru": "Чёрный (Space Black)",
     "hex": "#28282A",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -611,6 +623,7 @@ window.NARX_DATA = {
     "name_ru": "Белый (Cloud White)",
     "hex": "#F3F3F1",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -618,6 +631,7 @@ window.NARX_DATA = {
     "name_ru": "Золотой (Light Gold)",
     "hex": "#E9D9B8",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -625,6 +639,7 @@ window.NARX_DATA = {
     "name_ru": "Голубой (Sky Blue)",
     "hex": "#C9DCEB",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    }
   ],
@@ -634,6 +649,7 @@ window.NARX_DATA = {
     "name_ru": "Чёрный титан (Black)",
     "hex": "#3C3C3D",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -641,6 +657,7 @@ window.NARX_DATA = {
     "name_ru": "Белый титан (White)",
     "hex": "#F2F1ED",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -648,6 +665,7 @@ window.NARX_DATA = {
     "name_ru": "Натуральный титан (Natural)",
     "hex": "#C2BCB2",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -655,6 +673,7 @@ window.NARX_DATA = {
     "name_ru": "Пустынный титан (Desert)",
     "hex": "#BFA48F",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    }
   ],
@@ -664,6 +683,7 @@ window.NARX_DATA = {
     "name_ru": "Чёрный титан (Black)",
     "hex": "#3C3C3D",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -671,6 +691,7 @@ window.NARX_DATA = {
     "name_ru": "Белый титан (White)",
     "hex": "#F2F1ED",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -678,6 +699,7 @@ window.NARX_DATA = {
     "name_ru": "Натуральный титан (Natural)",
     "hex": "#C2BCB2",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -685,6 +707,7 @@ window.NARX_DATA = {
     "name_ru": "Пустынный титан (Desert)",
     "hex": "#BFA48F",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    }
   ],
@@ -694,6 +717,7 @@ window.NARX_DATA = {
     "name_ru": "Чёрный (Black)",
     "hex": "#3A3A3C",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -701,6 +725,7 @@ window.NARX_DATA = {
     "name_ru": "Белый (White)",
     "hex": "#F5F5F0",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -708,6 +733,7 @@ window.NARX_DATA = {
     "name_ru": "Розовый (Pink)",
     "hex": "#F2B8C8",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -715,6 +741,7 @@ window.NARX_DATA = {
     "name_ru": "Бирюзовый (Teal)",
     "hex": "#9DC7C1",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -722,6 +749,7 @@ window.NARX_DATA = {
     "name_ru": "Синий (Ultramarine)",
     "hex": "#6A7FD8",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    }
   ],
@@ -731,6 +759,7 @@ window.NARX_DATA = {
     "name_ru": "Натуральный титан (Natural)",
     "hex": "#BEB8AD",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -738,6 +767,7 @@ window.NARX_DATA = {
     "name_ru": "Синий титан (Blue)",
     "hex": "#3F4A5A",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -745,6 +775,7 @@ window.NARX_DATA = {
     "name_ru": "Белый титан (White)",
     "hex": "#EDECE8",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -752,6 +783,7 @@ window.NARX_DATA = {
     "name_ru": "Чёрный титан (Black)",
     "hex": "#3B3B3C",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    }
   ],
@@ -761,6 +793,7 @@ window.NARX_DATA = {
     "name_ru": "Натуральный титан (Natural)",
     "hex": "#BEB8AD",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -768,6 +801,7 @@ window.NARX_DATA = {
     "name_ru": "Синий титан (Blue)",
     "hex": "#3F4A5A",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -775,6 +809,7 @@ window.NARX_DATA = {
     "name_ru": "Белый титан (White)",
     "hex": "#EDECE8",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -782,6 +817,7 @@ window.NARX_DATA = {
     "name_ru": "Чёрный титан (Black)",
     "hex": "#3B3B3C",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    }
   ],
@@ -791,6 +827,7 @@ window.NARX_DATA = {
     "name_ru": "Чёрный (Black)",
     "hex": "#35393B",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -798,6 +835,7 @@ window.NARX_DATA = {
     "name_ru": "Синий (Blue)",
     "hex": "#CAD6DF",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -805,6 +843,7 @@ window.NARX_DATA = {
     "name_ru": "Зелёный (Green)",
     "hex": "#CFDCC7",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -812,6 +851,7 @@ window.NARX_DATA = {
     "name_ru": "Жёлтый (Yellow)",
     "hex": "#F1E4B4",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -819,6 +859,7 @@ window.NARX_DATA = {
     "name_ru": "Розовый (Pink)",
     "hex": "#F1D3D8",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    }
   ],
@@ -828,6 +869,7 @@ window.NARX_DATA = {
     "name_ru": "Чёрный (Space Black)",
     "hex": "#3B3A3C",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -835,6 +877,7 @@ window.NARX_DATA = {
     "name_ru": "Серебристый (Silver)",
     "hex": "#E3E4E0",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -842,6 +885,7 @@ window.NARX_DATA = {
     "name_ru": "Золотой (Gold)",
     "hex": "#F2E3C6",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -849,6 +893,7 @@ window.NARX_DATA = {
     "name_ru": "Фиолетовый (Deep Purple)",
     "hex": "#57485E",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    }
   ],
@@ -858,6 +903,7 @@ window.NARX_DATA = {
     "name_ru": "Чёрный (Space Black)",
     "hex": "#3B3A3C",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -865,6 +911,7 @@ window.NARX_DATA = {
     "name_ru": "Серебристый (Silver)",
     "hex": "#E3E4E0",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -872,6 +919,7 @@ window.NARX_DATA = {
     "name_ru": "Золотой (Gold)",
     "hex": "#F2E3C6",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -879,6 +927,7 @@ window.NARX_DATA = {
     "name_ru": "Фиолетовый (Deep Purple)",
     "hex": "#57485E",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    }
   ],
@@ -888,6 +937,7 @@ window.NARX_DATA = {
     "name_ru": "Чёрный (Midnight)",
     "hex": "#2E3238",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -895,6 +945,7 @@ window.NARX_DATA = {
     "name_ru": "Белый (Starlight)",
     "hex": "#F4EEE6",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -902,6 +953,7 @@ window.NARX_DATA = {
     "name_ru": "Синий (Blue)",
     "hex": "#A9C2D9",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -909,6 +961,7 @@ window.NARX_DATA = {
     "name_ru": "Фиолетовый (Purple)",
     "hex": "#D6CCE0",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -916,6 +969,7 @@ window.NARX_DATA = {
     "name_ru": "Жёлтый (Yellow)",
     "hex": "#F5E07A",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -923,6 +977,7 @@ window.NARX_DATA = {
     "name_ru": "Красный (RED)",
     "hex": "#C8102E",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    }
   ],
@@ -932,6 +987,7 @@ window.NARX_DATA = {
     "name_ru": "Графит (Graphite)",
     "hex": "#50504E",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -939,6 +995,7 @@ window.NARX_DATA = {
     "name_ru": "Золотой (Gold)",
     "hex": "#F3E3C3",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -946,6 +1003,7 @@ window.NARX_DATA = {
     "name_ru": "Серебристый (Silver)",
     "hex": "#E8E8E3",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -953,6 +1011,7 @@ window.NARX_DATA = {
     "name_ru": "Голубой (Sierra Blue)",
     "hex": "#9BB5CE",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -960,6 +1019,7 @@ window.NARX_DATA = {
     "name_ru": "Зелёный (Alpine Green)",
     "hex": "#58675A",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    }
   ],
@@ -969,6 +1029,7 @@ window.NARX_DATA = {
     "name_ru": "Чёрный (Midnight)",
     "hex": "#2E3238",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -976,6 +1037,7 @@ window.NARX_DATA = {
     "name_ru": "Белый (Starlight)",
     "hex": "#F4EEE6",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -983,6 +1045,7 @@ window.NARX_DATA = {
     "name_ru": "Синий (Blue)",
     "hex": "#3D5A77",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -990,6 +1053,7 @@ window.NARX_DATA = {
     "name_ru": "Розовый (Pink)",
     "hex": "#F6DCDA",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -997,6 +1061,7 @@ window.NARX_DATA = {
     "name_ru": "Зелёный (Green)",
     "hex": "#3F4E43",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1004,6 +1069,7 @@ window.NARX_DATA = {
     "name_ru": "Красный (RED)",
     "hex": "#C8102E",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    }
   ],
@@ -1013,6 +1079,7 @@ window.NARX_DATA = {
     "name_ru": "Чёрный (Black)",
     "hex": "#2A2A2C",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1020,6 +1087,7 @@ window.NARX_DATA = {
     "name_ru": "Белый (White)",
     "hex": "#F5F5F0",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1027,6 +1095,7 @@ window.NARX_DATA = {
     "name_ru": "Красный (RED)",
     "hex": "#C8102E",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1034,6 +1103,7 @@ window.NARX_DATA = {
     "name_ru": "Зелёный (Green)",
     "hex": "#D6E8D2",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1041,6 +1111,7 @@ window.NARX_DATA = {
     "name_ru": "Синий (Blue)",
     "hex": "#1F4E79",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1048,6 +1119,7 @@ window.NARX_DATA = {
     "name_ru": "Фиолетовый (Purple)",
     "hex": "#C9C1DC",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    }
   ],
@@ -1057,6 +1129,7 @@ window.NARX_DATA = {
     "name_ru": "Чёрный (Black)",
     "hex": "#2A2A2C",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1064,6 +1137,7 @@ window.NARX_DATA = {
     "name_ru": "Белый (White)",
     "hex": "#F5F5F0",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1071,6 +1145,7 @@ window.NARX_DATA = {
     "name_ru": "Зелёный (Green)",
     "hex": "#C7E3D1",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1078,6 +1153,7 @@ window.NARX_DATA = {
     "name_ru": "Жёлтый (Yellow)",
     "hex": "#FCE88A",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1085,6 +1161,7 @@ window.NARX_DATA = {
     "name_ru": "Фиолетовый (Purple)",
     "hex": "#D5CDE8",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1092,6 +1169,7 @@ window.NARX_DATA = {
     "name_ru": "Красный (RED)",
     "hex": "#C8102E",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    }
   ],
@@ -1101,6 +1179,7 @@ window.NARX_DATA = {
     "name_ru": "Серебристо-синий (Titanium Silverblue)",
     "hex": "#A9B6C4",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1108,6 +1187,7 @@ window.NARX_DATA = {
     "name_ru": "Чёрный (Titanium Black)",
     "hex": "#2F3032",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1115,6 +1195,7 @@ window.NARX_DATA = {
     "name_ru": "Серый (Titanium Gray)",
     "hex": "#8C8B87",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1122,6 +1203,7 @@ window.NARX_DATA = {
     "name_ru": "Бело-серебристый (Titanium Whitesilver)",
     "hex": "#E6E6E3",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    }
   ],
@@ -1131,6 +1213,7 @@ window.NARX_DATA = {
     "name_ru": "Тёмно-синий (Navy)",
     "hex": "#2C3547",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1138,6 +1221,7 @@ window.NARX_DATA = {
     "name_ru": "Голубой (Icyblue)",
     "hex": "#BFD3E3",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1145,6 +1229,7 @@ window.NARX_DATA = {
     "name_ru": "Мятный (Mint)",
     "hex": "#CFE3D6",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1152,6 +1237,7 @@ window.NARX_DATA = {
     "name_ru": "Серебристый (Silver Shadow)",
     "hex": "#C9CACB",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    }
   ],
@@ -1161,6 +1247,7 @@ window.NARX_DATA = {
     "name_ru": "Чёрный (Titanium Black)",
     "hex": "#2F3032",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1168,6 +1255,7 @@ window.NARX_DATA = {
     "name_ru": "Серый (Titanium Gray)",
     "hex": "#8C8B87",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1175,6 +1263,7 @@ window.NARX_DATA = {
     "name_ru": "Фиолетовый (Titanium Violet)",
     "hex": "#6F6480",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1182,6 +1271,7 @@ window.NARX_DATA = {
     "name_ru": "Жёлтый (Titanium Yellow)",
     "hex": "#E7DCAE",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    }
   ],
@@ -1191,6 +1281,7 @@ window.NARX_DATA = {
     "name_ru": "Чёрный (Onyx Black)",
     "hex": "#2A2A2C",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1198,6 +1289,7 @@ window.NARX_DATA = {
     "name_ru": "Серый (Marble Gray)",
     "hex": "#C9C9C6",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1205,6 +1297,7 @@ window.NARX_DATA = {
     "name_ru": "Фиолетовый (Cobalt Violet)",
     "hex": "#6E5E9E",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1212,6 +1305,7 @@ window.NARX_DATA = {
     "name_ru": "Жёлтый (Amber Yellow)",
     "hex": "#F2DF9A",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    }
   ],
@@ -1221,6 +1315,7 @@ window.NARX_DATA = {
     "name_ru": "Чёрный (Phantom Black)",
     "hex": "#2A2A2C",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1228,6 +1323,7 @@ window.NARX_DATA = {
     "name_ru": "Кремовый (Cream)",
     "hex": "#EFE6D6",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1235,6 +1331,7 @@ window.NARX_DATA = {
     "name_ru": "Зелёный (Green)",
     "hex": "#4F6E5F",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1242,6 +1339,7 @@ window.NARX_DATA = {
     "name_ru": "Лавандовый (Lavender)",
     "hex": "#D4C7E4",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    }
   ],
@@ -1251,6 +1349,7 @@ window.NARX_DATA = {
     "name_ru": "Графит (Graphite)",
     "hex": "#3D3F42",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1258,6 +1357,7 @@ window.NARX_DATA = {
     "name_ru": "Светло-серый (Lightgray)",
     "hex": "#D8D8D6",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1265,6 +1365,7 @@ window.NARX_DATA = {
     "name_ru": "Оливковый (Olive)",
     "hex": "#8D937A",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1272,6 +1373,7 @@ window.NARX_DATA = {
     "name_ru": "Розовый (Pink)",
     "hex": "#EFC9D2",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    }
   ],
@@ -1281,6 +1383,7 @@ window.NARX_DATA = {
     "name_ru": "Чёрный (Black)",
     "hex": "#2E2E30",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1288,6 +1391,7 @@ window.NARX_DATA = {
     "name_ru": "Лавандовый (Lavender)",
     "hex": "#CDBFE3",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1295,6 +1399,7 @@ window.NARX_DATA = {
     "name_ru": "Белый (White)",
     "hex": "#F2F2F0",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1302,6 +1407,7 @@ window.NARX_DATA = {
     "name_ru": "Лаймовый (Lime)",
     "hex": "#D8E8A8",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    }
   ],
@@ -1311,6 +1417,7 @@ window.NARX_DATA = {
     "name_ru": "Чёрный (Midnight Black)",
     "hex": "#2A2A2D",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1318,6 +1425,7 @@ window.NARX_DATA = {
     "name_ru": "Фиолетовый (Aurora Purple)",
     "hex": "#B8A2D8",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1325,6 +1433,7 @@ window.NARX_DATA = {
     "name_ru": "Синий (Ocean Blue)",
     "hex": "#3F6C9A",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    }
   ],
@@ -1334,6 +1443,7 @@ window.NARX_DATA = {
     "name_ru": "Чёрный (Midnight Black)",
     "hex": "#2A2A2D",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1341,6 +1451,7 @@ window.NARX_DATA = {
     "name_ru": "Синий (Ice Blue)",
     "hex": "#BCD2E6",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1348,6 +1459,7 @@ window.NARX_DATA = {
     "name_ru": "Зелёный (Mint Green)",
     "hex": "#CDE5D5",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    }
   ],
@@ -1357,6 +1469,7 @@ window.NARX_DATA = {
     "name_ru": "Чёрный (Black)",
     "hex": "#1F1F21",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1364,6 +1477,7 @@ window.NARX_DATA = {
     "name_ru": "Белый (White)",
     "hex": "#F4F4F2",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1371,6 +1485,7 @@ window.NARX_DATA = {
     "name_ru": "Зелёный (Green)",
     "hex": "#9FB8A5",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1378,6 +1493,7 @@ window.NARX_DATA = {
     "name_ru": "Серебристый (Liquid Silver)",
     "hex": "#D5D7D9",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    }
   ],
@@ -1387,6 +1503,7 @@ window.NARX_DATA = {
     "name_ru": "Графит (Graphite)",
     "hex": "#50504E",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1394,6 +1511,7 @@ window.NARX_DATA = {
     "name_ru": "Золотой (Gold)",
     "hex": "#F3E3C3",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1401,6 +1519,7 @@ window.NARX_DATA = {
     "name_ru": "Серебристый (Silver)",
     "hex": "#E8E8E3",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1408,6 +1527,7 @@ window.NARX_DATA = {
     "name_ru": "Голубой (Sierra Blue)",
     "hex": "#9BB5CE",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1415,6 +1535,7 @@ window.NARX_DATA = {
     "name_ru": "Зелёный (Alpine Green)",
     "hex": "#58675A",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    }
   ],
@@ -1424,6 +1545,7 @@ window.NARX_DATA = {
     "name_ru": "Графит (Graphite)",
     "hex": "#52514F",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1431,6 +1553,7 @@ window.NARX_DATA = {
     "name_ru": "Серебристый (Silver)",
     "hex": "#E3E4DF",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1438,6 +1561,7 @@ window.NARX_DATA = {
     "name_ru": "Золотой (Gold)",
     "hex": "#F6E6C9",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1445,6 +1569,7 @@ window.NARX_DATA = {
     "name_ru": "Синий (Pacific Blue)",
     "hex": "#2E4A5E",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    }
   ],
@@ -1454,6 +1579,7 @@ window.NARX_DATA = {
     "name_ru": "Графит (Graphite)",
     "hex": "#52514F",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1461,6 +1587,7 @@ window.NARX_DATA = {
     "name_ru": "Серебристый (Silver)",
     "hex": "#E3E4DF",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1468,6 +1595,7 @@ window.NARX_DATA = {
     "name_ru": "Золотой (Gold)",
     "hex": "#F6E6C9",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1475,6 +1603,7 @@ window.NARX_DATA = {
     "name_ru": "Синий (Pacific Blue)",
     "hex": "#2E4A5E",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    }
   ],
@@ -1484,6 +1613,7 @@ window.NARX_DATA = {
     "name_ru": "Серый (Space Gray)",
     "hex": "#535150",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1491,6 +1621,7 @@ window.NARX_DATA = {
     "name_ru": "Серебристый (Silver)",
     "hex": "#EBEBE3",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1498,6 +1629,7 @@ window.NARX_DATA = {
     "name_ru": "Золотой (Gold)",
     "hex": "#F3DFC8",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1505,6 +1637,7 @@ window.NARX_DATA = {
     "name_ru": "Тёмно-зелёный (Midnight Green)",
     "hex": "#4E5851",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    }
   ],
@@ -1514,6 +1647,7 @@ window.NARX_DATA = {
     "name_ru": "Серый (Space Gray)",
     "hex": "#535150",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1521,6 +1655,7 @@ window.NARX_DATA = {
     "name_ru": "Серебристый (Silver)",
     "hex": "#EBEBE3",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1528,6 +1663,7 @@ window.NARX_DATA = {
     "name_ru": "Золотой (Gold)",
     "hex": "#F3DFC8",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    },
    {
@@ -1535,6 +1671,7 @@ window.NARX_DATA = {
     "name_ru": "Тёмно-зелёный (Midnight Green)",
     "hex": "#4E5851",
     "pct": 0.0,
+    "usd": 0.0,
     "img": ""
    }
   ]
@@ -1903,57 +2040,12 @@ window.NARX_DATA = {
  ],
  "battery": [
   {
-   "from": 98.0,
-   "to": 100.0,
-   "label_ru": "Отличное",
-   "label": "A'lo",
-   "pct": 3.0,
-   "models": "=17",
-   "per1": 0
-  },
-  {
-   "from": 95.0,
-   "to": 97.0,
-   "label_ru": "Очень хорошее",
-   "label": "Juda yaxshi",
-   "pct": 6.0,
-   "models": "=17",
-   "per1": 0
-  },
-  {
-   "from": 93.0,
-   "to": 94.0,
-   "label_ru": "Хорошее",
-   "label": "Yaxshi",
-   "pct": 8.0,
-   "models": "=17",
-   "per1": 0
-  },
-  {
-   "from": 90.0,
-   "to": 92.0,
-   "label_ru": "Хорошее",
-   "label": "Yaxshi",
-   "pct": 10.0,
-   "models": "=17",
-   "per1": 0
-  },
-  {
    "from": 90.0,
    "to": 100.0,
    "label_ru": "Отличное",
    "label": "A'lo",
    "pct": 0.0,
-   "models": "16,17,air",
-   "per1": 0
-  },
-  {
-   "from": 85.0,
-   "to": 89.0,
-   "label_ru": "Нормальное",
-   "label": "Normal",
-   "pct": 15.0,
-   "models": "=17",
+   "models": "air",
    "per1": 0
   },
   {
@@ -1962,16 +2054,7 @@ window.NARX_DATA = {
    "label_ru": "Хорошее",
    "label": "Yaxshi",
    "pct": 3.0,
-   "models": "16,17,air",
-   "per1": 0
-  },
-  {
-   "from": 80.0,
-   "to": 84.0,
-   "label_ru": "Изношенное",
-   "label": "Eskirgan",
-   "pct": 18.0,
-   "models": "=17",
+   "models": "air",
    "per1": 0
   },
   {
@@ -1980,7 +2063,7 @@ window.NARX_DATA = {
    "label_ru": "Нормальное",
    "label": "Normal",
    "pct": 6.0,
-   "models": "16,17,air",
+   "models": "air",
    "per1": 0
   },
   {
@@ -1997,26 +2080,8 @@ window.NARX_DATA = {
    "to": 79.0,
    "label_ru": "Изношенное",
    "label": "Eskirgan",
-   "pct": 20.0,
-   "models": "=17",
-   "per1": 0
-  },
-  {
-   "from": 75.0,
-   "to": 79.0,
-   "label_ru": "Изношенное",
-   "label": "Eskirgan",
    "pct": 10.0,
-   "models": "16,17,air",
-   "per1": 0
-  },
-  {
-   "from": 1.0,
-   "to": 74.0,
-   "label_ru": "Требует замены",
-   "label": "Almashtirilishi kerak",
-   "pct": 25.0,
-   "models": "=17",
+   "models": "air",
    "per1": 0
   },
   {
@@ -2025,8 +2090,8 @@ window.NARX_DATA = {
    "label_ru": "По ёмкости",
    "label": "Sig'im bo'yicha",
    "pct": 0.0,
-   "models": "16 pro max,17 pro max",
-   "per1": 1.0
+   "models": "16,17",
+   "per1": 2.0
   },
   {
    "from": 1.0,
@@ -2034,7 +2099,7 @@ window.NARX_DATA = {
    "label_ru": "Требует замены",
    "label": "Almashtirilishi kerak",
    "pct": 15.0,
-   "models": "16,17,air",
+   "models": "air",
    "per1": 0
   },
   {
@@ -2044,15 +2109,6 @@ window.NARX_DATA = {
    "label": "Almashtirilishi kerak",
    "pct": 10.0,
    "models": "",
-   "per1": 0
-  },
-  {
-   "from": 0.0,
-   "to": 0.0,
-   "label_ru": "Не знаю",
-   "label": "Bilmayman",
-   "pct": 25.0,
-   "models": "=17",
    "per1": 0
   }
  ],
