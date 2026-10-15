@@ -1,6 +1,6 @@
 // Avtomatik yaratilgan: narx_to_data.py. Qo'lda tahrirlamang.
 window.NARX_DATA = {
- "updated": "15.10.2026 19:48",
+ "updated": "15.10.2026 20:00",
  "sample": false,
  "tradein_bonus": 8.0,
  "max_pct": 70.0,
@@ -521,7 +521,7 @@ window.NARX_DATA = {
     "name_ru": "Оранжевый (Cosmic Orange)",
     "hex": "#E0703A",
     "pct": 0.0,
-    "usd": 70.0,
+    "usd": 100.0,
     "img": ""
    },
    {
@@ -529,7 +529,7 @@ window.NARX_DATA = {
     "name_ru": "Тёмно-синий (Deep Blue)",
     "hex": "#2F3D5C",
     "pct": 0.0,
-    "usd": 70.0,
+    "usd": 100.0,
     "img": ""
    },
    {
@@ -547,7 +547,7 @@ window.NARX_DATA = {
     "name_ru": "Оранжевый (Cosmic Orange)",
     "hex": "#E0703A",
     "pct": 0.0,
-    "usd": 70.0,
+    "usd": 100.0,
     "img": ""
    },
    {
@@ -555,7 +555,7 @@ window.NARX_DATA = {
     "name_ru": "Тёмно-синий (Deep Blue)",
     "hex": "#2F3D5C",
     "pct": 0.0,
-    "usd": 70.0,
+    "usd": 100.0,
     "img": ""
    },
    {
@@ -573,7 +573,7 @@ window.NARX_DATA = {
     "name_ru": "Чёрный (Black)",
     "hex": "#2B2B2D",
     "pct": 0.0,
-    "usd": 70.0,
+    "usd": 100.0,
     "img": ""
    },
    {
@@ -581,7 +581,7 @@ window.NARX_DATA = {
     "name_ru": "Белый (White)",
     "hex": "#F2F2F0",
     "pct": 0.0,
-    "usd": 70.0,
+    "usd": 100.0,
     "img": ""
    },
    {
@@ -589,7 +589,7 @@ window.NARX_DATA = {
     "name_ru": "Голубой (Mist Blue)",
     "hex": "#A9BCD0",
     "pct": 0.0,
-    "usd": 70.0,
+    "usd": 100.0,
     "img": ""
    },
    {
@@ -597,7 +597,7 @@ window.NARX_DATA = {
     "name_ru": "Зелёный (Sage)",
     "hex": "#B7C3A5",
     "pct": 0.0,
-    "usd": 70.0,
+    "usd": 100.0,
     "img": ""
    },
    {
@@ -605,7 +605,7 @@ window.NARX_DATA = {
     "name_ru": "Лавандовый (Lavender)",
     "hex": "#CFC3E0",
     "pct": 0.0,
-    "usd": 70.0,
+    "usd": 100.0,
     "img": ""
    }
   ],
