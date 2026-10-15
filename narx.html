@@ -448,7 +448,8 @@ const seriesOf = m => { const s = String(m || '').toLowerCase(); const n = s.mat
 const modelKey = m => String(m || '').toLowerCase().replace(/^\s*(apple\s+)?iphone\s+/, '').replace(/\s+/g, ' ').trim();
 function forModel(list){
   const s = seriesOf(S.model), mk = modelKey(S.model), keys = r => r.models.split(',').map(x => x.trim());
-  const byModel = (list || []).filter(r => r.models && mk && keys(r).includes(mk));
+  // "=17" — aynan shu model; "16 pro max" — variantli model; "17" — butun seriya
+  const byModel = (list || []).filter(r => r.models && mk && (keys(r).includes('=' + mk) || (mk.includes(' ') && keys(r).includes(mk))));
   if (byModel.length) return byModel;
   const spec = (list || []).filter(r => r.models && s && keys(r).includes(s));
   return spec.length ? spec : (list || []).filter(r => !r.models);
@@ -463,7 +464,8 @@ const entry = () => D.models.find(m => m.brand === S.brand && m.model === S.mode
 const linTier = (b, p) => b && b.per1 > 0 ? { ...b, pct: Math.max(0, Math.round((100 - p) * b.per1 * 10) / 10) } : b;
 function batteryTier(p){ const B = batteries(); if (p === '' || isNaN(p)) return null; return linTier(B.find(b => p >= b.from && p <= b.to) || B[B.length - 1] || null, p); }
 const UNKNOWN_BAT = 85;   // "Bilmayman" — sig'im bo'yicha hisoblanadigan modellarda 85% deb olinadi
-function unknownTier(){ const B = batteries(); const lin = B.find(b => b.per1 > 0); if (lin) return linTier(lin, UNKNOWN_BAT);
+function unknownTier(){ const B = batteries(); const bm = B.find(b => /bilmayman/i.test(b.label)); if (bm) return bm;
+  const lin = B.find(b => b.per1 > 0); if (lin) return linTier(lin, UNKNOWN_BAT);
   return B.find(b => /normal/i.test(b.label)) || B.find(b => 80 >= b.from && 80 <= b.to) || B[Math.min(2, B.length - 1)] || null; }
 
 /* ---------- telefon rasmi (SVG, oddiy chizma — brend rasmi emas) ---------- */

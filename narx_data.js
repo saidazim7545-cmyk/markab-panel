@@ -1,6 +1,6 @@
 // Avtomatik yaratilgan: narx_to_data.py. Qo'lda tahrirlamang.
 window.NARX_DATA = {
- "updated": "10.10.2026 17:25",
+ "updated": "14.10.2026 15:50",
  "sample": false,
  "tradein_bonus": 8.0,
  "max_pct": 70.0,
@@ -1903,6 +1903,42 @@ window.NARX_DATA = {
  ],
  "battery": [
   {
+   "from": 98.0,
+   "to": 100.0,
+   "label_ru": "Отличное",
+   "label": "A'lo",
+   "pct": 3.0,
+   "models": "=17",
+   "per1": 0
+  },
+  {
+   "from": 95.0,
+   "to": 97.0,
+   "label_ru": "Очень хорошее",
+   "label": "Juda yaxshi",
+   "pct": 6.0,
+   "models": "=17",
+   "per1": 0
+  },
+  {
+   "from": 93.0,
+   "to": 94.0,
+   "label_ru": "Хорошее",
+   "label": "Yaxshi",
+   "pct": 8.0,
+   "models": "=17",
+   "per1": 0
+  },
+  {
+   "from": 90.0,
+   "to": 92.0,
+   "label_ru": "Хорошее",
+   "label": "Yaxshi",
+   "pct": 10.0,
+   "models": "=17",
+   "per1": 0
+  },
+  {
    "from": 90.0,
    "to": 100.0,
    "label_ru": "Отличное",
@@ -1914,10 +1950,28 @@ window.NARX_DATA = {
   {
    "from": 85.0,
    "to": 89.0,
+   "label_ru": "Нормальное",
+   "label": "Normal",
+   "pct": 15.0,
+   "models": "=17",
+   "per1": 0
+  },
+  {
+   "from": 85.0,
+   "to": 89.0,
    "label_ru": "Хорошее",
    "label": "Yaxshi",
    "pct": 3.0,
    "models": "16,17,air",
+   "per1": 0
+  },
+  {
+   "from": 80.0,
+   "to": 84.0,
+   "label_ru": "Изношенное",
+   "label": "Eskirgan",
+   "pct": 18.0,
+   "models": "=17",
    "per1": 0
   },
   {
@@ -1943,8 +1997,26 @@ window.NARX_DATA = {
    "to": 79.0,
    "label_ru": "Изношенное",
    "label": "Eskirgan",
+   "pct": 20.0,
+   "models": "=17",
+   "per1": 0
+  },
+  {
+   "from": 75.0,
+   "to": 79.0,
+   "label_ru": "Изношенное",
+   "label": "Eskirgan",
    "pct": 10.0,
    "models": "16,17,air",
+   "per1": 0
+  },
+  {
+   "from": 1.0,
+   "to": 74.0,
+   "label_ru": "Требует замены",
+   "label": "Almashtirilishi kerak",
+   "pct": 25.0,
+   "models": "=17",
    "per1": 0
   },
   {
@@ -1972,6 +2044,15 @@ window.NARX_DATA = {
    "label": "Almashtirilishi kerak",
    "pct": 10.0,
    "models": "",
+   "per1": 0
+  },
+  {
+   "from": 0.0,
+   "to": 0.0,
+   "label_ru": "Не знаю",
+   "label": "Bilmayman",
+   "pct": 25.0,
+   "models": "=17",
    "per1": 0
   }
  ],
