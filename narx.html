@@ -605,10 +605,17 @@ function steps(){
 }
 
 /* ---------- pricing ---------- */
+/* Singan yoki almashtirilgan qism — foiz emas, qat'iy $ summa (Excel "Qism narxlari ($)" varag'i, seriya bo'yicha),
+   so'mga kunlik kurs (Trastbank sotish) bilan o'tkaziladi; kurs yuklanmagan bo'lsa — Sozlamalardagi kurs. */
+const partUsd = () => forModel(D.part_prices || [])[0] || null;
+const usdRate = () => (S.rate && S.rate.usd) || D.usd_rate || 0;
+const isReplQ = q => /almashtiril|заменён/i.test(q.title || '');
 function calc(){
   const e = entry(); if (!e) return null;
-  const lines = []; let pct = 0, blocked = false;
+  const lines = []; let pct = 0, fix = 0, blocked = false;
   const add = (label, p) => { if (p > 0) { pct += p; lines.push({ label, p }); } };
+  const pu = partUsd(), rate = usdRate();
+  const addFix = (label, usd) => { const som = Math.round(usd * rate / 1000) * 1000; fix += som; lines.push({ label: `${label} ($${usd})`, p: 0, fix: som }); };
   const ce = colorEntry(); if (ce) add(`${t('Rang')}: ${tx(ce, 'name')}`, ce.pct);
   // model o'zgargan bo'lsa ham — tanlangan region kodi shu modelga tegishli foiz bilan olinadi
   const reg = S.region ? (regionsOf(S.brand).find(r => r.code === S.region.code) || S.region) : null;
@@ -616,15 +623,24 @@ function calc(){
   const bt = S.batteryUnknown ? unknownTier() : batteryTier(+S.battery);
   if (bt) add(`${t('Batareya')}: ${S.batteryUnknown ? t("noma'lum") : S.battery + '%'} (${tx(bt, 'label')})`, bt.pct);
   (D.damage || []).forEach(z => { const l = z.levels[S.dmg[z.code] || 0]; if (!l || !(S.dmg[z.code] > 0)) return;
-    if (l.block) blocked = true; add(`${tx(z, 'name')}: ${tx(l, 'label')}`, l.pct); });
+    if (l.block) blocked = true;
+    const broken = (S.dmg[z.code] || 0) === z.levels.length - 1;            // eng og'ir daraja: yoriq/singan, urilgan/egilgan
+    if (broken && pu && rate) addFix(`${tx(z, 'name')}: ${tx(l, 'label')}`, z.code === 'screen' ? pu.screen : pu.other);
+    else add(`${tx(z, 'name')}: ${tx(l, 'label')}`, l.pct); });
   D.questions.forEach((q, qi) => (S.ans[qi] || []).forEach(oi => { const o = q.options[oi]; if (!o) return;
-    if (o.block) blocked = true; add(`${tx(q, 'title').replace(/\?$/, '')}: ${tx(o, 'label')}`, o.pct); }));
+    if (o.block) blocked = true;
+    const lbl = `${tx(q, 'title').replace(/\?$/, '')}: ${tx(o, 'label')}`;
+    if (isReplQ(q) && oi > 0 && pu && rate) addFix(lbl, o.pos === 'screen' ? pu.screen : pu.other);
+    else add(lbl, o.pct); }));
   pct = Math.min(pct, D.max_pct);
   const r = D.round_to || 1;
-  const cash = Math.max(0, Math.round(e.base * (1 - pct / 100) / r) * r);
+  // foizli chegirmalar + qat'iy $ summalar; jami a'lo narxning max_pct (70%) idan oshmaydi
+  const ded = Math.min(e.base * pct / 100 + fix, e.base * D.max_pct / 100);
+  pct = e.base ? ded * 100 / e.base : 0;
+  const cash = Math.max(0, Math.round((e.base - ded) / r) * r);
   const tb = tradeBonus();
   const trade = Math.round(cash * (1 + tb / 100) / r) * r;
-  return { base: e.base, pct, cash, trade, tb, blocked, lines: lines.map(l => ({ ...l, sum: Math.round(e.base * l.p / 100 / 1000) * 1000 })) };
+  return { base: e.base, pct, cash, trade, tb, blocked, lines: lines.map(l => ({ ...l, sum: l.fix || Math.round(e.base * l.p / 100 / 1000) * 1000 })) };
 }
 
 /* ---------- icons ---------- */
@@ -675,7 +691,7 @@ function npHex(model, color){
 }
 function loadRate(){
   if (S.rate || S.rateLoading || !D.api) return; S.rateLoading = true;
-  fetch(D.api.replace(/\/$/, '') + '/api/rate').then(r => r.json()).then(j => { if (j && j.usd) { S.rate = j; if (S.flow === 'new') render(); } })
+  fetch(D.api.replace(/\/$/, '') + '/api/rate').then(r => r.json()).then(j => { if (j && j.usd) { S.rate = j; const st = steps()[S.i]; if (S.flow === 'new' || (st && st.k === 'result')) render(); } })
     .catch(() => {}).finally(() => { S.rateLoading = false; });
 }
 const fmtSum = n => Math.round(n).toLocaleString('ru-RU').replace(/,/g, ' ');
@@ -1298,6 +1314,7 @@ function leadFail(err){
 }
 
 track('open');
+loadRate();
 render();
 </script>
 </body>
