@@ -1,6 +1,6 @@
 // Avtomatik yaratilgan: narx_to_data.py. Qo'lda tahrirlamang.
 window.NARX_DATA = {
- "updated": "15.10.2026 15:42",
+ "updated": "15.10.2026 15:50",
  "sample": false,
  "tradein_bonus": 8.0,
  "max_pct": 70.0,
@@ -2805,22 +2805,38 @@ window.NARX_DATA = {
   {
    "models": "16,17,air",
    "screen": 150.0,
-   "other": 100.0
+   "other": 100.0,
+   "box": 50.0
   },
   {
    "models": "15",
    "screen": 120.0,
-   "other": 70.0
+   "other": 70.0,
+   "box": 50.0
+  },
+  {
+   "models": "14",
+   "screen": 100.0,
+   "other": 60.0,
+   "box": 50.0
+  },
+  {
+   "models": "13 pro max",
+   "screen": 100.0,
+   "other": 60.0,
+   "box": 50.0
   },
   {
    "models": "11,12",
    "screen": 40.0,
-   "other": 25.0
+   "other": 25.0,
+   "box": 30.0
   },
   {
    "models": "",
    "screen": 100.0,
-   "other": 60.0
+   "other": 60.0,
+   "box": 30.0
   }
  ],
  "usd_rate": 11905.0,

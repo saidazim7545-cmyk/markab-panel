@@ -610,6 +610,7 @@ function steps(){
 const partUsd = () => forModel(D.part_prices || [])[0] || null;
 const usdRate = () => (S.rate && S.rate.usd) || D.usd_rate || 0;
 const isReplQ = q => /almashtiril|заменён/i.test(q.title || '');
+const isBoxQ = q => /quti|короб/i.test(q.title || '');
 function calc(){
   const e = entry(); if (!e) return null;
   const lines = []; let pct = 0, fix = 0, blocked = false;
@@ -631,6 +632,7 @@ function calc(){
     if (o.block) blocked = true;
     const lbl = `${tx(q, 'title').replace(/\?$/, '')}: ${tx(o, 'label')}`;
     if (isReplQ(q) && oi > 0 && pu && rate) addFix(lbl, o.pos === 'screen' ? pu.screen : pu.other);
+    else if (isBoxQ(q) && oi > 0 && pu && pu.box > 0 && rate) addFix(lbl, pu.box);         // asl qutisi yo'q
     else add(lbl, o.pct); }));
   pct = Math.min(pct, D.max_pct);
   const r = D.round_to || 1;
