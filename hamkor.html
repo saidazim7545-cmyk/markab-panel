@@ -173,7 +173,7 @@ function render() {
     ${r.err === 'downBig' ? `<div class="err">${t('downBig')}</div>` : ''}
     <div class="quick">${[0, 10, 20, 30, 50].map(p => `<button data-dp="${p}" class="${pct === p ? 'on' : ''}">${p}%</button>`).join('')}</div>
     <label>${t('months')}</label>
-    <div class="months">${Array.from({ length: 12 }, (_, i) => i + 1).map(m => `<button data-m="${m}" class="${S.months === m ? 'on' : ''}">${m}</button>`).join('')}</div>
+    <div class="months">${Array.from({ length: 11 }, (_, i) => i + 2).map(m => `<button data-m="${m}" class="${S.months === m ? 'on' : ''}">${m}</button>`).join('')}</div>
   </div>
   <div id="out"></div>
   <p class="note">${t('rule', { p: String(RATE).replace('.', lang === 'ru' ? ',' : ','), f: FEE })}</p>`;
