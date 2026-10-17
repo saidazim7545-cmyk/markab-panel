@@ -40,6 +40,12 @@ label{display:block;font-size:12px;font-weight:700;color:var(--hint);margin:14px
 .inp input:focus{border-color:var(--brand);background:var(--card)}
 .inp input.bad{border-color:var(--bad)}
 .err{color:var(--bad);font-size:12.5px;margin-top:6px;font-weight:600}
+.dhint{font-size:12.5px;margin-top:6px;font-weight:600;color:var(--hint)}
+.dhint.bad{color:var(--bad)}
+.warn{border:1.5px solid var(--bad);background:rgba(196,59,59,.07);border-radius:16px;padding:16px;margin-bottom:12px}
+.warn b{color:var(--bad)}
+.warn p{margin:6px 0 12px;font-size:14px;line-height:1.45}
+.warn .btn{width:100%}
 .quick{display:flex;gap:6px;margin-top:8px}
 .quick button{flex:1;border:1px solid var(--line);background:var(--card);border-radius:10px;padding:7px 4px;font-size:13px;font-weight:600;cursor:pointer;color:var(--text)}
 .quick button.on{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
@@ -90,6 +96,7 @@ td b{font-weight:700}
 <div class="toast" id="toast"></div>
 <script>
 const RATE = 4.5;   // oyiga ustama, %
+const MIN_DOWN = 40; // boshlang'ich to'lov kamida, %
 const FEE = 30;     // bir martalik xizmat haqi, $
 const tg = window.Telegram && Telegram.WebApp;
 const inTg = !!(tg && (tg.initData || (tg.platform && tg.platform !== 'unknown')));
@@ -107,27 +114,32 @@ const L = {
   uz: { bTag: 'Hamkorlar uchun', bTitle: "Har bir mijoz uchun $5 bonus", bSub: "Mijozni olib keling — bonusni joyida olasiz.", badge: 'Hamkor', title: 'Nasiya kalkulyatori', lead: "Mijozga oylik to'lovni tez hisoblang",
     price: 'Telefonning tan narxi', down: "Boshlang'ich to'lov", months: 'Muddat (oy)', m: 'oy',
     needPrice: 'Narxni kiriting', downBig: "Boshlang'ich to'lov narxdan kam bo'lishi kerak",
+    dMin: "Kamida {p}% — {v}. Ko'proq kiritish mumkin.", dMin0: "Kamida {p}%. Ko'proq kiritish mumkin.", dLow: "Kamida {p}% bo'lishi kerak — {v}",
+    wTitle: "Boshlang'ich to'lov yetarli emas", wText: "Boshlang'ich to'lov tan narxining kamida {p}% bo'lishi kerak: <b>{v}</b>. Undan ko'p kiritishingiz mumkin.", wBtn: "{p}% qo'yish ({v})",
     monthly: "Oylik to'lov", forM: '{n} oy davomida', tan: 'Tan narxi', left: 'Nasiyaga qoladi',
     markup: 'Ustama ({p}% × {n} oy = {t}%)', fee: "Xizmat haqi (bir martalik)", nas: 'Nasiya summasi', all: "Mijoz jami to'laydi",
     sched: "To'lov jadvali", no: '№', date: 'Sana', pay: "To'lov", rest: 'Qoldiq',
     empty: "Narxni kiriting — jadval shu yerda chiqadi", copy: 'Nusxa olish', share: 'Mijozga yuborish',
-    copied: 'Nusxa olindi', rule: "Ustama: qolgan summaga oyiga {p}% · bir martalik ${f} xizmat haqi. Oylik to'lov butun dollarga yaxlitlangan, farq oxirgi oyda. Mijozga yuboriladigan xabarda tan narxi va ustama ko'rinmaydi.",
+    copied: 'Nusxa olindi', rule: "Boshlang'ich to'lov kamida 40%. Ustama: qolgan summaga oyiga {p}% · bir martalik ${f} xizmat haqi. Oylik to'lov butun dollarga yaxlitlangan, farq oxirgi oyda. Mijozga yuboriladigan xabarda tan narxi va ustama ko'rinmaydi.",
     msgHead: 'Markab — nasiya hisob-kitobi' },
   ru: { bTag: 'Для партнёров', bTitle: 'Бонус $5 за каждого клиента', bSub: 'Приведите клиента — бонус получите сразу на месте.', badge: 'Партнёр', title: 'Калькулятор рассрочки', lead: 'Быстро посчитайте ежемесячный платёж клиенту',
     price: 'Себестоимость телефона', down: 'Первоначальный взнос', months: 'Срок (мес.)', m: 'мес.',
     needPrice: 'Введите цену', downBig: 'Взнос должен быть меньше цены',
+    dMin: 'Минимум {p}% — {v}. Можно больше.', dMin0: 'Минимум {p}%. Можно больше.', dLow: 'Должно быть не меньше {p}% — {v}',
+    wTitle: 'Недостаточный первоначальный взнос', wText: 'Первоначальный взнос — не меньше {p}% от себестоимости: <b>{v}</b>. Можно внести больше.', wBtn: 'Поставить {p}% ({v})',
     monthly: 'Ежемесячный платёж', forM: 'в течение {n} мес.', tan: 'Себестоимость', left: 'Остаток в рассрочку',
     markup: 'Наценка ({p}% × {n} мес. = {t}%)', fee: 'Сервисный сбор (разовый)', nas: 'Сумма рассрочки', all: 'Клиент платит всего',
     sched: 'График платежей', no: '№', date: 'Дата', pay: 'Платёж', rest: 'Остаток',
     empty: 'Введите цену — здесь появится график', copy: 'Копировать', share: 'Отправить клиенту',
-    copied: 'Скопировано', rule: 'Наценка: {p}% в месяц на остаток · разовый сбор ${f}. Платёж округлён до доллара, разница — в последнем месяце. В сообщении клиенту себестоимость и наценка не указываются.',
+    copied: 'Скопировано', rule: 'Первоначальный взнос — от 40%. Наценка: {p}% в месяц на остаток · разовый сбор ${f}. Платёж округлён до доллара, разница — в последнем месяце. В сообщении клиенту себестоимость и наценка не указываются.',
     msgHead: 'Markab — расчёт рассрочки' }
 };
 let lang = 'uz';
 try { const s = localStorage.getItem('mh_lang'); if (s) lang = s; else {
   const lc = tg && tg.initDataUnsafe && tg.initDataUnsafe.user && tg.initDataUnsafe.user.language_code; if (lc === 'ru') lang = 'ru'; } } catch (e) {}
 const t = (k, v = {}) => L[lang][k].replace(/\{(\w+)\}/g, (_, x) => v[x]);
-const S = { price: '', down: '', months: 6 };
+const S = { price: '', down: '', months: 6, touched: false };
+const minDown = p => Math.ceil(p * MIN_DOWN / 100);
 const $ = id => document.getElementById(id);
 const usd = v => '$' + Math.round(v).toLocaleString('ru-RU').replace(/ /g, ' ');
 const usd2 = v => '$' + (Math.round(v * 100) / 100).toLocaleString('ru-RU', { minimumFractionDigits: 0, maximumFractionDigits: 2 }).replace(/ /g, ' ');
@@ -138,6 +150,7 @@ function calc() {
   const price = parse(S.price), down = parse(S.down), n = S.months;
   if (!price) return { err: S.price ? 'needPrice' : null };
   if (down >= price) return { err: 'downBig' };
+  if (down < minDown(price)) return { err: 'downMin', min: minDown(price) };
   const left = price - down;
   const markupPct = RATE * n;
   const markup = left * markupPct / 100;
@@ -169,9 +182,10 @@ function render() {
     <label for="price">${t('price')}</label>
     <div class="inp"><span>$</span><input id="price" class="num${r.err === 'needPrice' ? ' bad' : ''}" inputmode="decimal" autocomplete="off" placeholder="0" value="${S.price}"></div>
     <label for="down">${t('down')}</label>
-    <div class="inp"><span>$</span><input id="down" class="num${r.err === 'downBig' ? ' bad' : ''}" inputmode="decimal" autocomplete="off" placeholder="0" value="${S.down}"></div>
+    <div class="inp"><span>$</span><input id="down" class="num${r.err === 'downBig' || r.err === 'downMin' ? ' bad' : ''}" inputmode="decimal" autocomplete="off" placeholder="0" value="${S.down}"></div>
     ${r.err === 'downBig' ? `<div class="err">${t('downBig')}</div>` : ''}
-    <div class="quick">${[0, 10, 20, 30, 50].map(p => `<button data-dp="${p}" class="${pct === p ? 'on' : ''}">${p}%</button>`).join('')}</div>
+    <div class="dhint${r.err === 'downMin' ? ' bad' : ''}" id="dhint">${dhint(r)}</div>
+    <div class="quick">${[40, 50, 60, 70].map(p => `<button data-dp="${p}" class="${pct === p ? 'on' : ''}">${p}%</button>`).join('')}</div>
     <label>${t('months')}</label>
     <div class="months">${Array.from({ length: 11 }, (_, i) => i + 2).map(m => `<button data-m="${m}" class="${S.months === m ? 'on' : ''}">${m}</button>`).join('')}</div>
   </div>
@@ -179,23 +193,36 @@ function render() {
   <p class="note">${t('rule', { p: String(RATE).replace('.', lang === 'ru' ? ',' : ','), f: FEE })}</p>`;
   renderOut();
   const pi = $('price'), di = $('down');
-  pi.oninput = () => { S.price = clean(pi.value); renderOut(true); };
-  di.oninput = () => { S.down = clean(di.value); renderOut(true); };
+  pi.oninput = () => { S.price = clean(pi.value);
+    if (!S.touched) { const p = parse(S.price); S.down = p ? String(minDown(p)) : ''; di.value = S.down; }   // avtomatik 40%
+    renderOut(true); };
+  di.oninput = () => { S.down = clean(di.value); S.touched = true; renderOut(true); };
   document.querySelectorAll('[data-dp]').forEach(b => b.onclick = () => {
     const p = parse(S.price); if (!p) { pi.focus(); return; }
-    S.down = String(Math.round(p * (+b.dataset.dp) / 100)); haptic(); render(); });
+    S.down = String(Math.ceil(p * (+b.dataset.dp) / 100)); S.touched = true; haptic(); render(); });
   document.querySelectorAll('[data-m]').forEach(b => b.onclick = () => { S.months = +b.dataset.m; haptic(); render(); });
+}
+function dhint(r) {
+  const p = parse(S.price); if (!p) return t('dMin0', { p: MIN_DOWN });
+  return r.err === 'downMin' ? '⚠️ ' + t('dLow', { p: MIN_DOWN, v: usd(minDown(p)) }) : t('dMin', { p: MIN_DOWN, v: usd(minDown(p)) });
 }
 const clean = v => v.replace(/[^\d.,]/g, '').replace(',', '.').replace(/(\..*)\./g, '$1').slice(0, 10);
 
 function renderOut(live) {
   const r = calc(), o = $('out');
   if (live) {   // yozayotganda faqat natija va xato belgilari yangilanadi (fokus yo'qolmasin)
-    $('price').classList.toggle('bad', r.err === 'needPrice'); $('down').classList.toggle('bad', r.err === 'downBig');
+    $('price').classList.toggle('bad', r.err === 'needPrice'); $('down').classList.toggle('bad', r.err === 'downBig' || r.err === 'downMin');
+    const h = $('dhint'); h.innerHTML = dhint(r); h.classList.toggle('bad', r.err === 'downMin');
     const pr = parse(S.price), pct = pr ? Math.round(parse(S.down) / pr * 100) : -1;
     document.querySelectorAll('[data-dp]').forEach(b => b.classList.toggle('on', pct === +b.dataset.dp));
     const e = document.querySelector('.err'); if (e) e.remove();
     if (r.err === 'downBig') $('down').parentNode.insertAdjacentHTML('afterend', `<div class="err">${t('downBig')}</div>`);
+  }
+  if (r.err === 'downMin') {
+    o.innerHTML = `<div class="warn"><b>⚠️ ${t('wTitle')}</b><p>${t('wText', { p: MIN_DOWN, v: usd(r.min) })}</p>
+      <button class="btn p" id="setMin">${t('wBtn', { p: MIN_DOWN, v: usd(r.min) })}</button></div>`;
+    $('setMin').onclick = () => { S.down = String(r.min); S.touched = true; haptic(); render(); };
+    return;
   }
   if (!r.sched) { o.innerHTML = `<div class="card"><div class="empty">${t('empty')}</div></div>`; return; }
   o.innerHTML = `
