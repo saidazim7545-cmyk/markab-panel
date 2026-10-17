@@ -46,6 +46,14 @@ label{display:block;font-size:12px;font-weight:700;color:var(--hint);margin:14px
 .months{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
 .months button{border:1px solid transparent;background:var(--field);border-radius:11px;padding:10px 0;font-size:15px;font-weight:700;cursor:pointer;min-height:44px}
 .months button.on{background:var(--brand);color:var(--on-brand)}
+.bonus{position:relative;overflow:hidden;display:flex;align-items:center;gap:14px;border-radius:16px;padding:14px 16px;margin-bottom:12px;color:#fff;
+  background:linear-gradient(120deg,#1E8E5A 0%,#167049 100%);box-shadow:0 6px 18px rgba(30,142,90,.25)}
+:root.dark .bonus{background:linear-gradient(120deg,#1C7A50,#125A3B);box-shadow:none}
+.bonus::after{content:"";position:absolute;right:-30px;top:-40px;width:130px;height:130px;border-radius:50%;background:rgba(255,255,255,.08)}
+.bonus .amt{flex:none;width:62px;height:62px;border-radius:16px;background:#fff;color:#1E8E5A;display:grid;place-items:center;font-weight:800;font-size:24px;letter-spacing:-.5px;box-shadow:0 2px 6px rgba(0,0,0,.12)}
+.bonus .bt{font-weight:800;font-size:16.5px;line-height:1.25}
+.bonus .bs{font-size:13px;opacity:.92;margin-top:3px;line-height:1.35}
+.bonus .tag{display:inline-block;background:rgba(255,255,255,.2);border-radius:6px;padding:1px 7px;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;margin-bottom:4px}
 .hero{background:var(--brand);color:var(--on-brand);border-radius:16px;padding:16px;margin-bottom:12px}
 :root.dark .hero{background:linear-gradient(135deg,#8F1B38,#6B1229)}
 .hero .k{font-size:12px;font-weight:700;opacity:.85;text-transform:uppercase;letter-spacing:.5px}
@@ -96,7 +104,7 @@ applyTheme();
 if (inTg) tg.onEvent('themeChanged', applyTheme); else matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applyTheme);
 
 const L = {
-  uz: { badge: 'Hamkor', title: 'Nasiya kalkulyatori', lead: "Mijozga oylik to'lovni tez hisoblang",
+  uz: { bTag: 'Hamkorlar uchun', bTitle: "Har bir mijoz uchun $5 bonus", bSub: "Mijozni olib keling — bonusni joyida olasiz.", badge: 'Hamkor', title: 'Nasiya kalkulyatori', lead: "Mijozga oylik to'lovni tez hisoblang",
     price: 'Telefonning tan narxi', down: "Boshlang'ich to'lov", months: 'Muddat (oy)', m: 'oy',
     needPrice: 'Narxni kiriting', downBig: "Boshlang'ich to'lov narxdan kam bo'lishi kerak",
     monthly: "Oylik to'lov", forM: '{n} oy davomida', tan: 'Tan narxi', left: 'Nasiyaga qoladi',
@@ -105,7 +113,7 @@ const L = {
     empty: "Narxni kiriting — jadval shu yerda chiqadi", copy: 'Nusxa olish', share: 'Mijozga yuborish',
     copied: 'Nusxa olindi', rule: "Ustama: qolgan summaga oyiga {p}% · bir martalik ${f} xizmat haqi. Oylik to'lov butun dollarga yaxlitlangan, farq oxirgi oyda. Mijozga yuboriladigan xabarda tan narxi va ustama ko'rinmaydi.",
     msgHead: 'Markab — nasiya hisob-kitobi' },
-  ru: { badge: 'Партнёр', title: 'Калькулятор рассрочки', lead: 'Быстро посчитайте ежемесячный платёж клиенту',
+  ru: { bTag: 'Для партнёров', bTitle: 'Бонус $5 за каждого клиента', bSub: 'Приведите клиента — бонус получите сразу на месте.', badge: 'Партнёр', title: 'Калькулятор рассрочки', lead: 'Быстро посчитайте ежемесячный платёж клиенту',
     price: 'Себестоимость телефона', down: 'Первоначальный взнос', months: 'Срок (мес.)', m: 'мес.',
     needPrice: 'Введите цену', downBig: 'Взнос должен быть меньше цены',
     monthly: 'Ежемесячный платёж', forM: 'в течение {n} мес.', tan: 'Себестоимость', left: 'Остаток в рассрочку',
@@ -155,6 +163,7 @@ function render() {
   const r = calc(), price = parse(S.price);
   const pct = price ? Math.round(parse(S.down) / price * 100) : -1;
   $('app').innerHTML = `
+  <div class="bonus"><div class="amt">$5</div><div><span class="tag">${t('bTag')}</span><div class="bt">${t('bTitle')}</div><div class="bs">${t('bSub')}</div></div></div>
   <div class="card">
     <h2>${t('title')}</h2><p class="lead">${t('lead')}</p>
     <label for="price">${t('price')}</label>
