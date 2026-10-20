@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>Texno Markaz premium — telefon narxlash</title>
+<meta name="theme-color" content="#0B0B0D">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script>document.write('<script src="narx_data.js?t=' + Date.now() + '"><\/script><script src="texno_conf.js?t=' + Date.now() + '"><\/script>');</script>
 <noscript></noscript>
@@ -286,6 +289,107 @@
     background: var(--brand-soft); color: var(--brand); cursor: pointer; }
   .brsel { font-size: 13px; color: var(--hint); margin: 8px 2px 0; } .brsel a { color: var(--brand); font-weight: 700; text-decoration: none; }
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+  /* ===== Texno Markaz premium — o'z dizayni (qora + shampan oltin) ===== */
+  :root, :root.dark {
+    --brand: #C9A86A; --brand-ink: #DDBF84; --brand-soft: rgba(201,168,106,.13); --on-brand: #15130F;
+    --bg: #0B0B0D; --card: #151517; --field: #1F1F22; --text: #F2EFE9; --hint: #9B968D; --line: rgba(255,255,255,.08);
+    --ok: #4CC38A; --ok-soft: rgba(76,195,138,.13); --warn: #E3A23B; --warn-soft: rgba(227,162,59,.14); --bad: #EF6B6B; --bad-soft: rgba(239,107,107,.14);
+    --shadow: none; --logo: #F2EFE9; --gold-grad: linear-gradient(135deg, #E9D3A1 0%, #C9A86A 45%, #9C7B43 100%);
+  }
+  html, body { font-family: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); }
+  body::before { background: radial-gradient(45% 40% at 85% 0%, rgba(201,168,106,.10), transparent 70%); }
+  header { background: rgba(11,11,13,.92); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 1px 0 rgba(201,168,106,.18); }
+  .logo .m, .logo .w { background: var(--logo); }
+  .progress { background: #1A1A1D; } .progress i { background: var(--gold-grad); }
+  h1 { font-weight: 800; letter-spacing: -.4px; }
+  .back { border-radius: 8px; background: var(--field); color: var(--text); }
+  /* kartochkalar — ingichka chegara, o'tkirroq burchak */
+  .opt, .col, .zrow, .search input, .hint, .bat, .phones, .np-card, .ns-phone, .perk, .pop button, .how, .pcard, details, .fb, .brc, .chip {
+    border-radius: 10px; }
+  .opt, .col, .zrow, .search input, .hint, .bat, .phones, .np-card, .ns-phone, .perk, .pop button, .how, .pcard, details, .fb, .brc {
+    border: 1px solid var(--line); }
+  .opt.on, .col.on, .zrow.on, .chip.on, .fbopts button.on { border-color: var(--brand); background: var(--brand-soft); color: var(--brand-ink); }
+  .opt.on .box { color: var(--on-brand); }
+  .pin b { color: var(--on-brand); } .pin.on { color: var(--on-brand); } .pin.on b { background: var(--on-brand); color: var(--brand); }
+  .seg { background: var(--card); border: 1px solid var(--line); border-radius: 10px; }
+  .seg button { border-radius: 7px; letter-spacing: .2px; }
+  .seg button.on { background: var(--gold-grad); color: var(--on-brand); box-shadow: none; }
+  .langs { background: var(--card); border: 1px solid var(--line); border-radius: 8px; }
+  .langs button { border-radius: 6px; } .langs button.on { background: var(--brand); color: var(--on-brand); box-shadow: none; }
+  .btn { border-radius: 10px; background: var(--gold-grad); color: var(--on-brand); letter-spacing: .2px; }
+  .btn:active { filter: brightness(.92); background: var(--gold-grad); }
+  .btn.ghost { background: transparent; border: 1px solid rgba(201,168,106,.45); color: var(--brand-ink); }
+  .np-cta .np-go { background: var(--gold-grad); color: var(--on-brand); border-radius: 10px; }
+  .foot { background: rgba(11,11,13,.94); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 -1px 0 rgba(201,168,106,.18); }
+  /* bosh sahifa: qora "vitrina" banneri, oltin chiziqlar */
+  .hero, .hero.ls { border-radius: 14px; border: 1px solid rgba(201,168,106,.28); min-height: 200px;
+    background: repeating-linear-gradient(135deg, rgba(201,168,106,.05) 0 1px, transparent 1px 14px),
+                radial-gradient(90% 120% at 100% 100%, rgba(201,168,106,.22) 0%, transparent 60%), linear-gradient(160deg, #1A1A1D 0%, #0B0B0D 100%); }
+  .hero .blob { display: none; }
+  .hero .shine { background: linear-gradient(115deg, transparent 38%, rgba(233,211,161,.14) 50%, transparent 62%); background-size: 250% 100%; }
+  .hero .eyebrow { position: relative; z-index: 1; display: inline-block; font-size: 10.5px; font-weight: 800; letter-spacing: 2.2px; color: var(--brand);
+    border: 1px solid rgba(201,168,106,.45); padding: 4px 8px; border-radius: 4px; margin-bottom: 12px; }
+  .hero h1 { font-size: 25px; font-weight: 800; }
+  .hero h1 em { font-style: normal; background: var(--gold-grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .hero p { color: #CFCAC0; opacity: 1; }
+  .hero .go, .hero.ls .go { background: var(--gold-grad); color: var(--on-brand); border-radius: 8px; box-shadow: 0 6px 18px rgba(201,168,106,.25); }
+  .perk { padding: 12px 8px; }
+  .perk i { color: var(--brand); height: 24px; display: grid; place-items: center; }
+  .perk i svg { width: 22px; height: 22px; }
+  .perk b { font-size: 12.5px; letter-spacing: .1px; }
+  .sec h2 { font-size: 13px; font-weight: 800; letter-spacing: 1.6px; text-transform: uppercase; color: var(--hint); }
+  .sec button { color: var(--brand); }
+  .how em { border-radius: 6px; background: transparent; border: 1px solid rgba(201,168,106,.5); color: var(--brand); }
+  .pcard.main, :root.dark .pcard.main { background: var(--gold-grad); color: var(--on-brand); border: 0; }
+  .pcard.main .tag { background: rgba(0,0,0,.14); }
+  .ns-res, .ns-open { background: linear-gradient(160deg, #222226, #111113); border: 1px solid rgba(201,168,106,.3); border-radius: 12px; }
+  .ns-res .big, .ns-open em { color: var(--brand-ink); }
+  .ban { border-radius: 12px; border: 1px solid rgba(201,168,106,.28); background: linear-gradient(160deg, #1D1D20, #101012) !important; }
+  .ban .cta { background: var(--gold-grad); color: var(--on-brand); border-radius: 6px; }
+  .est b, .chosen { color: var(--brand-ink); }
+  .chosen { border-radius: 6px; border: 1px solid rgba(201,168,106,.35); }
+  .toast { background: #1F1F22; border: 1px solid rgba(201,168,106,.35); }
+  .sheet { border-top: 1px solid rgba(201,168,106,.25); border-radius: 16px 16px 0 0; }
+  .brc .hr .cl { color: var(--bad); }
+  .brc .bb button { border-radius: 8px; }
+  /* ===== Texno: boshqacha joylashuv ===== */
+  .bar { position: relative; min-height: 50px; }
+  .bar .logo { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+  .bar .back { position: relative; z-index: 1; } .bar .stepno, .bar .langs { position: relative; z-index: 1; }
+  /* rejimlar — pastki menyu (tab-bar) */
+  main > .seg:first-child { position: fixed; left: 0; right: 0; bottom: 0; z-index: 7; margin: 0; border: 0; border-radius: 0;
+    border-top: 1px solid rgba(201,168,106,.22); background: rgba(11,11,13,.96); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    padding: 6px 8px calc(8px + env(safe-area-inset-bottom)); display: grid; grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 4px; }
+  main > .seg:first-child button { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 11.5px; font-weight: 700; line-height: 1.2;
+    padding: 7px 4px 5px; background: none; color: var(--hint); border-radius: 8px; }
+  main > .seg:first-child button svg { width: 22px; height: 22px; }
+  main > .seg:first-child button.on { background: none; color: var(--brand); }
+  main > .seg:first-child button.on::after { content: ''; width: 18px; height: 2px; border-radius: 2px; background: var(--gold-grad); margin-top: 1px; }
+  /* bosh banner — vertikal "sahna" */
+  .hero, .hero.ls { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 18px 16px; min-height: 0; margin-bottom: 22px; }
+  .hero .phs3 { position: relative; order: -1; right: auto; bottom: auto; width: calc(100% + 36px); height: 196px; margin: 0 -18px 4px; overflow: hidden;
+    background: radial-gradient(50% 70% at 50% 100%, rgba(201,168,106,.28), transparent 70%); }
+  .hero .phs3 svg { width: 25%; }
+  .hero .phs3 svg:first-child { left: 24%; bottom: -18px; transform: rotate(-10deg); }
+  .hero .phs3 svg:last-child { right: 24%; left: auto; bottom: 4px; transform: rotate(8deg); }
+  .hero .eyebrow { margin: 14px 0 10px; }
+  .hero h1, .hero p { max-width: 100%; }
+  .hero h1 { font-size: 27px; }
+  .hero .go { width: 100%; justify-content: center; padding: 14px; margin-top: 16px; font-size: 15px; }
+  .hero .perks { width: 100%; margin: 16px 0 0; padding-top: 12px; border-top: 1px solid rgba(201,168,106,.2); gap: 0; position: relative; z-index: 1; }
+  .hero .perk { background: none; border: 0; border-radius: 0; padding: 2px 4px; }
+  .hero .perk + .perk { border-left: 1px solid rgba(201,168,106,.2); }
+  /* ommabop modellar — yonga suriladigan lenta */
+  .pop { display: flex; overflow-x: auto; gap: 10px; margin: 0 -16px 22px; padding: 0 16px 6px; scroll-snap-type: x mandatory; scroll-padding: 0 16px; scrollbar-width: none; }
+  .pop::-webkit-scrollbar { display: none; }
+  .pop button { flex: 0 0 124px; scroll-snap-align: start; padding: 16px 8px 12px; gap: 10px; }
+  .pop svg { width: 46px; }
+  /* qanday ishlaydi — vaqt chizig'i */
+  .how { background: none; border: 0; padding: 4px 2px 0; gap: 0; }
+  .how div { position: relative; align-items: flex-start; padding: 2px 0 18px; line-height: 1.4; }
+  .how div:not(:last-child)::after { content: ''; position: absolute; left: 12px; top: 30px; bottom: 4px; width: 1px; background: rgba(201,168,106,.35); }
+  .how em { margin-top: -1px; }
+  .sec { margin-top: 6px; }
 </style>
 </head>
 <body>
@@ -438,18 +542,17 @@ const RU = {
   "Rang": "Цвет", "Mintaqa": "Регион", "Batareya": "Аккумулятор", "noma'lum": "неизвестно", "so'm": "сум",
 };
 const LANG = (() => {
-  try { const v = localStorage.getItem('narx_lang'); if (v === 'uz' || v === 'ru') return v; } catch (e) {}
-  try { const lc = tg && tg.initDataUnsafe && tg.initDataUnsafe.user && tg.initDataUnsafe.user.language_code; if (lc) return /^ru|^be|^kk|^uk/.test(lc) ? 'ru' : 'uz'; } catch (e) {}
-  return /^ru/i.test(navigator.language || '') ? 'ru' : 'uz';
+  try { const v = localStorage.getItem('tm_lang'); if (v === 'uz' || v === 'ru') return v; } catch (e) {}
+  return 'uz';
 })();
 function t(uz, vars){ let s = (LANG === 'ru' && RU[uz]) || uz; if (vars) for (const k in vars) s = s.split('{' + k + '}').join(vars[k]); return s; }
 const tx = (o, k) => (o && ((LANG === 'ru' && o[k + '_ru']) || o[k])) || '';
-function setLang(l){ try { localStorage.setItem('narx_lang', l); } catch (e) {} location.reload(); }
+function setLang(l){ try { localStorage.setItem('tm_lang', l); } catch (e) {} location.reload(); }
 
 /* ---------- state ---------- */
 const S = { i: 0, brand: '', model: '', mem: '', color: '', dmg: {}, region: null, battery: '', batteryUnknown: false, ans: {}, q: '',
             feedback: '', competitor: '', mode: '', name: '', phone: '', branch: null, day: null, slot: '', photos: [],
-            flow: 'sell', L: { price: '', cur: '$', desc: '', city: '', showtg: true } };
+            flow: /^elon/i.test(SRC) ? 'listing' : 'sell', L: { price: '', cur: '$', desc: '', city: '', showtg: true } };
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num = n => Math.round(n || 0).toLocaleString('ru-RU').replace(/\s|,/g, ' ');
 const som = n => num(n) + ' ' + t("so'm");
@@ -810,7 +913,7 @@ function vNewPhones(seg){
 }
 function vBrand(){
   const hasNew = (D.new_phones || []).length > 0;
-  const seg = `<div class="seg"><button data-flow="sell" class="${S.flow !== 'listing' && S.flow !== 'new' ? 'on' : ''}">💰 ${t(hasNew ? 'Telefon narxlash' : 'Texno Markazga sotish')}</button>${hasNew ? `<button data-flow="new" class="${S.flow === 'new' ? 'on' : ''}">📱 ${t('iPhone narxlari')}</button>` : ''}</div>`;
+  const seg = `<div class="seg ${hasNew ? 'three' : ''}"><button data-flow="sell" class="${S.flow !== 'listing' && S.flow !== 'new' ? 'on' : ''}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.3"/></svg>${t(hasNew ? 'Telefon narxlash' : 'Texno Markazga sotish')}</button>${hasNew ? `<button data-flow="new" class="${S.flow === 'new' ? 'on' : ''}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="6.5" y="2.5" width="11" height="19" rx="2.5"/><path d="M10.5 18.5h3"/></svg>${t('iPhone narxlari')}</button>` : ''}<button data-flow="listing" class="${S.flow === 'listing' ? 'on' : ''}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10v4h3l7 4V6L6 10z"/><path d="M16.5 9a4 4 0 0 1 0 6M19 6.5a7.5 7.5 0 0 1 0 11"/></svg>${t(hasNew ? "E'lon" : "E'lon berish")}</button></div>`;
   const bindFlow = () => document.querySelectorAll('[data-flow]').forEach(el => el.onclick = () => { if (S.flow !== el.dataset.flow) { S.flow = el.dataset.flow; S.i = 0; haptic(); render(); window.scrollTo(0, 0); track('step', 'flow:' + S.flow); } });
   if (S.flow === 'new') { const v = vNewPhones(seg); const b = v.bind; v.bind = () => { bindFlow(); b(); }; return v; }
   const L = S.flow === 'listing', one = brands.length === 1;
@@ -820,19 +923,20 @@ function vBrand(){
   const popular = [];
   for (const m of D.models) { if (popular.length >= 6) break; if (!popular.some(x => x.b === m.brand && x.m === m.model)) popular.push({ b: m.brand, m: m.model }); }
   const hb = brands[0] || 'Apple';
-  const perks = L ? [['🆓', t('Bepul'), t("e'lon")], ['🛡️', t('Tekshiruv'), t('spamsiz kanal')], ['📷', t('Rasmlar'), t('1–3 ta')]]
-                  : [['⏱️', t('2 daqiqa'), t('javob bering')], ['💵', t('Naqd pul'), t('bugunoq')], ['🔁', 'Trade-in', `+${maxTradeBonus()}% ${t('bonus')}`]];
+  const perks = L ? [['<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.3"/></svg>', t('Bepul'), t("e'lon")], ['<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4.5 6v6c0 4.5 3.2 7.8 7.5 9 4.3-1.2 7.5-4.5 7.5-9V6z"/><path d="m9 12 2 2 4-4"/></svg>', t('Tekshiruv'), t('spamsiz kanal')], ['<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>', t('Rasmlar'), t('1–3 ta')]]
+                  : [['<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/></svg>', t('2 daqiqa'), t('javob bering')], ['<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.6"/><path d="M6 9.5v5M18 9.5v5"/></svg>', t('Naqd pul'), t('bugunoq')], ['<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h13l-3.5-3.5M20 16H7l3.5 3.5"/></svg>', 'Trade-in', `+${maxTradeBonus()}% ${t('bonus')}`]];
   const how = L ? [t('Telefon haqida qisqa savollarga javob bering'), t("Narx, rasm va izoh qo'shing"), t("Tekshiruvdan so'ng e'lon kanalda chiqadi")]
                 : [t('Telefon haqidagi savollarga javob bering'), t("Naqd yoki trade-in narxini darhol ko'ring"), t("Filialga keling — pulni o'sha kuni olasiz")];
   return { html: `
     ${seg}
     <div class="hero ${L ? 'ls' : ''}"><i class="blob b1"></i><i class="blob b2"></i><i class="blob b3"></i><i class="shine"></i>
-      <h1>${L ? t("Telefoningizni e'lon qiling") : t('Telefoningiz qancha turadi?')}</h1>
+      <span class="eyebrow">TEXNO MARKAZ · PREMIUM</span>
+      <h1>${(L ? t("Telefoningizni e'lon qiling") : t('Telefoningiz qancha turadi?')).replace(/(\S+)$/, '<em>$1</em>')}</h1>
       <p>${L ? t("E'lon tekshiruvdan so'ng Texno Markaz kanalida bepul chiqadi.") : t('Bir necha savolga javob bering — 2 daqiqada naqd va trade-in narxini bilasiz. Bepul.')}</p>
       ${one ? `<button class="go" data-b="${esc(hb)}">${L ? t("E'lon berish →") : t('Narxni bilish') + ' →'}</button>` : ''}
-      <div class="phs3">${mini(hb, (popular[1] || popular[0] || {}).m || 'iPhone 16', L ? '#9DC7C1' : '#E8E4DC')}${mini(hb, (popular[0] || {}).m || 'iPhone 17 Pro', L ? '#2F3D5C' : '#E0703A')}</div>
+      <div class="phs3">${mini(hb, (popular[1] || popular[0] || {}).m || 'iPhone 16', '#C9C2B6')}${mini(hb, (popular[0] || {}).m || 'iPhone 17 Pro', '#2E2E31')}</div>
+      <div class="perks">${perks.map(([i, b, sp]) => `<div class="perk"><i>${i}</i><b>${esc(b)}</b><span>${esc(sp)}</span></div>`).join('')}</div>
     </div>
-    <div class="perks">${perks.map(([i, b, sp]) => `<div class="perk"><i>${i}</i><b>${esc(b)}</b><span>${esc(sp)}</span></div>`).join('')}</div>
     ${bannerHTML('start')}
     ${one ? `<div class="sec"><h2>${t('Ommabop modellar')}</h2><button data-b="${esc(hb)}">${t('Hammasi')} →</button></div>
       <div class="pop">${popular.map((p, i) => `<button data-pm="${i}">${mini(p.b, p.m, firstColor(p.b, p.m) || pal[i % pal.length])}<span>${esc(p.m)}</span></button>`).join('')}</div>`
