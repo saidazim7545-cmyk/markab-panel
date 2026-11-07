@@ -286,6 +286,34 @@
     background: var(--brand-soft); color: var(--brand); cursor: pointer; }
   .brsel { font-size: 13px; color: var(--hint); margin: 8px 2px 0; } .brsel a { color: var(--brand); font-weight: 700; text-decoration: none; }
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+  .seg.four { grid-template-columns: 1fr 1fr; } .seg.four button { font-size: 13px; padding: 9px 4px; }
+  .sh-bar { display: flex; gap: 6px; margin: 0 0 10px; } .sh-bar select { flex: 1; min-width: 0; border: 1px solid var(--line); background: var(--card); color: var(--text); border-radius: 12px; padding: 9px 6px; font: inherit; font-size: 13px; }
+  .sh-cnt { font-size: 12.5px; color: var(--hint); margin: 0 0 8px; }
+  .sh-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .sh-it { background: var(--card); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; text-align: left; padding: 0; cursor: pointer; color: var(--text); font: inherit; display: flex; flex-direction: column; }
+  .sh-im { aspect-ratio: 1; background: var(--field); position: relative; display: grid; place-items: center; width: 100%; }
+  .sh-im img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .sh-im .b { position: absolute; left: 7px; top: 7px; background: rgba(0,0,0,.6); color: #fff; font-size: 11px; font-weight: 800; border-radius: 9px; padding: 2px 7px; }
+  .sh-im .n { position: absolute; right: 7px; top: 7px; background: var(--brand); color: #fff; font-size: 11px; font-weight: 800; border-radius: 9px; padding: 2px 7px; }
+  .sh-bd { padding: 9px 10px 11px; display: flex; flex-direction: column; gap: 2px; flex: 1; }
+  .sh-bd b { font-size: 14px; line-height: 1.25; } .sh-bd .s { color: var(--hint); font-size: 12px; }
+  .sh-bd .p { font-weight: 800; font-size: 15.5px; margin-top: 4px; } .sh-bd .u { color: var(--hint); font-size: 12px; }
+  .sh-bd .m { margin-top: auto; padding-top: 6px; color: var(--brand); font-weight: 800; font-size: 12.5px; }
+  .sh-gal { display: flex; gap: 8px; overflow-x: auto; scroll-snap-type: x mandatory; margin: 0 -2px 12px; scrollbar-width: none; }
+  .sh-gal::-webkit-scrollbar { display: none; } .sh-gal img { height: 270px; max-width: 86%; border-radius: 16px; object-fit: cover; scroll-snap-align: start; flex: none; background: var(--field); }
+  .sh-card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 14px; margin-bottom: 12px; }
+  .sh-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 8px; } .sh-tags span { background: var(--field); border-radius: 16px; padding: 4px 10px; font-size: 12.5px; color: var(--hint); }
+  .sh-price { font-size: 25px; font-weight: 800; } .sh-usd { color: var(--hint); font-size: 13px; }
+  .sh-modes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin: 10px 0; } .sh-modes.two { grid-template-columns: 1fr 1fr; }
+  .sh-modes button, .sh-terms button { border: 1.5px solid transparent; background: var(--field); color: var(--text); border-radius: 11px; padding: 9px 4px; font: inherit; font-size: 12.5px; font-weight: 800; cursor: pointer; line-height: 1.2; }
+  .sh-modes button.on, .sh-terms button.on { border-color: var(--brand); background: var(--brand-soft); color: var(--brand); }
+  .sh-terms { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
+  .sh-big { font-size: 28px; font-weight: 800; color: var(--brand); margin: 12px 0 0; } .sh-sub { color: var(--hint); font-size: 13px; }
+  .sh-row { display: flex; justify-content: space-between; padding: 7px 0; border-top: 1px solid var(--line); font-size: 13.5px; }
+  .sh-in { width: 100%; border: 1px solid var(--line); background: var(--field); color: var(--text); border-radius: 12px; padding: 12px; font: inherit; margin-bottom: 8px; }
+  .sh-msg { font-weight: 700; font-size: 14px; margin-top: 8px; } .sh-msg.err { color: #c0392b; } .sh-msg.ok { color: #1F8A5B; }
+  .sh-back { border: 0; background: none; color: var(--brand); font: inherit; font-weight: 800; padding: 0 0 10px; cursor: pointer; }
+  .sh-empty { text-align: center; color: var(--hint); padding: 40px 10px; grid-column: 1 / -1; }
 </style>
 </head>
 <body>
@@ -449,7 +477,8 @@ function setLang(l){ try { localStorage.setItem('narx_lang', l); } catch (e) {} 
 /* ---------- state ---------- */
 const S = { i: 0, brand: '', model: '', mem: '', color: '', dmg: {}, region: null, battery: '', batteryUnknown: false, ans: {}, q: '',
             feedback: '', competitor: '', mode: '', name: '', phone: '', branch: null, day: null, slot: '', photos: [],
-            flow: /^elon/i.test(SRC) ? 'listing' : 'sell', L: { price: '', cur: '$', desc: '', city: '', showtg: true } };
+            flow: /^elon/i.test(SRC) ? 'listing' : /^(sotuv|t_)/i.test(SRC) ? 'shop' : 'sell', L: { price: '', cur: '$', desc: '', city: '', showtg: true },
+            shop: { items: null, mod: '', sort: 'new', st: '', bat: 0, pick: /^t_/i.test(SRC) ? SRC.slice(2) : null, mi: 0, n: 12, pay: 'n', sent: '' } };
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num = n => Math.round(n || 0).toLocaleString('ru-RU').replace(/\s|,/g, ' ');
 const som = n => num(n) + ' ' + t("so'm");
@@ -612,7 +641,7 @@ function vParts(s){
 
 /* ---------- steps (dynamic) ---------- */
 function steps(){
-  if (S.flow === 'new') return [{ k: 'brand' }];
+  if (S.flow === 'new' || S.flow === 'shop') return [{ k: 'brand' }];
   const st = [{ k: 'brand' }, { k: 'model' }];
   if (S.model && memsOf(S.brand, S.model).length > 1) st.push({ k: 'mem' });
   if (S.model && colorsOf(S.brand, S.model).length) st.push({ k: 'color' });
@@ -693,14 +722,14 @@ function render(){
   foot.hidden = !out.foot; document.getElementById('footIn').innerHTML = out.foot || '';
   if (document.getElementById('backBtn')) document.getElementById('backBtn').onclick = back;
   document.querySelectorAll('[data-lang]').forEach(b => b.onclick = () => { if (b.dataset.lang !== LANG) setLang(b.dataset.lang); });
-  if (inTelegram && tg.BackButton) { try { S.i > 0 ? tg.BackButton.show() : tg.BackButton.hide(); } catch(e){} }
+  if (inTelegram && tg.BackButton) { try { (S.i > 0 || (S.flow === 'shop' && S.shop.pick)) ? tg.BackButton.show() : tg.BackButton.hide(); } catch(e){} }
   out.bind && out.bind();
   bindBanners();
   const fh = foot.hidden ? 0 : foot.offsetHeight;
   document.getElementById('view').style.paddingBottom = (fh + 24) + 'px';
 }
 function next(){ S.i++; haptic(); render(); window.scrollTo(0, 0); }
-function back(){ if (S.i > 0) { S.i--; haptic(); render(); window.scrollTo(0, 0); } }
+function back(){ if (S.flow === 'shop' && S.shop.pick) { S.shop.pick = null; S.shop.sent = ''; haptic(); render(); window.scrollTo(0, S.shop.y || 0); return; } if (S.i > 0) { S.i--; haptic(); render(); window.scrollTo(0, 0); } }
 if (inTelegram && tg.BackButton) { try { tg.BackButton.onClick(back); } catch(e){} }
 const chosenLine = () => S.model ? `<div class="chosen">${S.model.startsWith(S.brand) ? '' : esc(S.brand) + ' '}${esc(S.model)}${S.mem ? ' · ' + esc(S.mem) : ''}${S.color ? ' · ' + esc((colorEntry() ? tx(colorEntry(), 'name') : t(S.color)).replace(/\s*\(.*\)$/, '')) : ''}</div>` : '';
 
@@ -808,11 +837,97 @@ function vNewPhones(seg){
       const tb = document.getElementById('npTrade'); if (tb) tb.onclick = () => { S.flow = 'sell'; S.i = 0; haptic(); render(); window.scrollTo(0, 0); track('step', 'new:tradein'); };
     } };
 }
+/* ---------- Sotuvdagi telefonlar (Markab vitrina: prixoddan avtomatik) ---------- */
+const SHOP = () => D.api.replace(/\/$/, '') + '/sotuv';
+const shUp = (x, k) => Math.ceil(x / k) * k;
+function shCalc(it, n, dp){ const V = S.shop.v; if (!dp) return [0, shUp(it.p * (1 + V.z[n] / 100) / n, 1000)];
+  const d = shUp(it.p * dp / 100, 10000); return [d, shUp((it.p - d) * (1 + V.pct / 100 * n) / n, 1000)]; }
+const shFam = m => { const x = (m || '').match(/iPhone (\d+|XS?|SE)/); return x ? 'iPhone ' + x[1] : t('Boshqa'); };
+function shLoad(){
+  if (S.shop.items || S.shop.loading || !D.api) return; S.shop.loading = true;
+  fetch(SHOP() + '/api/vitrina').then(r => r.json()).then(j => { S.shop.items = j.items || []; S.shop.v = j; })
+    .catch(() => { S.shop.err = true; }).finally(() => { S.shop.loading = false; if (S.flow === 'shop') render(); });
+}
+function vShop(seg){
+  shLoad(); const H = S.shop;
+  if (!H.items) return { html: `${seg}<div class="sh-empty">${H.err ? t("Aloqa yo'q. Keyinroq urinib ko'ring.") : t('Yuklanmoqda…')}</div>`, bind(){} };
+  const it = H.pick && H.items.find(x => x.id === H.pick);
+  if (H.pick && !it) H.pick = null;
+  if (it) return vShopItem(seg, it);
+  const fams = [...new Set(H.items.map(x => shFam(x.m)))].sort((a, b) => (parseInt(b.slice(7)) || 0) - (parseInt(a.slice(7)) || 0));
+  const sts = [...new Set(H.items.map(x => x.st).filter(Boolean))].sort();
+  const lo = x => Math.min(x.m0, ...x.dn.map(d => d[2]));
+  let L = H.items.filter(x => (!H.mod || shFam(x.m) === H.mod) && (!H.st || x.st === H.st) && (!H.bat || (H.bat === 100 ? x.new : (x.new || (x.c || 0) >= H.bat))));
+  L = L.slice().sort((a, b) => H.sort === 'pa' ? a.p - b.p : H.sort === 'pd' ? b.p - a.p : H.sort === 'mo' ? lo(a) - lo(b) : b.ts.localeCompare(a.ts));
+  const ICON = '<svg width="60" height="96" viewBox="0 0 70 110"><rect x="4" y="2" width="62" height="106" rx="12" fill="var(--line)"/><rect x="9" y="7" width="52" height="96" rx="9" fill="var(--card)"/></svg>';
+  return { html: `${seg}
+    <h1>${t('Sotuvdagi telefonlar')}</h1>
+    <p class="np-rate">${t("Rasm, narx va nasiya hisobi. Telefonni bosing — oylik to'lovni hisoblang va ariza qoldiring.")}</p>
+    <div class="np-models">${['', ...fams].map(f => `<button class="chip ${f === H.mod ? 'on' : ''}" data-shm="${esc(f)}">${f ? esc(f) : t('Hammasi')}</button>`).join('')}</div>
+    <div class="sh-bar"><select id="shSort"><option value="new">${t("Yangi e'lonlar")}</option><option value="pa">${t('Arzonidan')}</option><option value="pd">${t('Qimmatidan')}</option><option value="mo">${t("Oylik to'lov")}</option></select>
+      <select id="shSt"><option value="">${t('Barcha filiallar')}</option>${sts.map(x => `<option>${esc(x)}</option>`).join('')}</select>
+      <select id="shBat"><option value="0">${t('Batareya')}</option><option value="100">${t('Yangi')}</option><option value="90">90%+</option><option value="85">85%+</option><option value="80">80%+</option></select></div>
+    <div class="sh-cnt">${L.length} ${t('ta telefon')}</div>
+    <div class="sh-grid">${L.map(x => `<button class="sh-it" data-shi="${x.id}"><div class="sh-im">${x.ph ? `<img src="${SHOP()}/img/${x.id}/0" loading="lazy" alt="">` : ICON}${x.new ? `<span class="b">${t('YANGI')}</span>` : x.c ? `<span class="b">🔋 ${x.c}%</span>` : ''}${x.n > 1 ? `<span class="n">${x.n} ${t('dona')}</span>` : ''}</div>
+      <div class="sh-bd"><b>${esc(x.t)}</b><span class="s">${esc(x.col)}${x.st ? ' · ' + esc(x.st.replace(' filiali', '')) : ''}</span><span class="p">${fmtSum(x.p)} ${t("so'm")}</span>${x.u ? `<span class="u">${t('naqd')} $${fmtSum(x.u)}</span>` : ''}
+      <span class="m">${t('nasiya: oyiga')} ${fmtSum(lo(x))} ${t("so'mdan")} ›</span></div></button>`).join('') || `<div class="sh-empty">${t("Bu filtr bo'yicha telefon topilmadi")}</div>`}</div>`,
+    bind(){
+      const sv = (id, k, num) => { const el = document.getElementById(id); el.value = String(H[k]); el.onchange = () => { H[k] = num ? +el.value : el.value; render(); }; };
+      sv('shSort', 'sort'); sv('shSt', 'st'); sv('shBat', 'bat', 1);
+      document.querySelectorAll('[data-shm]').forEach(el => el.onclick = () => { H.mod = el.dataset.shm; haptic(); render(); });
+      document.querySelectorAll('[data-shi]').forEach(el => el.onclick = () => { H.y = window.scrollY; H.pick = el.dataset.shi; H.mi = 0; H.n = 12; H.sent = ''; haptic(); render(); window.scrollTo(0, 0); track('step', 'shop:item'); });
+      track('step', 'shop');
+    } };
+}
+function vShopItem(seg, it){
+  const H = S.shop, modes = it.dn.map(d => ({ nm: d[0], dp: d[1] })).concat([{ nm: t("Boshlang'ich to'lovsiz"), dp: 0 }]);
+  if (H.mi >= modes.length) H.mi = 0;
+  const M = modes[H.mi], TS = M.dp ? Array.from({ length: 11 }, (_, i) => i + 2) : Object.keys(H.v.z).map(Number);
+  if (!TS.includes(H.n)) H.n = TS[TS.length - 1];
+  const [dw, m] = shCalc(it, H.n, M.dp), tot = dw + m * H.n;
+  const tags = [it.new ? t('Yangi') : '', it.c ? '🔋 ' + it.c + '%' : '', it.col ? '🎨 ' + it.col : '', it.st ? '📍 ' + it.st : '', it.n > 1 ? it.n + ' ' + t('dona') : ''].filter(Boolean);
+  const me = (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) || {};
+  const ph = (H.v.phone || '').replace(/\D/g, '');
+  return { html: `<button class="sh-back" id="shBack">‹ ${t('Sotuvdagi telefonlar')}</button>
+    ${it.ph ? `<div class="sh-gal">${Array.from({ length: it.ph }, (_, k) => `<img src="${SHOP()}/img/${it.id}/${k}" alt="">`).join('')}</div>` : ''}
+    <div class="sh-card"><h1 style="margin:0">${esc(it.t)}</h1><div class="sh-tags">${tags.map(x => `<span>${esc(x)}</span>`).join('')}</div>
+      <div class="sh-price">${fmtSum(it.p)} ${t("so'm")}</div>${it.u ? `<div class="sh-usd">${t('naqd')}: <b>$${fmtSum(it.u)}</b></div>` : ''}</div>
+    <div class="sh-card"><b>💳 ${t('Nasiya kalkulyatori')}</b>
+      <div class="sh-modes ${modes.length === 2 ? 'two' : ''}">${modes.map((x, i) => `<button data-shmo="${i}" class="${i === H.mi ? 'on' : ''}">${esc(t(x.nm))}${x.dp ? '<br>' + x.dp + '%' : ''}</button>`).join('')}</div>
+      <div class="sh-terms">${TS.map(k => `<button data-shn="${k}" class="${k === H.n ? 'on' : ''}">${k}</button>`).join('')}</div>
+      <div class="sh-big">${fmtSum(m)} ${t("so'm")}</div><div class="sh-sub">${t('oyiga')} · ${H.n} ${t('oy')}${M.dp ? '' : ' · ' + t("boshlang'ich to'lovsiz")}</div>
+      <div style="margin-top:10px"><div class="sh-row"><span>${t('Telefon narxi')}</span><b>${fmtSum(it.p)}</b></div>${M.dp ? `<div class="sh-row"><span>${t("Boshlang'ich to'lov")} (${M.dp}%)</span><b>${fmtSum(dw)}</b></div>` : ''}<div class="sh-row"><span>${t("Jami to'lov")}</span><b>${fmtSum(tot)}</b></div></div>
+      <div class="sh-sub" style="margin-top:8px">${t("Yakuniy shartlar shartnoma tuzishda aniqlashtiriladi.")}</div></div>
+    <div class="sh-card"><b>📝 ${t("Ariza qoldiring — o'zimiz qo'ng'iroq qilamiz")}</b>
+      <div class="sh-modes two" style="margin-top:10px"><button data-shp="n" class="${H.pay === 'n' ? 'on' : ''}">${t('Nasiya')} ${H.n} ${t('oy')}</button><button data-shp="c" class="${H.pay === 'c' ? 'on' : ''}">${t('Naqd')}</button></div>
+      ${H.sent === 'ok' ? `<div class="sh-msg ok">✅ ${t("Arizangiz qabul qilindi! Tez orada qo'ng'iroq qilamiz.")}</div>` : `
+      <input class="sh-in" id="shNm" placeholder="${t('Ismingiz')}" value="${esc(H.nm || me.first_name || '')}">
+      <input class="sh-in" id="shPh" placeholder="${t('Telefon: 90 123 45 67')}" inputmode="tel" value="${esc(H.ph || '')}">
+      <button class="btn" id="shGo">${t('Ariza yuborish')}</button>${H.sent ? `<div class="sh-msg err">${esc(H.sent)}</div>` : ''}`}
+      ${ph ? `<div class="sh-sub" style="text-align:center;margin-top:10px">${t("yoki qo'ng'iroq qiling")}: <a href="tel:+998${ph}" style="color:var(--brand);font-weight:800">${esc(H.v.phone)}</a></div>` : ''}</div>
+    <div class="np-cta"><b>🔁 ${t('Eski telefoningiz bormi?')}</b>${t("Uni Markabga topshiring — narxi yangi telefon narxidan ayiriladi. Avval eski telefoningiz narxini bilib oling.")}
+      <button class="np-go" id="shTrade">${t('Eski telefonim narxini bilish')} →</button></div>`,
+    bind(){
+      document.getElementById('shBack').onclick = back;
+      document.querySelectorAll('[data-shmo]').forEach(el => el.onclick = () => { H.mi = +el.dataset.shmo; haptic(); render(); });
+      document.querySelectorAll('[data-shn]').forEach(el => el.onclick = () => { H.n = +el.dataset.shn; haptic(); render(); });
+      document.querySelectorAll('[data-shp]').forEach(el => el.onclick = () => { H.pay = el.dataset.shp; keep(); haptic(); render(); });
+      const tb = document.getElementById('shTrade'); if (tb) tb.onclick = () => { S.flow = 'sell'; S.i = 0; H.pick = null; haptic(); render(); window.scrollTo(0, 0); track('step', 'shop:tradein'); };
+      function keep(){ const a = document.getElementById('shNm'), b = document.getElementById('shPh'); if (a) H.nm = a.value; if (b) H.ph = b.value; }
+      const go = document.getElementById('shGo'); if (!go) return;
+      go.onclick = () => { keep(); go.disabled = true; go.textContent = t('Yuborilmoqda…');
+        fetch(SHOP() + '/api/lead', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: it.id, name: H.nm || '', phone: H.ph || '', n: H.pay === 'n' ? H.n : 0, d: H.pay === 'n' ? M.dp : 0, src: 'app', tg: me.id || '' }) })
+        .then(r => r.json()).then(j => { H.sent = j.ok ? 'ok' : (j.error || t('Xatolik')); if (j.ok) { haptic('success'); track('lead', 'shop', it.t); } render(); })
+        .catch(() => { H.sent = t("Aloqa yo'q. Qo'ng'iroq qiling."); render(); }); };
+    } };
+}
 function vBrand(){
   const hasNew = (D.new_phones || []).length > 0;
-  const seg = `<div class="seg ${hasNew ? 'three' : ''}"><button data-flow="sell" class="${S.flow !== 'listing' && S.flow !== 'new' ? 'on' : ''}">💰 ${t(hasNew ? 'Telefon narxlash' : 'Markabga sotish')}</button>${hasNew ? `<button data-flow="new" class="${S.flow === 'new' ? 'on' : ''}">📱 ${t('iPhone narxlari')}</button>` : ''}<button data-flow="listing" class="${S.flow === 'listing' ? 'on' : ''}">📢 ${t(hasNew ? "E'lon" : "E'lon berish")}</button></div>`;
+  const seg = `<div class="seg four"><button data-flow="shop" class="${S.flow === 'shop' ? 'on' : ''}">🛍 ${t('Sotuvda')}</button><button data-flow="sell" class="${S.flow !== 'listing' && S.flow !== 'new' && S.flow !== 'shop' ? 'on' : ''}">💰 ${t(hasNew ? 'Telefon narxlash' : 'Markabga sotish')}</button>${hasNew ? `<button data-flow="new" class="${S.flow === 'new' ? 'on' : ''}">📱 ${t('iPhone narxlari')}</button>` : ''}<button data-flow="listing" class="${S.flow === 'listing' ? 'on' : ''}">📢 ${t(hasNew ? "E'lon" : "E'lon berish")}</button></div>`;
   const bindFlow = () => document.querySelectorAll('[data-flow]').forEach(el => el.onclick = () => { if (S.flow !== el.dataset.flow) { S.flow = el.dataset.flow; S.i = 0; haptic(); render(); window.scrollTo(0, 0); track('step', 'flow:' + S.flow); } });
   if (S.flow === 'new') { const v = vNewPhones(seg); const b = v.bind; v.bind = () => { bindFlow(); b(); }; return v; }
+  if (S.flow === 'shop') { const v = vShop(seg); const b = v.bind; v.bind = () => { bindFlow(); b(); }; return v; }
   const L = S.flow === 'listing', one = brands.length === 1;
   const pal = ['#2F3D5C', '#E0703A', '#C2BCB2', '#9DC7C1', '#3C3C3D', '#F2B8C8'];
   const mini = (b, m, col) => phoneSVG('back', { kind: phoneKind(b, m), color: col }).replace('viewBox="-14 -6 128 234"', 'viewBox="-2 -2 104 204"');
