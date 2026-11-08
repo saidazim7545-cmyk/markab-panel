@@ -841,8 +841,8 @@ function vNewPhones(seg){
 /* ---------- Sotuvdagi telefonlar (Markab vitrina: prixoddan avtomatik) ---------- */
 const SHOP = () => D.api.replace(/\/$/, '') + '/sotuv';
 const shUp = (x, k) => Math.ceil(x / k) * k;
-function shCalc(it, n, dp){ const V = S.shop.v; if (!dp) return [0, shUp(it.p * (1 + V.z[n] / 100) / n, 1000)];
-  const d = shUp(it.p * dp / 100, 10000); return [d, shUp((it.p - d) * (1 + V.pct / 100 * n) / n, 1000)]; }
+function shCalc(it, n, dp){ const V = S.shop.v, P = it.np || it.p; if (!dp) return [0, shUp(P * (1 + V.z[n] / 100) / n, 1000)];
+  const d = shUp(P * dp / 100, 10000); return [d, shUp((P - d) * (1 + V.pct / 100 * n) / n, 1000)]; }
 const shFam = m => { const x = (m || '').match(/iPhone (\d+|XS?|SE)/); return x ? 'iPhone ' + x[1] : t('Boshqa'); };
 function shLoad(){
   if (S.shop.items || S.shop.loading || !D.api) return; S.shop.loading = true;
@@ -892,12 +892,12 @@ function vShopItem(seg, it){
   return { html: `<button class="sh-back" id="shBack">‹ ${t('Sotuvdagi telefonlar')}</button>
     ${it.ph ? `<div class="sh-gal">${Array.from({ length: it.ph }, (_, k) => `<img src="${SHOP()}/img/${it.id}/${k}" alt="">`).join('')}</div>` : ''}
     <div class="sh-card"><h1 style="margin:0">${esc(it.t)}</h1><div class="sh-tags">${tags.map(x => `<span>${esc(x)}</span>`).join('')}</div>
-      <div class="sh-price">${fmtSum(it.p)} ${t("so'm")}</div>${it.u ? `<div class="sh-usd">${t('naqd')}: <b>$${fmtSum(it.u)}</b></div>` : ''}</div>
+      ${it.cust ? `<div class="sh-sub" style="margin-bottom:4px">🤝 ${t('Mijoz telefoni · Markab orqali sotiladi')}</div>` : ''}<div class="sh-price">${fmtSum(it.p)} ${t("so'm")}${it.cust ? ' <span class="sh-sub">(' + t('naqd') + ')</span>' : ''}</div>${it.u ? `<div class="sh-usd">${t('naqd')}: <b>$${fmtSum(it.u)}</b></div>` : ''}</div>
     <div class="sh-card"><b>💳 ${t('Nasiya kalkulyatori')}</b>
       <div class="sh-modes ${modes.length === 2 ? 'two' : ''}">${modes.map((x, i) => `<button data-shmo="${i}" class="${i === H.mi ? 'on' : ''}">${esc(t(x.nm))}${x.dp ? '<br>' + x.dp + '%' : ''}</button>`).join('')}</div>
       <div class="sh-terms">${TS.map(k => `<button data-shn="${k}" class="${k === H.n ? 'on' : ''}">${k}</button>`).join('')}</div>
       <div class="sh-big">${fmtSum(m)} ${t("so'm")}</div><div class="sh-sub">${t('oyiga')} · ${H.n} ${t('oy')}${M.dp ? '' : ' · ' + t("boshlang'ich to'lovsiz")}</div>
-      <div style="margin-top:10px"><div class="sh-row"><span>${t('Telefon narxi')}</span><b>${fmtSum(it.p)}</b></div>${M.dp ? `<div class="sh-row"><span>${t("Boshlang'ich to'lov")} (${M.dp}%)</span><b>${fmtSum(dw)}</b></div>` : ''}<div class="sh-row"><span>${t("Jami to'lov")}</span><b>${fmtSum(tot)}</b></div></div>
+      <div style="margin-top:10px"><div class="sh-row"><span>${t('Telefon narxi')}</span><b>${fmtSum(it.np || it.p)}</b></div>${M.dp ? `<div class="sh-row"><span>${t("Boshlang'ich to'lov")} (${M.dp}%)</span><b>${fmtSum(dw)}</b></div>` : ''}<div class="sh-row"><span>${t("Jami to'lov")}</span><b>${fmtSum(tot)}</b></div></div>
       <div class="sh-sub" style="margin-top:8px">${t("Yakuniy shartlar shartnoma tuzishda aniqlashtiriladi.")}</div></div>
     <div class="sh-card"><b>📝 ${t("Ariza qoldiring — o'zimiz qo'ng'iroq qilamiz")}</b>
       <div class="sh-modes two" style="margin-top:10px"><button data-shp="n" class="${H.pay === 'n' ? 'on' : ''}">${t('Nasiya')} ${H.n} ${t('oy')}</button><button data-shp="c" class="${H.pay === 'c' ? 'on' : ''}">${t('Naqd')}</button></div>
@@ -1049,7 +1049,8 @@ function postSeen(r){
   const key = [S.model, S.mem, r.cash].join('|'); if (key === _seenKey) return; _seenKey = key;
   try { fetch(SHOP() + '/api/seen', { method: 'POST', headers: { 'Content-Type': 'application/json' }, keepalive: true,
     body: JSON.stringify({ initData: tg.initData, d: { model: `${S.model.startsWith(S.brand) ? '' : S.brand + ' '}${S.model}`.trim(), mem: S.mem,
-      battery: S.battery, cash: r.cash, trade: r.trade, lang: LANG } }) }).catch(() => {}); } catch (e) {}
+      battery: S.battery, cash: r.cash, trade: r.trade, lang: LANG,
+      color: S.color || '', region: S.region ? S.region.label : '', answers: buildAnswers().slice(0, 20) } }) }).catch(() => {}); } catch (e) {}
 }
 function waCard(){
   const u = TGU(); if (!u || u.allows_write_to_pm !== false || S.waOk) return '';
@@ -1074,21 +1075,35 @@ function vSotibBer(){
       🏬 ${t("6 ta filial va har kuni yuzlab mijozlar")}<br>🤝 ${t("100 dan ortiq hamkor do'kon")}<br>💳 ${t("Halol muddatli to'lov — telefon tez sotiladi")}<br>📢 ${t("Kanal va Markab ilovasida e'lon")}<br><br>
       ✅ <b>${t("Siz hech narsa to'lamaysiz")}</b> — ${t("xizmat haqini xaridor to'laydi")}<br>⏱ ${t("Odatda bir hafta ichida sotiladi")}<br>💵 ${t("Sotilgan zahoti pul qo'lingizda. Shoshilinch bo'lsa — Markab joyida sotib oladi")}</div>
     <div class="sh-card"><b>💬 ${t('Telefoningizni qanchaga sotmoqchisiz?')}</b><div style="height:10px"></div>
-      ${B.sent === 'ok' ? `<div class="sh-msg ok">✅ ${t("Qabul qilindi! Menejerimiz tez orada qo'ng'iroq qiladi.")}</div>` : `
+      ${B.sent === 'ok' ? `<div class="sh-msg ok">✅ ${t("Qabul qilindi! Menejerimiz tez orada qo'ng'iroq qiladi va telefoningizni kanalimizga e'lon qilamiz.")}</div>` : `
       <input class="sh-in num" id="sbP" inputmode="numeric" placeholder="${t('Narx, so\'m — masalan 6 500 000')}" value="${esc(B.p || '')}">
       <input class="sh-in" id="sbN" placeholder="${t('Ismingiz')}" value="${esc(B.n || me.first_name || I0.name || '')}">
       <input class="sh-in" id="sbT" inputmode="tel" placeholder="${t('Telefon: 90 123 45 67')}" value="${esc(B.t || '')}">
+      <div style="margin:4px 0 10px"><b style="font-size:14px">📸 ${t('Telefon rasmlari (3–5 ta)')}</b>
+        <div class="sh-sub" style="margin:2px 0 8px">${t("Old, orqa, yon tomonlari va batareya holati. IMEI ekranini rasmga olmang.")}</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">${(B.ph || []).map((u, i) => `<div style="position:relative"><img src="${u}" style="width:62px;height:62px;object-fit:cover;border-radius:10px"><button data-sbx="${i}" style="position:absolute;top:-6px;right:-6px;border:0;border-radius:50%;width:22px;height:22px;background:#c0392b;color:#fff;font-weight:800">×</button></div>`).join('')}
+        ${(B.ph || []).length < 5 ? `<label style="width:62px;height:62px;border:2px dashed var(--line);border-radius:10px;display:grid;place-items:center;font-size:26px;color:var(--hint);cursor:pointer">+<input type="file" id="sbF" accept="image/*" multiple style="display:none"></label>` : ''}</div></div>
       <button class="btn" id="sbGo">${t('Yuborish')}</button>${B.sent ? `<div class="sh-msg err">${esc(B.sent)}</div>` : ''}`}</div>
     <div class="np-cta"><b>🎁 ${t("Sovg'a")}</b>${t("Markabdan yangi telefon olsangiz — chexol va himoya oynasi bizdan sovg'a!")}
       <button class="np-go" id="sbShop">🛍 ${t('Sotuvdagi telefonlar')} →</button></div>`,
     bind(){
       document.getElementById('sbShop').onclick = () => { S.flow = 'shop'; haptic(); render(); window.scrollTo(0, 0); };
       const P = document.getElementById('sbP'); if (P) P.oninput = () => { const d = P.value.replace(/\D/g, ''); P.value = d ? fmtSum(+d) : ''; };
+      const keep = () => { B.p = P ? P.value : B.p; const n = document.getElementById('sbN'), tt = document.getElementById('sbT'); if (n) B.n = n.value; if (tt) B.t = tt.value; };
+      document.querySelectorAll('[data-sbx]').forEach(x => x.onclick = () => { keep(); B.ph.splice(+x.dataset.sbx, 1); render(); });
+      const F = document.getElementById('sbF'); if (F) F.onchange = () => { keep(); B.ph = B.ph || [];
+        const files = [...F.files].slice(0, 5 - B.ph.length);
+        Promise.all(files.map(f => new Promise(ok => { const img = new Image(); img.onload = () => {
+            const k = Math.min(1, 1280 / Math.max(img.width, img.height)), c = document.createElement('canvas');
+            c.width = Math.round(img.width * k); c.height = Math.round(img.height * k); c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+            ok(c.toDataURL('image/jpeg', 0.82)); URL.revokeObjectURL(img.src); }; img.onerror = () => ok(null); img.src = URL.createObjectURL(f); })))
+          .then(a => { B.ph = B.ph.concat(a.filter(Boolean)).slice(0, 5); render(); }); };
       const go = document.getElementById('sbGo'); if (!go) return;
       go.onclick = () => { B.p = P.value; B.n = document.getElementById('sbN').value; B.t = document.getElementById('sbT').value;
+        if ((B.ph || []).length < 2) { B.sent = t("Kamida 2 ta rasm qo'shing — rasmsiz e'lon kam ko'riladi"); render(); return; }
         go.disabled = true; go.textContent = t('Yuborilmoqda…');
         fetch(SHOP() + '/api/sotibber', { method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ k: B.k, price: B.p, name: B.n, phone: B.t }) })
+          body: JSON.stringify({ k: B.k, price: B.p, name: B.n, phone: B.t, photos: B.ph || [] }) })
           .then(r => r.json()).then(j => { B.sent = j.ok ? 'ok' : (j.error || t('Xatolik')); if (j.ok) { haptic('success'); track('lead', 'sotibber', I0.model); } render(); })
           .catch(() => { B.sent = t("Aloqa yo'q. Qo'ng'iroq qiling."); render(); }); };
       track('step', 'sotibber');
