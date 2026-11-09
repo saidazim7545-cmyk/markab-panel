@@ -870,7 +870,7 @@ function vShop(seg){
       <select id="shBat"><option value="0">${t('Batareya')}</option><option value="100">${t('Yangi')}</option><option value="90">90%+</option><option value="85">85%+</option><option value="80">80%+</option></select></div>
     <div class="sh-cnt">${L.length} ${t('ta telefon')}</div>
     <div class="sh-grid">${L.map(x => `<button class="sh-it" data-shi="${x.id}"><div class="sh-im">${x.ph ? `<img src="${SHOP()}/img/${x.id}/0" loading="lazy" alt="">` : ICON}${x.new ? `<span class="b">${t('YANGI')}</span>` : x.c ? `<span class="b">🔋 ${x.c}%</span>` : ''}${x.n > 1 ? `<span class="n">${x.n} ${t('dona')}</span>` : ''}</div>
-      <div class="sh-bd"><b>${esc(x.t)}</b><span class="s">${esc(x.col)}${x.st ? ' · ' + esc(x.st.replace(' filiali', '')) : ''}</span><span class="p">${fmtSum(x.p)} ${t("so'm")}</span>${x.u ? `<span class="u">${t('naqd')} $${fmtSum(x.u)}</span>` : ''}
+      <div class="sh-bd"><b>${esc(x.t)}</b><span class="s">${esc(x.col)}${x.st ? ' · ' + esc(x.st.replace(' filiali', '')) : ''}${x.cn ? ' · № ' + esc(x.cn) : ''}</span><span class="p">${fmtSum(x.p)} ${t("so'm")}</span>${x.u ? `<span class="u">${t('naqd')} $${fmtSum(x.u)}</span>` : ''}
       <span class="m">${t('nasiya: oyiga')} ${fmtSum(lo(x))} ${t("so'mdan")} ›</span></div></button>`).join('') || `<div class="sh-empty">${t("Bu filtr bo'yicha telefon topilmadi")}</div>`}</div>`,
     bind(){
       const sv = (id, k, num) => { const el = document.getElementById(id); el.value = String(H[k]); el.onchange = () => { H[k] = num ? +el.value : el.value; render(); }; };
@@ -886,7 +886,7 @@ function vShopItem(seg, it){
   const M = modes[H.mi], TS = M.dp ? Array.from({ length: 11 }, (_, i) => i + 2) : Object.keys(H.v.z).map(Number);
   if (!TS.includes(H.n)) H.n = TS[TS.length - 1];
   const [dw, m] = shCalc(it, H.n, M.dp), tot = dw + m * H.n;
-  const tags = [it.new ? t('Yangi') : '', it.c ? '🔋 ' + it.c + '%' : '', it.col ? '🎨 ' + it.col : '', it.st ? '📍 ' + it.st : '', it.n > 1 ? it.n + ' ' + t('dona') : ''].filter(Boolean);
+  const tags = [it.new ? t('Yangi') : '', it.c ? '🔋 ' + it.c + '%' : '', it.col ? '🎨 ' + it.col : '', it.st ? '📍 ' + it.st : '', it.n > 1 ? it.n + ' ' + t('dona') : '', it.cn ? '№ ' + it.cn : ''].filter(Boolean);
   const me = (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) || {};
   const ph = (H.v.phone || '').replace(/\D/g, '');
   return { html: `<button class="sh-back" id="shBack">‹ ${t('Sotuvdagi telefonlar')}</button>
